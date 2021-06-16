@@ -1,5 +1,5 @@
 const Note = (props) => (
-  <svg viewBox="0 0 400 400" {...props}>
+  <svg viewBox="100 100 200 200" {...props}>
     <g
       id="black/logo_symbol"
       stroke="none"

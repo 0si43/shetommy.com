@@ -4,6 +4,7 @@ import Twitter from '../svgs/twitter'
 import GitHub from '../svgs/github'
 import Zenn from '../svgs/zenn'
 import Note from '../svgs/note'
+import Qiita from '../svgs/qiita'
 
 const otherSites = [
   {
@@ -21,15 +22,15 @@ const otherSites = [
     alt: 'Zenn icon',
     link: 'https://zenn.dev/st43',
   },
-  // {
-  //   Comp: Qiita,
-  //   alt: 'Qitta icon',
-  //   link: 'https://qiita.com/st43',
-  // },
   {
     Comp: Note,
     alt: 'note icon',
     link: 'https://note.com/st43',
+  },
+  {
+    Comp: Qiita,
+    alt: 'Qitta icon',
+    link: 'https://qiita.com/st43',
   },
 ]
 
