@@ -8,14 +8,19 @@ export default function Home() {
     <>
       <Header titlePre="Home" />
       <div className={styles.container}>
-        <div className={styles.profileImage}>
-          <Image src="/profile.png" alt="Avatar" width={200} height={200} />
-        </div>
-
-        <OtherSites />
-
         <main className={styles.main}>
-          <h1 className={styles.title}>蔀のページへようこそ</h1>
+          <div className={styles.profileImage}>
+            <Image src="/profile.png" alt="Avatar" width={200} height={200} />
+          </div>
+          <h2 className={styles.text}>
+            蔀<br></br>
+          </h2>
+          （しとみ）
+          <OtherSites />
+          <h2 className={styles.text}>
+            ソフトウェアエンジニア<br></br>
+            楽天イーグルスファン<br></br>
+          </h2>
         </main>
 
         <footer className={styles.footer}>
