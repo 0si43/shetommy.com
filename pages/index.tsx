@@ -1,15 +1,11 @@
-import Head from 'next/head'
 import Image from 'next/image'
+import Header from '../components/header'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>蔀(Shetommy)</title>
-        <meta name="description" content="蔀の個人サイト" />
-        <link rel="icon" href="/profile.png" />
-      </Head>
+      <Header titlePre="Home" />
 
       <div className={styles.profileImage}>
         <Image src="/profile.png" alt="Avatar" width={200} height={200} />
