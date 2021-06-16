@@ -109,7 +109,6 @@
 }
 
 .profileImage {
-  clip-path: circle(50%);
   margin: 2rem 2rem 2rem 5rem;
 }
 
