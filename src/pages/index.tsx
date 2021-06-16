@@ -17,10 +17,29 @@ export default function Home() {
           </h2>
           （しとみ）
           <OtherSites />
-          <h2 className={styles.text}>
-            ソフトウェアエンジニア<br></br>
-            楽天イーグルスファン<br></br>
-          </h2>
+          ソフトウェアエンジニア<br></br>
+          楽天イーグルスファン<br></br>
+          Web上の成果物が散らばってきたので、ここに集約します<br></br>
+          一年に一個大きなソフトウェア開発ができるようにがんばるのが目標です
+          <br></br>
+          <br></br>
+          <br></br>
+          Career<br></br>
+          2019 - iOSエンジニア<br></br>
+          <br></br>
+          Works<br></br>
+          2020 Pieces of Paper<br></br>
+          <br></br>
+          Skill Set<br></br>
+          iOS開発<br></br>
+          <br></br>
+          Activity<br></br>
+          2020 - note<br></br>
+          2009 - 2019 個人ブログ<br></br>
+          <br></br>
+          Development<br></br>
+          色々個人的に試す環境です<br></br>
+          <br></br>
         </main>
 
         <footer className={styles.footer}>
