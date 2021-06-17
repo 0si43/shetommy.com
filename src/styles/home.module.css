@@ -70,13 +70,14 @@
 
 .works {
   display: flex;
-  flex-wrap: wrap;
+  overflow: scroll;
 }
 
 .work {
   margin: 2rem;
   padding: 2rem;
   display: flex;
+  flex-shrink: 0;
   box-shadow: 1px 0 5px 1px #999;
   align-items: center;
 }
@@ -85,7 +86,6 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   font-size: 1.2rem;
 }
 
