@@ -6,7 +6,6 @@ import styles from '../styles/header.module.css'
 const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Home', page: '/' },
   { label: 'Articles', page: '/articles' },
-  //   { label: 'Contact', page: '/contact' },
 ]
 
 const Header = ({ titlePre = '' }) => {
@@ -17,8 +16,8 @@ const Header = ({ titlePre = '' }) => {
       <Head>
         <link rel="icon" href="/profile.png" />
         <title>{titlePre} </title>
-        <meta name="description" content="Shetommy's profile page" />
-        <meta name="og:title" content="蔀のプロフィールページ" />
+        <meta name="description" content="Shetommy's portfolio website" />
+        <meta name="og:title" content="蔀のポートフォリオサイト" />
         {/* <meta property="og:image" content={ogImageUrl} /> */}
       </Head>
       <ul>

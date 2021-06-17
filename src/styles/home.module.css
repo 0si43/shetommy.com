@@ -59,9 +59,15 @@
   font-size: 3rem;
 }
 
-/* .title a:active {
+.contents {
+  margin: 2rem 2rem 2rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
+  background: coral;
+}
+
+.contents h1 {
   text-decoration: underline;
-} */
+}
 
 @media (max-width: 600px) {
   .grid {
