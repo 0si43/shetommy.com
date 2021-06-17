@@ -37,15 +37,45 @@ export default function Home() {
           </div>
           <div className={styles.contents}>
             <h1>Works</h1>
-            <h2>2020</h2>
-            <Image
-              src="/pieces_of_paper.png"
-              alt="Pieces of Paper's app icon"
-              width={48}
-              height={48}
-            />
-            <p>Pieces of Paper</p>
+            <div className={styles.works}>
+              <div className={styles.work}>
+                <a href="">
+                  <Image
+                    src="/profile.png"
+                    alt="Shetommy.com"
+                    width={100}
+                    height={100}
+                  />
+                </a>
+                <div className={styles.workContent}>
+                  <p>Shetommy.com</p>
+                  <p className={styles.subText}>2021</p>
+                  <p className={styles.description}>
+                    このWebサイトそのものです。Next.jsを使って開発しました。
+                  </p>
+                </div>
+              </div>
+              <div className={styles.work}>
+                <a href="https://github.com/0si43/PiecesOfPaper">
+                  <Image
+                    src="/pieces_of_paper.png"
+                    alt="Pieces of Paper's app icon"
+                    width={100}
+                    height={100}
+                  />
+                </a>
+                <div className={styles.workContent}>
+                  <p>Pieces of Paper</p>
+                  <p className={styles.subText}>2020</p>
+                  <p className={styles.description}>
+                    はじめて個人開発でApp
+                    StoreにリリースしたiOSアプリ。ノートアプリです。「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
+                  </p>
+                </div>
+              </div>
+            </div>
             <h1>Activity</h1>
+            <p>2020 iOSDC登壇</p>
             <p>2020 - note</p>
             <p>2009 - 2019 個人ブログ</p>
 
