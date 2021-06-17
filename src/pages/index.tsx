@@ -9,18 +9,32 @@ export default function Home() {
       <Header titlePre="Home" />
       <div className={styles.container}>
         <main className={styles.main}>
-          <div className={styles.profileImage}>
-            <Image src="/profile.png" alt="Avatar" width={200} height={200} />
+          <div className={styles.profile}>
+            <div className={styles.profileLeftColumn}>
+              <div className={styles.image}>
+                <Image
+                  src="/profile.png"
+                  alt="Avatar"
+                  width={200}
+                  height={200}
+                />
+              </div>
+              <OtherSites />
+            </div>
+            <div className={styles.profileRightColumn}>
+              <div className={styles.name}>蔀</div>
+              （しとみ）
+              <ul>
+                <li>iOS開発がメインのソフトウェアエンジニア</li>
+                <li>楽天イーグルスファン</li>
+                <br></br>
+                <li>Web上の成果物が散らばってきたので、ここに集約します</li>
+                <li>
+                  一年に一個大きなソフトウェア開発ができるようにがんばるのが目標です
+                </li>
+              </ul>
+            </div>
           </div>
-          <h2 className={styles.text}>
-            蔀<br></br>
-          </h2>
-          （しとみ）
-          <OtherSites />
-          ソフトウェアエンジニア<br></br>
-          楽天イーグルスファン<br></br>
-          Web上の成果物が散らばってきたので、ここに集約します<br></br>
-          一年に一個大きなソフトウェア開発ができるようにがんばるのが目標です
           <br></br>
           <br></br>
           <br></br>
