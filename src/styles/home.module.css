@@ -33,30 +33,6 @@
   font-size: 0.9rem;
 }
 
-.skill {
-  margin: 1rem;
-  padding: 0 1rem 0 1rem;
-  display: flex;
-  flex-shrink: 0;
-  box-shadow: 1px 0 5px 1px #999;
-}
-
-.skill p {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-.career th {
-  background: navy;
-  color: white;
-}
-
-.career th,
-.career td {
-  padding: 1em 10px 1em 1em;
-  border-bottom: 1px solid gray;
-}
-
 @media (max-width: 600px) {
   .grid {
     width: 100%;

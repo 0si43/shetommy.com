@@ -1,0 +1,12 @@
+.skill {
+  margin: 1rem;
+  padding: 0 1rem 0 1rem;
+  display: flex;
+  flex-shrink: 0;
+  box-shadow: 1px 0 5px 1px #999;
+}
+
+.skill p {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
