@@ -15,34 +15,6 @@
   align-items: center;
 }
 
-.profile {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-
-.profileLeftColumn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.profileRightColumn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-}
-
-.image {
-  margin: 2rem;
-}
-
-.name {
-  font-size: 3rem;
-}
-
 .contents {
   margin: 2rem;
   padding: 2rem;
@@ -59,22 +31,6 @@
 
 .subText {
   font-size: 0.9rem;
-}
-
-.activity {
-  margin: 2rem;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  box-shadow: 1px 0 5px 1px #999;
-}
-
-.activity .description {
-  margin-top: 1.5rem;
-  color: darkgray;
-  font-size: 0.9rem;
-  max-width: 20rem;
 }
 
 .skill {
