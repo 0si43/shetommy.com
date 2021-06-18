@@ -146,8 +146,17 @@ export default function Home() {
             </div>
 
             <h1>Skill Set</h1>
-            <p>iOS開発</p>
-            <p>Unity</p>
+            <div className={styles.cardsRow}>
+              <div className={styles.skill}>
+                <Image src="/apple.svg" alt="Apple" width={24} height={24} />
+                <p>iOS</p>
+              </div>
+
+              <div className={styles.skill}>
+                <Image src="/unity.svg" alt="Unity" width={24} height={24} />
+                <p>Unity</p>
+              </div>
+            </div>
             <h1>Career</h1>
             <h2>2019 - </h2>
             <p>iOSエンジニア</p>
