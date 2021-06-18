@@ -5,8 +5,14 @@ export default function Career() {
     <div className={styles.career}>
       <table>
         <tr>
-          <th>Start(year)</th>
-          <th>End(year)</th>
+          <th>
+            Start<br></br>
+            (year)
+          </th>
+          <th>
+            End<br></br>
+            (year)
+          </th>
           <th>Role</th>
         </tr>
         <tr>
