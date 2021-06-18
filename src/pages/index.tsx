@@ -55,6 +55,7 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+
               <div className={styles.work}>
                 <a href="https://github.com/0si43/PiecesOfPaper">
                   <Image
@@ -91,6 +92,24 @@ export default function Home() {
                 <p className={styles.description}>
                   「Apple pencil対応の勘所を話します」というテーマで登壇しました
                 </p>
+              </div>
+
+              <div className={styles.activity}>
+                <a href="https://fortee.jp/iosdc-japan-2020/proposal/348c2d74-7855-4d8b-8457-db9df25f9a7c">
+                  <Image src="/zenn.jpg" alt="Zenn" width={300} height={150} />
+                </a>
+                <p className={styles.subText}>2020 - </p>
+                <p>Zenn</p>
+                <p className={styles.description}>技術記事を書いています</p>
+              </div>
+
+              <div className={styles.activity}>
+                <a href="https://fortee.jp/iosdc-japan-2020/proposal/348c2d74-7855-4d8b-8457-db9df25f9a7c">
+                  <Image src="/zenn.jpg" alt="Zenn" width={300} height={150} />
+                </a>
+                <p className={styles.subText}>2020 - </p>
+                <p>Zenn</p>
+                <p className={styles.description}>技術記事を書いています</p>
               </div>
 
               <p>2020 - note</p>
