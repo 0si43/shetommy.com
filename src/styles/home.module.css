@@ -134,9 +134,18 @@
 
 .skill p {
   margin-left: 1rem;
-  /* margin-top: 0; */
   margin-right: 1rem;
-  /* margin-bottom: 0.2rem; */
+}
+
+.career th {
+  background: navy;
+  color: white;
+}
+
+.career th,
+.career td {
+  padding: 1em 10px 1em 1em;
+  border-bottom: 1px solid gray;
 }
 
 @media (max-width: 600px) {

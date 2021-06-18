@@ -158,10 +158,25 @@ export default function Home() {
               </div>
             </div>
             <h1>Career</h1>
-            <h2>2019 - </h2>
-            <p>iOSエンジニア</p>
-            <h2>2014 - 2019</h2>
-            <p> 金融系システムエンジニア</p>
+            <div className={styles.career}>
+              <table>
+                <tr>
+                  <th>Start(year)</th>
+                  <th>End(year)</th>
+                  <th>Role</th>
+                </tr>
+                <tr>
+                  <td>2019</td>
+                  <td>-</td>
+                  <td>iOSエンジニア</td>
+                </tr>
+                <tr>
+                  <td>2014</td>
+                  <td>2019</td>
+                  <td>金融系システムエンジニア</td>
+                </tr>
+              </table>
+            </div>
 
             <h1>Development</h1>
             <p>色々個人的に試す環境です</p>
