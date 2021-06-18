@@ -3,6 +3,7 @@
   margin: 1rem auto;
   max-width: 500px;
   text-align: center;
+  filter: brightness(0);
 }
 
 .links a {
