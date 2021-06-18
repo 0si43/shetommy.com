@@ -33,6 +33,12 @@
   font-size: 0.9rem;
 }
 
+@media (max-width: 900px) {
+  .cardsRow {
+    max-width: 35rem;
+  }
+}
+
 @media (max-width: 600px) {
   .contents {
     width: 100%;

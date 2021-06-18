@@ -16,7 +16,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  max-width: 25rem;
 }
 
 .image {
@@ -27,6 +26,12 @@
   font-size: 3rem;
 }
 
+@media (max-width: 900px) {
+  .right {
+    max-width: 16rem;
+  }
+}
+
 @media (max-width: 600px) {
   .profile {
     flex-direction: column;
@@ -34,5 +39,6 @@
 
   .right {
     align-items: center;
+    max-width: 25rem;
   }
 }
