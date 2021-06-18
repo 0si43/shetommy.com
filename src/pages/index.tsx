@@ -95,7 +95,7 @@ export default function Home() {
               </div>
 
               <div className={styles.activity}>
-                <a href="https://fortee.jp/iosdc-japan-2020/proposal/348c2d74-7855-4d8b-8457-db9df25f9a7c">
+                <a href="https://zenn.dev/st43">
                   <Image src="/zenn.jpg" alt="Zenn" width={300} height={150} />
                 </a>
                 <p className={styles.subText}>2020 - </p>
@@ -104,18 +104,45 @@ export default function Home() {
               </div>
 
               <div className={styles.activity}>
-                <a href="https://fortee.jp/iosdc-japan-2020/proposal/348c2d74-7855-4d8b-8457-db9df25f9a7c">
-                  <Image src="/zenn.jpg" alt="Zenn" width={300} height={150} />
+                <a href="https://note.com/st43">
+                  <Image src="/note.svg" alt="note" width={300} height={150} />
                 </a>
-                <p className={styles.subText}>2020 - </p>
-                <p>Zenn</p>
-                <p className={styles.description}>技術記事を書いています</p>
+                <p className={styles.subText}>2020 -</p>
+                <p>note</p>
+                <p className={styles.description}>実用的な記事を書いています</p>
               </div>
 
-              <p>2020 - note</p>
-              <p>2020 - Zenn</p>
-              <p>2019 - 2020 Qiita</p>
-              <p>2009 - 2019 個人ブログ</p>
+              <div className={styles.activity}>
+                <a href="https://qiita.com/st43">
+                  <Image
+                    src="/qiita.png"
+                    alt="Qiita"
+                    width={320}
+                    height={150}
+                  />
+                </a>
+                <p className={styles.subText}>2019 - 2020</p>
+                <p>Qiita</p>
+                <p className={styles.description}>
+                  以前は技術記事はQiitaに書いていましたが、Zennに移行しました
+                </p>
+              </div>
+
+              <div className={styles.activity}>
+                <a href="https://note.com/st43/n/n42ecbdd9aaaf">
+                  <Image
+                    src="/hatena.svg"
+                    alt="Hatena"
+                    width={300}
+                    height={150}
+                  />
+                </a>
+                <p className={styles.subText}>2009 - 2020</p>
+                <p>個人ブログ</p>
+                <p className={styles.description}>
+                  学生時代から四十三庵という名前の個人ブログを公開していました。雑記ブログで、11年継続しました。過去の記事の内容のアップデートが追いつかなくなったのを感じて、非公開にしました。
+                </p>
+              </div>
             </div>
 
             <h1>Skill Set</h1>
