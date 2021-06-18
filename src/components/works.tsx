@@ -14,7 +14,7 @@ export default function Works() {
             height={100}
           />
         </a>
-        <div className={styles.workContent}>
+        <div className={styles.content}>
           <p>Shetommy.com</p>
           <p className={homeStyles.subText}>2021</p>
           <p className={styles.description}>
@@ -32,7 +32,7 @@ export default function Works() {
             height={100}
           />
         </a>
-        <div className={styles.workContent}>
+        <div className={styles.content}>
           <p>Pieces of Paper</p>
           <p className={styles.subText}>2020</p>
           <p className={styles.description}>
