@@ -68,7 +68,7 @@
   text-decoration: underline;
 }
 
-.works {
+.cardsRow {
   display: flex;
   overflow: scroll;
 }
@@ -89,11 +89,16 @@
   font-size: 1.2rem;
 }
 
-.workContent p {
+.workContent p,
+.activity p {
   margin-left: 0;
   margin-top: 0;
   margin-right: 0;
   margin-bottom: 0.2rem;
+}
+
+.subText {
+  font-size: 0.9rem;
 }
 
 .workContent .description {
@@ -103,8 +108,20 @@
   max-width: 10rem;
 }
 
-.subText {
+.activity {
+  margin: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: 1px 0 5px 1px #999;
+}
+
+.activity .description {
+  margin-top: 1.5rem;
+  color: darkgray;
   font-size: 0.9rem;
+  max-width: 20rem;
 }
 
 @media (max-width: 600px) {

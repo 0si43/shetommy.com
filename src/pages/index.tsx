@@ -37,7 +37,7 @@ export default function Home() {
           </div>
           <div className={styles.contents}>
             <h1>Works</h1>
-            <div className={styles.works}>
+            <div className={styles.cardsRow}>
               <div className={styles.work}>
                 <a href="">
                   <Image
@@ -74,10 +74,30 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <h1>Activity</h1>
-            <p>2020 iOSDC登壇</p>
-            <p>2020 - note</p>
-            <p>2009 - 2019 個人ブログ</p>
+
+            <h1>Activities</h1>
+            <div className={styles.cardsRow}>
+              <div className={styles.activity}>
+                <a href="https://fortee.jp/iosdc-japan-2020/proposal/348c2d74-7855-4d8b-8457-db9df25f9a7c">
+                  <Image
+                    src="/iosdc2020.png"
+                    alt="iOSDC 2020"
+                    width={300}
+                    height={150}
+                  />
+                </a>
+                <p className={styles.subText}>2020</p>
+                <p>iOSDC 2020登壇</p>
+                <p className={styles.description}>
+                  「Apple pencil対応の勘所を話します」というテーマで登壇しました
+                </p>
+              </div>
+
+              <p>2020 - note</p>
+              <p>2020 - Zenn</p>
+              <p>2019 - 2020 Qiita</p>
+              <p>2009 - 2019 個人ブログ</p>
+            </div>
 
             <h1>Skill Set</h1>
             <p>iOS開発</p>
