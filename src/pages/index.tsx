@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Header from '../components/header'
 import OtherSites from '../components/otherSites'
+import Footer from '../components/footer'
 import styles from '../styles/home.module.css'
 
 export default function Home() {
@@ -186,10 +187,7 @@ export default function Home() {
             <p>※個人的な技術検証のためのページです</p>
           </div>
         </main>
-
-        <footer className={styles.footer}>
-          Copyright © Shetommy All Rights Reserved.
-        </footer>
+        <Footer />
       </div>
     </>
   )
