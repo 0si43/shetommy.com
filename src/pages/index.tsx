@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import Header from '../components/header'
 import OtherSites from '../components/otherSites'
 import styles from '../styles/home.module.css'
@@ -179,7 +180,10 @@ export default function Home() {
             </div>
 
             <h1>Development</h1>
-            <p>色々個人的に試す環境です</p>
+            <Link href="/dev">
+              <a>実験場</a>
+            </Link>
+            <p>※個人的な技術検証のためのページです</p>
           </div>
         </main>
 
