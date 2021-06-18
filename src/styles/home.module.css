@@ -34,8 +34,17 @@
 }
 
 @media (max-width: 600px) {
-  .grid {
+  .contents {
     width: 100%;
-    flex-direction: column;
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .main {
+    width: 100%;
+  }
+
+  .cardsRow {
+    max-width: 100rem;
   }
 }
