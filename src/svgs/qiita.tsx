@@ -1,4 +1,8 @@
-const Qiita = (props) => (
+type Props = {
+  height: number
+}
+
+const Qiita = (props: Props) => (
   <svg
     version="1.1"
     id="Layer_1"
