@@ -124,6 +124,21 @@
   max-width: 20rem;
 }
 
+.skill {
+  margin: 1rem;
+  padding: 0 1rem 0 1rem;
+  display: flex;
+  flex-shrink: 0;
+  box-shadow: 1px 0 5px 1px #999;
+}
+
+.skill p {
+  margin-left: 1rem;
+  /* margin-top: 0; */
+  margin-right: 1rem;
+  /* margin-bottom: 0.2rem; */
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
