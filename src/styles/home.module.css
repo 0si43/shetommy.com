@@ -51,6 +51,7 @@
   }
 
   .cardsRow {
-    max-width: 100rem;
+    /* width: 100%; */
+    /* max-width: 100rem; */
   }
 }
