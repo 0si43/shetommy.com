@@ -12,7 +12,7 @@ const Qiita = (props: Props) => (
     width="32px"
     height="32px"
     viewBox="0 0 300 300"
-    enable-background="new 0 0 300 300"
+    enableBackground="new 0 0 300 300"
   >
     {' '}
     <image
