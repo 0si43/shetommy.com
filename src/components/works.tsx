@@ -34,7 +34,7 @@ export default function Works() {
         </a>
         <div className={styles.content}>
           <p>Pieces of Paper</p>
-          <p className={styles.subText}>2020</p>
+          <p className={homeStyles.subText}>2020</p>
           <p className={styles.description}>
             はじめて個人開発でApp
             StoreにリリースしたiOSアプリ。ノートアプリです。「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
