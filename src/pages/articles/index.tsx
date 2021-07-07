@@ -1,11 +1,13 @@
 import Header from '../../components/header'
-import Link from "next/link";
-import { getDatabase } from "../../components/notion";
-import { Text } from "./[id].tsx";
-import styles from "./index.module.css";
+import Link from 'next/link'
+import { getDatabase } from '../../components/notion'
+import { Text } from './[id]'
+import styles from './index.module.css'
 import Footer from '../../components/footer'
 
-export const databaseId = process.env.NOTION_DATABASE_ID;
+export const databaseId = process.env.NOTION_DATABASE_ID
+  ? process.env.NOTION_DATABASE_ID
+  : ''
 
 export default function Home({ posts }) {
   return (
@@ -19,13 +21,13 @@ export default function Home({ posts }) {
         <ol className={styles.posts}>
           {posts.map((post) => {
             const date = new Date(post.last_edited_time).toLocaleString(
-              "en-US",
+              'en-US',
               {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric',
               }
-            );
+            )
             return (
               <li key={post.id} className={styles.post}>
                 <h3 className={styles.postTitle}>
@@ -41,22 +43,22 @@ export default function Home({ posts }) {
                   <a> Read post →</a>
                 </Link>
               </li>
-            );
+            )
           })}
         </ol>
       </main>
       <Footer />
     </div>
-  );
+  )
 }
 
 export const getStaticProps = async () => {
-  const database = await getDatabase(databaseId);
+  const database = await getDatabase(databaseId)
 
   return {
     props: {
       posts: database,
     },
     revalidate: 1,
-  };
-};
+  }
+}
