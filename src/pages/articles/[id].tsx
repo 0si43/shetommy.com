@@ -2,7 +2,7 @@ import Header from '../../components/header'
 import { Fragment } from 'react'
 import { getDatabase, getPage, getBlocks } from '../../components/notion'
 import Link from 'next/link'
-import { databaseId } from './index.js'
+import { databaseId } from './index'
 import styles from './post.module.css'
 import Footer from '../../components/footer'
 
