@@ -1,9 +1,11 @@
+import Header from '../../components/header'
 import { Fragment } from "react";
 import Head from "next/head";
 import { getDatabase, getPage, getBlocks } from "../../components/notion";
 import Link from "next/link";
 import { databaseId } from "./index.js";
 import styles from "./post.module.css";
+import Footer from '../../components/footer'
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -102,11 +104,10 @@ export default function Post({ page, blocks }) {
   }
   return (
     <div>
-      <Head>
+      {/* <Head>
         <title>{page.properties.Name.title[0].plain_text}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      </Head> */}
+      <Header titlePre="Articles" />
       <article className={styles.container}>
         <h1 className={styles.name}>
           <Text text={page.properties.Name.title} />
@@ -120,6 +121,7 @@ export default function Post({ page, blocks }) {
           </Link>
         </section>
       </article>
+      <Footer />
     </div>
   );
 }
