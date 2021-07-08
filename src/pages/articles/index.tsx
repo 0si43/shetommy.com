@@ -32,11 +32,7 @@ export default function Home({ posts }) {
                     </a>
                   </Link>
                 </h3>
-
                 <p className={styles.postDescription}>{date}</p>
-                <Link href={`/articles/${title}`}>
-                  <a> Read post →</a>
-                </Link>
               </li>
             )
           })}
