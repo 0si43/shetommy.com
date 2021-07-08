@@ -2,7 +2,7 @@ import Header from '../../components/header'
 import Link from 'next/link'
 import { getDatabase } from '../../components/notion'
 import { Text } from './[title]'
-import styles from './index.module.css'
+import styles from '../../styles/articles/index.module.css'
 import Footer from '../../components/footer'
 
 export const databaseId = process.env.NOTION_DATABASE_ID
