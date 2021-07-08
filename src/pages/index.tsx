@@ -8,7 +8,7 @@ import Skills from '../components/skills'
 import Career from '../components/career'
 
 import Footer from '../components/footer'
-import styles from '../styles/home.module.css'
+import styles from '../styles/home/home.module.css'
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
           <div className={styles.contents}>
             <h1>Works</h1>
             <Works />
-            
+
             <h1>Activities</h1>
             <Activities />
 

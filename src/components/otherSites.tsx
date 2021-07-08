@@ -1,4 +1,4 @@
-import otherSiteStyles from '../styles/other_sites.module.css'
+import otherSiteStyles from '../styles/home/other_sites.module.css'
 
 import Twitter from '../svgs/twitter'
 import GitHub from '../svgs/github'

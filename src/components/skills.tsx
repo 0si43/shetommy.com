@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import homeStyles from '../styles/home.module.css'
-import styles from '../styles/skills.module.css'
+import homeStyles from '../styles/home/home.module.css'
+import styles from '../styles/home/skills.module.css'
 
 export default function Works() {
   return (

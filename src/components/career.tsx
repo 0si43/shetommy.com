@@ -1,4 +1,4 @@
-import styles from '../styles/career.module.css'
+import styles from '../styles/home/career.module.css'
 
 export default function Career() {
   return (
