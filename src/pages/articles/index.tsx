@@ -20,9 +20,15 @@ export default function Home({ posts }) {
         <h2 className={styles.heading}>All Posts</h2>
         <ol className={styles.posts}>
           {posts.map((post) => {
-            const date = new Date(post.last_edited_time).toLocaleDateString()
             // FIXME: もっとキレイに取得する
             const title: string = post.properties.Name.title[0].plain_text
+            const publishDateObject = post.properties['publish date']
+            const dateString =
+              publishDateObject == undefined
+                ? post.last_edited_time
+                : publishDateObject.date.start
+            const date = new Date(dateString).toLocaleDateString()
+
             return (
               <li key={title} className={styles.post}>
                 <h3 className={styles.postTitle}>
