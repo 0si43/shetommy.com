@@ -9,8 +9,9 @@
   font-size: 32px;
 }
 
-.name {
-  font-size: 36px;
+.container .name {
+  font-size: 50px;
+  text-decoration: underline;
 }
 
 .back {
