@@ -13,10 +13,7 @@ export default function Home({ posts }) {
   return (
     <div>
       <main className={styles.container}>
-        <header className={styles.header}>
-          <Header titlePre="Articles" />
-        </header>
-
+        <Header titlePre="Articles" />
         <h2 className={styles.heading}>All Posts</h2>
         <ol className={styles.posts}>
           {posts.map((post) => {
