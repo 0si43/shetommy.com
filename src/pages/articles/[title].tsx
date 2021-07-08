@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { databaseId } from './index'
 import styles from './post.module.css'
 import Footer from '../../components/footer'
+import { GetStaticPaths } from 'next'
+import { makeConsoleLogger } from '@notionhq/client/build/src/logging'
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -103,9 +105,6 @@ export default function Post({ page, blocks }) {
   }
   return (
     <div>
-      {/* <Head>
-        <title>{page.properties.Name.title[0].plain_text}</title>
-      </Head> */}
       <Header titlePre="Articles" />
       <article className={styles.container}>
         <h1 className={styles.name}>
@@ -127,15 +126,23 @@ export default function Post({ page, blocks }) {
 
 export const getStaticPaths = async () => {
   const database = await getDatabase(databaseId)
+
   return {
-    paths: database.map((page) => ({ params: { id: page.id } })),
-    fallback: true,
+    paths: database.map((page) => ({
+      params: { title: page.properties.Name.title[0].plain_text },
+    })),
+    fallback: false,
   }
 }
 
 export const getStaticProps = async (context) => {
-  const { id } = context.params
-  const page = await getPage(id)
+  const { title } = context.params
+  // FIXME: だいぶムダな処理をしている。contextからidが取れればgetPageでできる
+  const database = await getDatabase(databaseId)
+  const page = database.find(
+    (page) => page.properties.Name.title[0].plain_text == title
+  )
+  const id = page.id
   const blocks = await getBlocks(id)
 
   // Retrieve block children for nested blocks (one level deep), for example toggle blocks

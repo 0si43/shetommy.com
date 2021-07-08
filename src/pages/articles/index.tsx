@@ -1,7 +1,7 @@
 import Header from '../../components/header'
 import Link from 'next/link'
 import { getDatabase } from '../../components/notion'
-import { Text } from './[id]'
+import { Text } from './[title]'
 import styles from './index.module.css'
 import Footer from '../../components/footer'
 
@@ -28,10 +28,12 @@ export default function Home({ posts }) {
                 year: 'numeric',
               }
             )
+            // FIXME: もっとキレイに取得する
+            const title: string = post.properties.Name.title[0].plain_text
             return (
-              <li key={post.id} className={styles.post}>
+              <li key={title} className={styles.post}>
                 <h3 className={styles.postTitle}>
-                  <Link href={`/articles/${post.id}`}>
+                  <Link href={`/articles/${title}`}>
                     <a>
                       <Text text={post.properties.Name.title} />
                     </a>
@@ -39,7 +41,7 @@ export default function Home({ posts }) {
                 </h3>
 
                 <p className={styles.postDescription}>{date}</p>
-                <Link href={`/articles/${post.id}`}>
+                <Link href={`/articles/${title}`}>
                   <a> Read post →</a>
                 </Link>
               </li>
