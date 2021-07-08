@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import homeStyles from '../styles/home.module.css'
-import styles from '../styles/activities.module.css'
+import homeStyles from '../styles/home/home.module.css'
+import styles from '../styles/home/activities.module.css'
 
 export default function Activities() {
   return (
