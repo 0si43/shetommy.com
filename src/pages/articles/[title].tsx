@@ -141,6 +141,7 @@ export const getStaticProps = async (context) => {
     // @ts-ignore
     (page) => page.properties.Name.title[0].plain_text == title
   )
+  // @ts-ignore
   const id = page.id
   const blocks = await getBlocks(id)
 
