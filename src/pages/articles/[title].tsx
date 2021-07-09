@@ -126,6 +126,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths: database.map((page) => ({
+      // @ts-ignore
       params: { title: page.properties.Name.title[0].plain_text },
     })),
     fallback: false,
@@ -137,6 +138,7 @@ export const getStaticProps = async (context) => {
   // FIXME: だいぶムダな処理をしている。contextからidが取れればgetPageでできる
   const database = await getDatabase(databaseId)
   const page = database.find(
+    // @ts-ignore
     (page) => page.properties.Name.title[0].plain_text == title
   )
   const id = page.id
