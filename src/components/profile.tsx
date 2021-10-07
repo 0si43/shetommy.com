@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import BuyMeACoffeeWidget from '../components/coffee'
 import OtherSites from '../components/otherSites'
 import styles from '../styles/home/profile.module.css'
 
@@ -10,6 +11,7 @@ export default function Profile() {
           <Image src="/profile.png" alt="Avatar" width={200} height={200} />
         </div>
         <OtherSites />
+        <BuyMeACoffeeWidget />
       </div>
       <div className={styles.right}>
         <div className={styles.name}>蔀</div>
