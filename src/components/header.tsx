@@ -28,7 +28,7 @@ const Header = ({ titlePre = '' }) => {
         <meta
           property="og:description"
           content={
-            titlePre == 'Home' || 'Articles'
+            titlePre == 'Home' || titlePre == 'Articles'
               ? '蔀のポートフォリオサイト＆個人ブログ'
               : 'Written by 蔀'
           }
