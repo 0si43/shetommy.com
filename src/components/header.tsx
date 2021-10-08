@@ -20,13 +20,12 @@ const Header = ({ titlePre = '' }) => {
           name="description"
           content="Shetommy's portfolio website and personal blog"
         />
-        <meta name="og:title" content="蔀のポートフォリオサイト&ブログ" />
         <meta property="og:title" content={titlePre} />
         <meta
           property="og:type"
           content={titlePre == 'Home' ? 'website' : 'article'}
         />
-        <meta property="og:description" content="蔀のブログです" />
+        <meta property="og:description" content="Written by 蔀" />
         <meta
           property="og:image"
           content="https://www.shetommy.com/_next/image?url=%2Fprofile.png&w=640&q=75"
