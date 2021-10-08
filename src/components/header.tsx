@@ -24,7 +24,7 @@ const Header = ({ titlePre = '' }) => {
           content="Shetommy's portfolio website"
         />
         <meta property="og:image" content="profile.png" />
-        <meta name="twitter:card" content="profile.png" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <ul>
         {navItems.map(({ label, page, link }) => (
