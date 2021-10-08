@@ -22,8 +22,15 @@ const Header = ({ titlePre = '' }) => {
         />
         <meta name="og:title" content="蔀のポートフォリオサイト&ブログ" />
         <meta property="og:title" content={titlePre} />
+        <meta
+          property="og:type"
+          content={titlePre == 'Home' ? 'website' : 'article'}
+        />
         <meta property="og:description" content="蔀のブログです" />
-        <meta property="og:image" content="/profile.png" />
+        <meta
+          property="og:image"
+          content="https://www.shetommy.com/_next/image?url=%2Fprofile.png&w=640&q=75"
+        />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <ul>
