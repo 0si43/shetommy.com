@@ -20,10 +20,6 @@
   padding: 2rem;
 }
 
-.contents h1 {
-  text-decoration: underline;
-}
-
 .cardsRow {
   display: flex;
   overflow: scroll;
