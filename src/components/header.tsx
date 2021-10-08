@@ -25,7 +25,14 @@ const Header = ({ titlePre = '' }) => {
           property="og:type"
           content={titlePre == 'Home' ? 'website' : 'article'}
         />
-        <meta property="og:description" content="Written by 蔀" />
+        <meta
+          property="og:description"
+          content={
+            titlePre == 'Home' || 'Articles'
+              ? '蔀のポートフォリオサイト＆個人ブログ'
+              : 'Written by 蔀'
+          }
+        />
         <meta
           property="og:image"
           content="https://www.shetommy.com/_next/image?url=%2Fprofile.png&w=640&q=75"
