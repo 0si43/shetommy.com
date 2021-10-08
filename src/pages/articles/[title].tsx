@@ -105,7 +105,7 @@ export default function Post({ page, blocks }) {
   }
   return (
     <div>
-      <Header titlePre="Articles" />
+      <Header titlePre={page.properties.Name.title[0].plain_text} />
       <article className={styles.container}>
         <h1 className={styles.name}>
           <Text text={page.properties.Name.title} />
