@@ -16,30 +16,25 @@ export const TextComponent = ({ richTexts }: { richTexts: RichTextText[] }) => {
     return null
   }
 
-  const elements = richTexts.map((value) => {
+  const elements = richTexts.map((value, index) => {
     const {
       annotations: { bold, code, color, italic, strikethrough, underline },
       text,
     } = value
     return (
-      <>
-        <span
-          className={[
-            bold ? styles.bold : '',
-            code ? styles.code : '',
-            italic ? styles.italic : '',
-            strikethrough ? styles.strikethrough : '',
-            underline ? styles.underline : '',
-          ].join(' ')}
-          style={color !== 'default' ? { color } : {}}
-        >
-          {text.link ? (
-            <a href={text.link.url}>{text.content}</a>
-          ) : (
-            text.content
-          )}
-        </span>
-      </>
+      <span
+        key={index}
+        className={[
+          bold ? styles.bold : '',
+          code ? styles.code : '',
+          italic ? styles.italic : '',
+          strikethrough ? styles.strikethrough : '',
+          underline ? styles.underline : '',
+        ].join(' ')}
+        style={color !== 'default' ? { color } : {}}
+      >
+        {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
+      </span>
     )
   })
 
@@ -48,38 +43,46 @@ export const TextComponent = ({ richTexts }: { richTexts: RichTextText[] }) => {
 
 const renderBlock = (block: Block) => {
   const { type, id } = block
-  const texts = block[type].text as RichTextText[]
 
   switch (type) {
     case 'paragraph':
       return (
         <p>
-          <TextComponent richTexts={texts} />
+          <TextComponent richTexts={block.paragraph.text as RichTextText[]} />
         </p>
       )
     case 'heading_1':
       return (
         <h1>
-          <TextComponent richTexts={texts} />
+          <TextComponent richTexts={block.heading_1.text as RichTextText[]} />
         </h1>
       )
     case 'heading_2':
       return (
         <h2>
-          <TextComponent richTexts={texts} />
+          <TextComponent richTexts={block.heading_2.text as RichTextText[]} />
         </h2>
       )
     case 'heading_3':
       return (
         <h3>
-          <TextComponent richTexts={texts} />
+          <TextComponent richTexts={block.heading_3.text as RichTextText[]} />
         </h3>
       )
     case 'bulleted_list_item':
+      return (
+        <li>
+          <TextComponent
+            richTexts={block.bulleted_list_item.text as RichTextText[]}
+          />
+        </li>
+      )
     case 'numbered_list_item':
       return (
         <li>
-          <TextComponent richTexts={texts} />
+          <TextComponent
+            richTexts={block.numbered_list_item.text as RichTextText[]}
+          />
         </li>
       )
     case 'to_do':
@@ -88,7 +91,7 @@ const renderBlock = (block: Block) => {
         <div>
           <label htmlFor={id}>
             <input type="checkbox" id={id} defaultChecked={toDoValue.checked} />{' '}
-            <TextComponent richTexts={texts} />
+            <TextComponent richTexts={toDoValue.text as RichTextText[]} />
           </label>
         </div>
       )
@@ -97,7 +100,7 @@ const renderBlock = (block: Block) => {
       return (
         <details>
           <summary>
-            <TextComponent richTexts={texts} />
+            <TextComponent richTexts={blockValue.text as RichTextText[]} />
           </summary>
           <>
             {blockValue.children?.map((block) => (
@@ -202,10 +205,42 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   )
   const blocksWithChildren = blocks.map((block) => {
     // Add child blocks if the block should contain children but none exists
-    if (block.has_children && !block[block.type].children) {
-      block[block.type]['children'] = childBlocks.find(
-        (x) => x.id === block.id
-      )?.children
+    switch (block.type) {
+      case 'paragraph':
+        if (block.has_children && !block[block.type].children) {
+          block[block.type]['children'] = childBlocks.find(
+            (x) => x.id === block.id
+          )?.children
+        }
+        break
+      case 'bulleted_list_item':
+        if (block.has_children && !block[block.type].children) {
+          block[block.type]['children'] = childBlocks.find(
+            (x) => x.id === block.id
+          )?.children
+        }
+        break
+      case 'numbered_list_item':
+        if (block.has_children && !block[block.type].children) {
+          block[block.type]['children'] = childBlocks.find(
+            (x) => x.id === block.id
+          )?.children
+        }
+        break
+      case 'toggle':
+        if (block.has_children && !block[block.type].children) {
+          block[block.type]['children'] = childBlocks.find(
+            (x) => x.id === block.id
+          )?.children
+        }
+        break
+      case 'to_do':
+        if (block.has_children && !block[block.type].children) {
+          block[block.type]['children'] = childBlocks.find(
+            (x) => x.id === block.id
+          )?.children
+        }
+        break
     }
     return block
   })
