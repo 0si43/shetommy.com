@@ -1,5 +1,4 @@
 import { Client } from '@notionhq/client'
-import type { Page, Block } from '@notionhq/client/build/src/api-types'
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -9,18 +8,16 @@ export const getDatabase = async (databaseId: string) => {
   const response = await notion.databases.query({
     database_id: databaseId,
   })
-  const pages: Page[] = response.results
-  return pages
+  return response.results
 }
 
 export const getPage = async (pageId: string) => {
   const response = await notion.pages.retrieve({ page_id: pageId })
-  const page: Page = response
-  return page
+  return response
 }
 
 export const getBlocks = async (blockId: string) => {
-  const blocks: Block[] = []
+  const blocks = []
   let cursor: undefined | string = undefined
 
   while (true) {
