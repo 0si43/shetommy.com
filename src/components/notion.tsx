@@ -1,4 +1,5 @@
 import { Client } from '@notionhq/client'
+import type { Block } from '@notionhq/client/build/src/api-types'
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -17,8 +18,19 @@ export const getPage = async (pageId: string) => {
 }
 
 export const getBlocks = async (blockId: string) => {
-  const response = await notion.blocks.children.list({
-    block_id: blockId,
-  })
-  return response.results
+  const blocks: Block[] = []
+  let cursor: undefined | string = undefined
+
+  while (true) {
+    const { results, next_cursor } = await notion.blocks.children.list({
+      start_cursor: cursor,
+      block_id: blockId,
+    })
+    blocks.push(...results)
+    if (!next_cursor) {
+      break
+    }
+    cursor = next_cursor
+  }
+  return blocks
 }
