@@ -1,12 +1,16 @@
 import Header from '../../components/header'
 import { Fragment } from 'react'
 import { getDatabase, getPage, getBlocks } from '../../components/notion'
-import Link from 'next/link'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
 import Footer from '../../components/footer'
-import { GetStaticPaths } from 'next'
-import { makeConsoleLogger } from '@notionhq/client/build/src/logging'
+import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
+import type {
+  Block,
+  TitlePropertyValue,
+  RichText,
+  RichTextText,
+} from '@notionhq/client/build/src/api-types'
 
 export const Text = ({ text }) => {
   if (!text) {
@@ -99,16 +103,21 @@ const renderBlock = (block) => {
   }
 }
 
-export default function Post({ page, blocks }) {
+export default function Post({ page, blocks }: Props) {
   if (!page || !blocks) {
     return <div />
   }
+
+  const titlePropery = page.properties.Name as TitlePropertyValue
+  const titleRichText = titlePropery.title as RichTextText[]
+  const title = titleRichText[0].plain_text
+
   return (
     <div>
-      <Header titlePre={page.properties.Name.title[0].plain_text} />
+      <Header titlePre={title} />
       <article className={styles.container}>
         <h1 className={styles.name}>
-          <Text text={page.properties.Name.title} />
+          <Text text={titleRichText} />
         </h1>
         <section>
           {blocks.map((block) => (
@@ -122,26 +131,47 @@ export default function Post({ page, blocks }) {
 }
 
 export const getStaticPaths = async () => {
-  const database = await getDatabase(databaseId)
+  const pages = await getDatabase(databaseId)
+
+  const paths = pages.map((page) => {
+    const titlePropery = page.properties.Name as TitlePropertyValue
+    const titleRichText = titlePropery.title as RichTextText[]
+    const title = titleRichText[0].plain_text
+    return {
+      params: {
+        title: title,
+      },
+    }
+  })
 
   return {
-    paths: database.map((page) => ({
-      // @ts-ignore
-      params: { title: page.properties.Name.title[0].plain_text },
-    })),
+    paths: paths,
     fallback: false,
   }
 }
 
-export const getStaticProps = async (context) => {
-  const { title } = context.params
-  // FIXME: だいぶムダな処理をしている。contextからidが取れればgetPageでできる
-  const database = await getDatabase(databaseId)
-  const page = database.find(
-    // @ts-ignore
-    (page) => page.properties.Name.title[0].plain_text == title
-  )
-  // @ts-ignore
+type Props = InferGetStaticPropsType<typeof getStaticProps>
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const pageTtile = context.params?.title
+  const pages = await getDatabase(databaseId)
+  const page = pages.find((page) => {
+    const titlePropery = page.properties.Name as TitlePropertyValue
+    const titleRichText = titlePropery.title as RichTextText[]
+    const searchTitle = titleRichText[0].plain_text
+    return searchTitle == pageTtile
+  })
+
+  if (!page) {
+    return {
+      props: {
+        undefined,
+        blocks: undefined,
+      },
+      revalidate: 1,
+    }
+  }
+
   const id = page.id
   const blocks = await getBlocks(id)
 
