@@ -11,7 +11,7 @@ export default function usePageView() {
       return
     }
 
-    const handleRouteChange = (path) => {
+    const handleRouteChange = (path: string) => {
       pageview(path)
     }
 
