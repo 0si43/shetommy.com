@@ -8,7 +8,6 @@ import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import type {
   Block,
   TitlePropertyValue,
-  RichText,
   RichTextText,
 } from '@notionhq/client/build/src/api-types'
 
@@ -49,62 +48,67 @@ export const TextComponent = ({ richTexts }: { richTexts: RichTextText[] }) => {
 
 const renderBlock = (block: Block) => {
   const { type, id } = block
-  const value = block[type]
+  const texts = block[type].text as RichTextText[]
 
   switch (type) {
     case 'paragraph':
       return (
         <p>
-          <TextComponent richTexts={value.text} />
+          <TextComponent richTexts={texts} />
         </p>
       )
     case 'heading_1':
       return (
         <h1>
-          <TextComponent richTexts={value.text} />
+          <TextComponent richTexts={texts} />
         </h1>
       )
     case 'heading_2':
       return (
         <h2>
-          <TextComponent richTexts={value.text} />
+          <TextComponent richTexts={texts} />
         </h2>
       )
     case 'heading_3':
       return (
         <h3>
-          <TextComponent richTexts={value.text} />
+          <TextComponent richTexts={texts} />
         </h3>
       )
     case 'bulleted_list_item':
     case 'numbered_list_item':
       return (
         <li>
-          <TextComponent richTexts={value.text} />
+          <TextComponent richTexts={texts} />
         </li>
       )
     case 'to_do':
+      const toDoValue = block[type]
       return (
         <div>
           <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
-            <TextComponent richTexts={value.text} />
+            <input type="checkbox" id={id} defaultChecked={toDoValue.checked} />{' '}
+            <TextComponent richTexts={texts} />
           </label>
         </div>
       )
     case 'toggle':
+      const blockValue = block[type]
       return (
         <details>
           <summary>
-            <TextComponent richTexts={value.text} />
+            <TextComponent richTexts={texts} />
           </summary>
-          {value.children?.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
+          <>
+            {blockValue.children?.map((block) => (
+              <Fragment key={block.id}>{renderBlock(block)}</Fragment>
+            ))}
+          </>
         </details>
       )
     case 'child_page':
-      return <p>{value.title}</p>
+      const childPageValue = block[type]
+      return <p>{childPageValue.title}</p>
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
