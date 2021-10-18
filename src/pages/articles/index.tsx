@@ -1,7 +1,7 @@
 import Header from '../../components/header'
 import Link from 'next/link'
 import { getDatabase } from '../../components/notion'
-import { Text } from './[title]'
+import { TextComponent } from './[title]'
 import type {
   DatePropertyValue,
   TitlePropertyValue,
@@ -53,7 +53,7 @@ export default function Home(props: Props) {
                 <h3 className={styles.postTitle}>
                   <Link href={`/articles/${title}`}>
                     <a>
-                      <Text text={titleRichText} />
+                      <TextComponent richTexts={titleRichText} />
                     </a>
                   </Link>
                 </h3>

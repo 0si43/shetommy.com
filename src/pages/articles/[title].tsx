@@ -12,33 +12,42 @@ import type {
   RichTextText,
 } from '@notionhq/client/build/src/api-types'
 
-export const Text = ({ text }) => {
-  if (!text) {
+export const TextComponent = ({ richTexts }: { richTexts: RichTextText[] }) => {
+  if (!richTexts) {
     return null
   }
-  return text.map((value) => {
+
+  const elements = richTexts.map((value) => {
     const {
       annotations: { bold, code, color, italic, strikethrough, underline },
       text,
     } = value
     return (
-      <span
-        className={[
-          bold ? styles.bold : '',
-          code ? styles.code : '',
-          italic ? styles.italic : '',
-          strikethrough ? styles.strikethrough : '',
-          underline ? styles.underline : '',
-        ].join(' ')}
-        style={color !== 'default' ? { color } : {}}
-      >
-        {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
-      </span>
+      <>
+        <span
+          className={[
+            bold ? styles.bold : '',
+            code ? styles.code : '',
+            italic ? styles.italic : '',
+            strikethrough ? styles.strikethrough : '',
+            underline ? styles.underline : '',
+          ].join(' ')}
+          style={color !== 'default' ? { color } : {}}
+        >
+          {text.link ? (
+            <a href={text.link.url}>{text.content}</a>
+          ) : (
+            text.content
+          )}
+        </span>
+      </>
     )
   })
+
+  return <>{elements}</>
 }
 
-const renderBlock = (block) => {
+const renderBlock = (block: Block) => {
   const { type, id } = block
   const value = block[type]
 
@@ -46,32 +55,32 @@ const renderBlock = (block) => {
     case 'paragraph':
       return (
         <p>
-          <Text text={value.text} />
+          <TextComponent richTexts={value.text} />
         </p>
       )
     case 'heading_1':
       return (
         <h1>
-          <Text text={value.text} />
+          <TextComponent richTexts={value.text} />
         </h1>
       )
     case 'heading_2':
       return (
         <h2>
-          <Text text={value.text} />
+          <TextComponent richTexts={value.text} />
         </h2>
       )
     case 'heading_3':
       return (
         <h3>
-          <Text text={value.text} />
+          <TextComponent richTexts={value.text} />
         </h3>
       )
     case 'bulleted_list_item':
     case 'numbered_list_item':
       return (
         <li>
-          <Text text={value.text} />
+          <TextComponent richTexts={value.text} />
         </li>
       )
     case 'to_do':
@@ -79,7 +88,7 @@ const renderBlock = (block) => {
         <div>
           <label htmlFor={id}>
             <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
-            <Text text={value.text} />
+            <TextComponent richTexts={value.text} />
           </label>
         </div>
       )
@@ -87,7 +96,7 @@ const renderBlock = (block) => {
       return (
         <details>
           <summary>
-            <Text text={value.text} />
+            <TextComponent richTexts={value.text} />
           </summary>
           {value.children?.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
@@ -117,7 +126,7 @@ export default function Post({ page, blocks }: Props) {
       <Header titlePre={title} />
       <article className={styles.container}>
         <h1 className={styles.name}>
-          <Text text={titleRichText} />
+          <TextComponent richTexts={titleRichText} />
         </h1>
         <section>
           {blocks.map((block) => (
