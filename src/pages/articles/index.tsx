@@ -1,11 +1,10 @@
 import Header from '../../components/header'
-import Link from 'next/link'
 import { getDatabase, getPageTitle, getPageDate } from '../../components/notion'
-import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints.d'
-import { TextComponent } from './[title]'
 import styles from '../../styles/articles/index.module.css'
 import Footer from '../../components/footer'
+
 import { InferGetStaticPropsType } from 'next'
+import Link from 'next/link'
 
 export const databaseId = process.env.NOTION_DATABASE_ID
   ? process.env.NOTION_DATABASE_ID

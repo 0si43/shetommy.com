@@ -1,6 +1,5 @@
 import { Client, isNotionClientError } from '@notionhq/client'
 import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints.d'
-import { makeConsoleLogger } from '@notionhq/client/build/src/logging'
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
