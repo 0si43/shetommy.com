@@ -30,6 +30,11 @@ export const getDatabase = async (databaseId: string) => {
   }
 }
 
+/// publish dateが設定されていないページをfilterする
+export const filterPages = (pages: NotionPage[]) => {
+  return pages.filter((page) => page.properties['publish date'] !== null)
+}
+
 export const getPageTitle = (property: NotionProperty) => {
   return property.Name.type == 'title' ? property.Name.title[0].plain_text : ''
 }
@@ -43,7 +48,18 @@ export const getPageDate = (page: NotionPage) => {
   ) {
     dateString = page.properties['publish date'].date.start
   }
-  return new Date(dateString).toLocaleDateString()
+  return new Date(dateString)
+}
+
+/// 「publish date」が存在するかどうかを返す
+export const isPublishDate = (page: NotionPage) => {
+  if (
+    page.properties['publish date'].type == 'date' &&
+    page.properties['publish date'].date !== null
+  ) {
+    return true
+  }
+  return false
 }
 
 export const getPage = async (pageId: string) => {
