@@ -1,10 +1,5 @@
 import Header from '../../components/header'
-import {
-  getDatabase,
-  getPageTitle,
-  getPage,
-  getBlocks,
-} from '../../components/notion'
+import { getDatabase, getPageTitle, getBlocks } from '../../components/notion'
 import { renderBlock } from '../../components/renderNotionBlock'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
@@ -75,6 +70,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       })
   )
 
+  /// ブロックに子ブロックがあった場合に全て付与する
   const blocksWithChildren = blocks.map((block) => {
     // Add child blocks if the block should contain children but none exists
     if (block.has_children) {

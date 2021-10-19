@@ -9,9 +9,11 @@ const notion = new Client({
 })
 
 declare type NotionPage = QueryDatabaseResponse['results'][number]
-
 declare type NotionProperty =
   QueryDatabaseResponse['results'][number]['properties']
+export type blockWithChildren = ListBlockChildrenResponse['results'][number] & {
+  children?: blockWithChildren[]
+}
 
 /// Blog記事のデータベースを取得する
 export const getDatabase = async (databaseId: string) => {
@@ -26,18 +28,6 @@ export const getDatabase = async (databaseId: string) => {
     }
     return []
   }
-}
-
-/// 型のnarrowingを行う。条件に合わないものはfilterする
-export const narrowTypeDatabase = (db?: QueryDatabaseResponse) => {
-  if (!db) {
-    return []
-  }
-
-  return db.results.filter((post) => {
-    post.properties.Name.type != 'title' ||
-      post.properties['publish date'].type != 'date'
-  })
 }
 
 export const getPageTitle = (property: NotionProperty) => {
@@ -61,10 +51,7 @@ export const getPage = async (pageId: string) => {
   return response
 }
 
-export type blockWithChildren = ListBlockChildrenResponse['results'][number] & {
-  children?: blockWithChildren[]
-}
-
+/// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
 export const getBlocks = async (blockId: string) => {
   const blocks: blockWithChildren[] = []
   let cursor: undefined | string = undefined
