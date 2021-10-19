@@ -1,115 +1,20 @@
 import Header from '../../components/header'
-import { Fragment } from 'react'
-import { getDatabase, getPage, getBlocks } from '../../components/notion'
-import Link from 'next/link'
+import { getDatabase, getPageTitle, getBlocks } from '../../components/notion'
+import { renderBlock } from '../../components/renderNotionBlock'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
 import Footer from '../../components/footer'
-import { GetStaticPaths } from 'next'
-import { makeConsoleLogger } from '@notionhq/client/build/src/logging'
 
-export const Text = ({ text }) => {
-  if (!text) {
-    return null
-  }
-  return text.map((value) => {
-    const {
-      annotations: { bold, code, color, italic, strikethrough, underline },
-      text,
-    } = value
-    return (
-      <span
-        className={[
-          bold ? styles.bold : '',
-          code ? styles.code : '',
-          italic ? styles.italic : '',
-          strikethrough ? styles.strikethrough : '',
-          underline ? styles.underline : '',
-        ].join(' ')}
-        style={color !== 'default' ? { color } : {}}
-      >
-        {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
-      </span>
-    )
-  })
-}
+import { Fragment } from 'react'
+import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
+import { ParsedUrlQuery } from 'querystring'
 
-const renderBlock = (block) => {
-  const { type, id } = block
-  const value = block[type]
-
-  switch (type) {
-    case 'paragraph':
-      return (
-        <p>
-          <Text text={value.text} />
-        </p>
-      )
-    case 'heading_1':
-      return (
-        <h1>
-          <Text text={value.text} />
-        </h1>
-      )
-    case 'heading_2':
-      return (
-        <h2>
-          <Text text={value.text} />
-        </h2>
-      )
-    case 'heading_3':
-      return (
-        <h3>
-          <Text text={value.text} />
-        </h3>
-      )
-    case 'bulleted_list_item':
-    case 'numbered_list_item':
-      return (
-        <li>
-          <Text text={value.text} />
-        </li>
-      )
-    case 'to_do':
-      return (
-        <div>
-          <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
-            <Text text={value.text} />
-          </label>
-        </div>
-      )
-    case 'toggle':
-      return (
-        <details>
-          <summary>
-            <Text text={value.text} />
-          </summary>
-          {value.children?.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
-        </details>
-      )
-    case 'child_page':
-      return <p>{value.title}</p>
-    default:
-      return `❌ Unsupported block (${
-        type === 'unsupported' ? 'unsupported by Notion API' : type
-      })`
-  }
-}
-
-export default function Post({ page, blocks }) {
-  if (!page || !blocks) {
-    return <div />
-  }
+export default function Post({ title, blocks }: Props) {
   return (
     <div>
-      <Header titlePre={page.properties.Name.title[0].plain_text} />
+      <Header titlePre={title} />
       <article className={styles.container}>
-        <h1 className={styles.name}>
-          <Text text={page.properties.Name.title} />
-        </h1>
+        <h1 className={styles.name}>{title}</h1>
         <section>
           {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
@@ -122,27 +27,34 @@ export default function Post({ page, blocks }) {
 }
 
 export const getStaticPaths = async () => {
-  const database = await getDatabase(databaseId)
+  const pages = await getDatabase(databaseId)
+
+  const paths = pages.map((page) => {
+    const title = getPageTitle(page.properties)
+    return {
+      params: {
+        title: title,
+      },
+    }
+  })
 
   return {
-    paths: database.map((page) => ({
-      // @ts-ignore
-      params: { title: page.properties.Name.title[0].plain_text },
-    })),
+    paths: paths,
     fallback: false,
   }
 }
 
-export const getStaticProps = async (context) => {
-  const { title } = context.params
-  // FIXME: だいぶムダな処理をしている。contextからidが取れればgetPageでできる
+type Props = InferGetStaticPropsType<typeof getStaticProps>
+interface IParams extends ParsedUrlQuery {
+  title: string
+}
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const { title } = context.params as IParams
   const database = await getDatabase(databaseId)
-  const page = database.find(
-    // @ts-ignore
-    (page) => page.properties.Name.title[0].plain_text == title
-  )
-  // @ts-ignore
-  const id = page.id
+  const page = database.find((page) => getPageTitle(page.properties) == title)
+  // NotionのDB上にあったタイトルをパスにしているので、存在は保証されている
+  const id = page!.id
   const blocks = await getBlocks(id)
 
   // Retrieve block children for nested blocks (one level deep), for example toggle blocks
@@ -157,19 +69,19 @@ export const getStaticProps = async (context) => {
         }
       })
   )
+
+  /// ブロックに子ブロックがあった場合に全て付与する
   const blocksWithChildren = blocks.map((block) => {
     // Add child blocks if the block should contain children but none exists
-    if (block.has_children && !block[block.type].children) {
-      block[block.type]['children'] = childBlocks.find(
-        (x) => x.id === block.id
-      )?.children
+    if (block.has_children) {
+      block.children = childBlocks.find((x) => x.id === block.id)?.children
     }
     return block
   })
 
   return {
     props: {
-      page,
+      title,
       blocks: blocksWithChildren,
     },
     revalidate: 1,
