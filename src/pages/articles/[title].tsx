@@ -13,7 +13,6 @@ import Footer from '../../components/footer'
 import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints.d'
 
 export default function Post({ title, blocks }: Props) {
   return (
@@ -75,44 +74,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
         }
       })
   )
+
   const blocksWithChildren = blocks.map((block) => {
     // Add child blocks if the block should contain children but none exists
-    switch (block.type) {
-      case 'paragraph':
-        if (block.has_children && !block[block.type].children) {
-          block[block.type]['children'] = childBlocks.find(
-            (x) => x.id === block.id
-          )?.children
-        }
-        break
-      case 'bulleted_list_item':
-        if (block.has_children && !block[block.type].children) {
-          block[block.type]['children'] = childBlocks.find(
-            (x) => x.id === block.id
-          )?.children
-        }
-        break
-      case 'numbered_list_item':
-        if (block.has_children && !block[block.type].children) {
-          block[block.type]['children'] = childBlocks.find(
-            (x) => x.id === block.id
-          )?.children
-        }
-        break
-      case 'toggle':
-        if (block.has_children && !block[block.type].children) {
-          block[block.type]['children'] = childBlocks.find(
-            (x) => x.id === block.id
-          )?.children
-        }
-        break
-      case 'to_do':
-        if (block.has_children && !block[block.type].children) {
-          block[block.type]['children'] = childBlocks.find(
-            (x) => x.id === block.id
-          )?.children
-        }
-        break
+    if (block.has_children) {
+      block.children = childBlocks.find((x) => x.id === block.id)?.children
     }
     return block
   })

@@ -1,5 +1,8 @@
 import { Client, isNotionClientError } from '@notionhq/client'
-import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints.d'
+import type {
+  QueryDatabaseResponse,
+  ListBlockChildrenResponse,
+} from '@notionhq/client/build/src/api-endpoints.d'
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -58,8 +61,12 @@ export const getPage = async (pageId: string) => {
   return response
 }
 
+export type blockWithChildren = ListBlockChildrenResponse['results'][number] & {
+  children?: blockWithChildren[]
+}
+
 export const getBlocks = async (blockId: string) => {
-  const blocks = []
+  const blocks: blockWithChildren[] = []
   let cursor: undefined | string = undefined
 
   while (true) {
