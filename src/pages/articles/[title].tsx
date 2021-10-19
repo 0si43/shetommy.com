@@ -1,140 +1,26 @@
 import Header from '../../components/header'
-import { Fragment } from 'react'
-import { getDatabase, getPage, getBlocks } from '../../components/notion'
+import {
+  getDatabase,
+  getPageTitle,
+  getPage,
+  getBlocks,
+} from '../../components/notion'
+import { renderBlock } from '../../components/renderNotionBlock'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
 import Footer from '../../components/footer'
+
+import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
-import type {
-  Block,
-  TitlePropertyValue,
-  RichTextText,
-} from '@notionhq/client/build/src/api-types'
+import { ParsedUrlQuery } from 'querystring'
+import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints.d'
 
-export const TextComponent = ({ richTexts }: { richTexts: RichTextText[] }) => {
-  if (!richTexts) {
-    return null
-  }
-
-  const elements = richTexts.map((value, index) => {
-    const {
-      annotations: { bold, code, color, italic, strikethrough, underline },
-      text,
-    } = value
-    return (
-      <span
-        key={index}
-        className={[
-          bold ? styles.bold : '',
-          code ? styles.code : '',
-          italic ? styles.italic : '',
-          strikethrough ? styles.strikethrough : '',
-          underline ? styles.underline : '',
-        ].join(' ')}
-        style={color !== 'default' ? { color } : {}}
-      >
-        {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
-      </span>
-    )
-  })
-
-  return <>{elements}</>
-}
-
-const renderBlock = (block: Block) => {
-  const { type, id } = block
-
-  switch (type) {
-    case 'paragraph':
-      return (
-        <p>
-          <TextComponent richTexts={block.paragraph.text as RichTextText[]} />
-        </p>
-      )
-    case 'heading_1':
-      return (
-        <h1>
-          <TextComponent richTexts={block.heading_1.text as RichTextText[]} />
-        </h1>
-      )
-    case 'heading_2':
-      return (
-        <h2>
-          <TextComponent richTexts={block.heading_2.text as RichTextText[]} />
-        </h2>
-      )
-    case 'heading_3':
-      return (
-        <h3>
-          <TextComponent richTexts={block.heading_3.text as RichTextText[]} />
-        </h3>
-      )
-    case 'bulleted_list_item':
-      return (
-        <li>
-          <TextComponent
-            richTexts={block.bulleted_list_item.text as RichTextText[]}
-          />
-        </li>
-      )
-    case 'numbered_list_item':
-      return (
-        <li>
-          <TextComponent
-            richTexts={block.numbered_list_item.text as RichTextText[]}
-          />
-        </li>
-      )
-    case 'to_do':
-      const toDoValue = block[type]
-      return (
-        <div>
-          <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={toDoValue.checked} />{' '}
-            <TextComponent richTexts={toDoValue.text as RichTextText[]} />
-          </label>
-        </div>
-      )
-    case 'toggle':
-      const blockValue = block[type]
-      return (
-        <details>
-          <summary>
-            <TextComponent richTexts={blockValue.text as RichTextText[]} />
-          </summary>
-          <>
-            {blockValue.children?.map((block) => (
-              <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-            ))}
-          </>
-        </details>
-      )
-    case 'child_page':
-      const childPageValue = block[type]
-      return <p>{childPageValue.title}</p>
-    default:
-      return `❌ Unsupported block (${
-        type === 'unsupported' ? 'unsupported by Notion API' : type
-      })`
-  }
-}
-
-export default function Post({ page, blocks }: Props) {
-  if (!page || !blocks) {
-    return <div />
-  }
-
-  const titlePropery = page.properties.Name as TitlePropertyValue
-  const titleRichText = titlePropery.title as RichTextText[]
-  const title = titleRichText[0].plain_text
-
+export default function Post({ title, blocks }: Props) {
   return (
     <div>
       <Header titlePre={title} />
       <article className={styles.container}>
-        <h1 className={styles.name}>
-          <TextComponent richTexts={titleRichText} />
-        </h1>
+        <h1 className={styles.name}>{title}</h1>
         <section>
           {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock(block)}</Fragment>
@@ -150,9 +36,7 @@ export const getStaticPaths = async () => {
   const pages = await getDatabase(databaseId)
 
   const paths = pages.map((page) => {
-    const titlePropery = page.properties.Name as TitlePropertyValue
-    const titleRichText = titlePropery.title as RichTextText[]
-    const title = titleRichText[0].plain_text
+    const title = getPageTitle(page.properties)
     return {
       params: {
         title: title,
@@ -167,28 +51,16 @@ export const getStaticPaths = async () => {
 }
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
+interface IParams extends ParsedUrlQuery {
+  title: string
+}
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const pageTtile = context.params?.title
-  const pages = await getDatabase(databaseId)
-  const page = pages.find((page) => {
-    const titlePropery = page.properties.Name as TitlePropertyValue
-    const titleRichText = titlePropery.title as RichTextText[]
-    const searchTitle = titleRichText[0].plain_text
-    return searchTitle == pageTtile
-  })
-
-  if (!page) {
-    return {
-      props: {
-        undefined,
-        blocks: undefined,
-      },
-      revalidate: 1,
-    }
-  }
-
-  const id = page.id
+  const { title } = context.params as IParams
+  const database = await getDatabase(databaseId)
+  const page = database.find((page) => getPageTitle(page.properties) == title)
+  // NotionのDB上にあったタイトルをパスにしているので、存在は保証されている
+  const id = page!.id
   const blocks = await getBlocks(id)
 
   // Retrieve block children for nested blocks (one level deep), for example toggle blocks
@@ -247,7 +119,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   return {
     props: {
-      page,
+      title,
       blocks: blocksWithChildren,
     },
     revalidate: 1,
