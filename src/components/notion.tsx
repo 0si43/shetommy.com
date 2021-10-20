@@ -36,7 +36,10 @@ export const filterPages = (pages: NotionPage[]) => {
 }
 
 export const getPageTitle = (property: NotionProperty) => {
-  return property.Name.type == 'title' ? property.Name.title[0].plain_text : ''
+  if (property.Name.type === 'title' && property.Name.title[0]) {
+    return property.Name.title[0].plain_text
+  }
+  return ''
 }
 
 /// 「publish date」で指定された日時を返す。存在しない場合はページの作成日時を返す
@@ -65,6 +68,33 @@ export const isPublishDate = (page: NotionPage) => {
 export const getPage = async (pageId: string) => {
   const response = await notion.pages.retrieve({ page_id: pageId })
   return response
+}
+
+/// 冒頭80字を返す。存在しなかったらnullを返す
+export const getOpeningSentence = async (blockId: string) => {
+  let openingSentence = ''
+  let cursor: undefined | string = undefined
+
+  while (true) {
+    const block = await notion.blocks.children.list({
+      start_cursor: cursor,
+      block_id: blockId,
+      page_size: 1,
+    })
+
+    if (block.results[0]?.type === 'paragraph') {
+      block.results[0].paragraph.text.forEach((textObject) => {
+        openingSentence += textObject.plain_text
+      })
+    }
+
+    const next_cursor = block.next_cursor as string | null
+    if (openingSentence.length >= 80 || !next_cursor) {
+      break
+    }
+    cursor = next_cursor
+  }
+  return openingSentence.substr(0, 80)
 }
 
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
