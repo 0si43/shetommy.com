@@ -19,9 +19,11 @@ export const databaseId = process.env.NOTION_DATABASE_ID
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const getStaticProps = async () => {
-  // データベースから「publish date」がないものを除いて、降順にソートする
+  // データベースから「publish date」とタイトルがないものを除いて、降順にソートする
   const database = (await getDatabase(databaseId))
-    .filter((page) => isPublishDate(page))
+    .filter(
+      (page) => isPublishDate(page) && getPageTitle(page.properties) !== ''
+    )
     .sort(
       (page, page2) =>
         getPageDate(page2).getTime() - getPageDate(page).getTime()
@@ -62,10 +64,10 @@ export default function Home({ db, openingSentences }: Props) {
                     <a>{title}</a>
                   </Link>
                 </h3>
+                <p className={styles.postDescription}>{date}</p>
                 <p className={styles.postDescription}>
                   {openingSentences[index]}
                 </p>
-                <p className={styles.postDescription}>{date}</p>
               </li>
             )
           })}
