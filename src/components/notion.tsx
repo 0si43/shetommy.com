@@ -36,7 +36,10 @@ export const filterPages = (pages: NotionPage[]) => {
 }
 
 export const getPageTitle = (property: NotionProperty) => {
-  return property.Name.type == 'title' ? property.Name.title[0].plain_text : ''
+  if (property.Name.type === 'title' && property.Name.title[0]) {
+    return property.Name.title[0].plain_text
+  }
+  return ''
 }
 
 /// 「publish date」で指定された日時を返す。存在しない場合はページの作成日時を返す
@@ -79,7 +82,7 @@ export const getOpeningSentence = async (blockId: string) => {
       page_size: 1,
     })
 
-    if (block.results[0].type === 'paragraph') {
+    if (block.results[0]?.type === 'paragraph') {
       block.results[0].paragraph.text.forEach((textObject) => {
         openingSentence += textObject.plain_text
       })
