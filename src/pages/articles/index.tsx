@@ -51,6 +51,10 @@ export default function Home({ db, openingSentences }: Props) {
             const title = getPageTitle(post.properties)
             const date = getPageDate(post).toLocaleDateString()
 
+            if (title.length <= 0) {
+              return <></>
+            }
+
             return (
               <li key={title} className={styles.post}>
                 <h3 className={styles.postTitle}>
