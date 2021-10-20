@@ -67,6 +67,33 @@ export const getPage = async (pageId: string) => {
   return response
 }
 
+/// 冒頭80字を返す。存在しなかったらnullを返す
+export const getOpeningSentence = async (blockId: string) => {
+  let openingSentence = ''
+  let cursor: undefined | string = undefined
+
+  while (true) {
+    const block = await notion.blocks.children.list({
+      start_cursor: cursor,
+      block_id: blockId,
+      page_size: 1,
+    })
+
+    if (block.results[0].type === 'paragraph') {
+      block.results[0].paragraph.text.forEach((textObject) => {
+        openingSentence += textObject.plain_text
+      })
+    }
+
+    const next_cursor = block.next_cursor as string | null
+    if (openingSentence.length >= 80 || !next_cursor) {
+      break
+    }
+    cursor = next_cursor
+  }
+  return openingSentence.substr(0, 80)
+}
+
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
 export const getBlocks = async (blockId: string) => {
   const blocks: blockWithChildren[] = []
