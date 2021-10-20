@@ -29,14 +29,16 @@ export default function Post({ title, blocks }: Props) {
 export const getStaticPaths = async () => {
   const pages = await getDatabase(databaseId)
 
-  const paths = pages.map((page) => {
-    const title = getPageTitle(page.properties)
-    return {
-      params: {
-        title: title,
-      },
-    }
-  })
+  const paths = pages
+    .filter((page) => getPageTitle(page.properties) !== '')
+    .map((page) => {
+      const title = getPageTitle(page.properties)
+      return {
+        params: {
+          title: title,
+        },
+      }
+    })
 
   return {
     paths: paths,
