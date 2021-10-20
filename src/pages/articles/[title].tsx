@@ -1,5 +1,10 @@
 import Header from '../../components/header'
-import { getDatabase, getPageTitle, getBlocks } from '../../components/notion'
+import {
+  getDatabase,
+  getPageTitle,
+  getBlocks,
+  isPublishDate,
+} from '../../components/notion'
 import { renderBlock } from '../../components/renderNotionBlock'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
@@ -30,7 +35,9 @@ export const getStaticPaths = async () => {
   const pages = await getDatabase(databaseId)
 
   const paths = pages
-    .filter((page) => getPageTitle(page.properties) !== '')
+    .filter(
+      (page) => isPublishDate(page) && getPageTitle(page.properties) !== ''
+    )
     .map((page) => {
       const title = getPageTitle(page.properties)
       return {
