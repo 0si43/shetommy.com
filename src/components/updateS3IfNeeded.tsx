@@ -9,7 +9,7 @@ let extension = ''
 let blob: Blob | null = null
 
 /// AWS S3に保存した画像のパスを返す。キーはブロックID。S3上に存在しない場合はアップロードする
-const useS3Resource = async (keyName: string, temporaryUrl: string) => {
+const updateS3IfNeeded = async (keyName: string, temporaryUrl: string) => {
   if (!keyName || !temporaryUrl) {
     return ''
   }
@@ -107,4 +107,4 @@ const imageUrlAtS3 = (keyName: string, temporaryUrl: string) => {
   )
 }
 
-export default useS3Resource
+export default imageUrlAtS3

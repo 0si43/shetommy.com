@@ -1,4 +1,5 @@
 import styles from '../styles/articles/post.module.css'
+import imageUrlAtS3 from './imageUrlAtS3'
 import type { blockWithChildren } from './notion'
 import { Fragment } from 'react'
 
@@ -114,11 +115,13 @@ export const renderBlock = (block: blockWithChildren) => {
       const childPageValue = block[type]
       return <p>{childPageValue.title}</p>
     case 'image':
-      const value = block.image
+      const imageValue = block.image
       const src =
-        value.type === 'external' ? value.external.url : value.file.url
+        imageValue.type === 'external'
+          ? imageValue.external.url
+          : imageUrlAtS3(block.id, imageValue.file.url)
       const caption =
-        value.caption?.length > 0 ? value.caption[0].plain_text : ''
+        imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
       return (
         <figure>
           <img src={src} alt={caption} />
