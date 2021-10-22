@@ -17,26 +17,21 @@ const client = new S3Client({
   },
 })
 
-let blob: Blob
-let extension = ''
-
 /// AWS S3に保存した画像のパスを返す。キーはブロックID。S3上に存在しない場合はアップロードする
 const putS3IfNeeded = async (keyName: string, temporaryUrl: string) => {
   if (!keyName || !temporaryUrl) {
     return ''
   }
 
-  const result = await getImageAsBinary(temporaryUrl)
-  blob = result.blob
-  extension = result.extension
+  const extension = await getImageAsBinary(temporaryUrl)
 
   if (!extension) {
     return ''
   }
 
-  if (!(await isImageExist(keyName))) {
+  if (!(await isImageExist(keyName, extension))) {
     // URLは静的に決定するので、アップロードの成功は待たない
-    return await uploadImage(keyName, temporaryUrl)
+    return await uploadImage(keyName, temporaryUrl, extension)
   }
 
   return true
@@ -45,16 +40,16 @@ const putS3IfNeeded = async (keyName: string, temporaryUrl: string) => {
 /// 一時ファイルの画像をバイナリとして取得する。ここで画像のフォーマットがわかる
 const getImageAsBinary = async (temporaryUrl: string) => {
   try {
-    blob = await fetch(temporaryUrl).then((r) => r.blob())
-    return { blob: blob, extension: blob!.type.replace('image/', '') }
+    const blob = await fetch(temporaryUrl).then((r) => r.blob())
+    return blob!.type.replace('image/', '')
   } catch (error) {
     console.log(error)
-    return { blob: new Blob(), extension: '' }
+    return ''
   }
 }
 
 /// S3上にブロックIDに対応する画像があるか
-const isImageExist = async (keyName: string) => {
+const isImageExist = async (keyName: string, extension: string) => {
   if (!client && !keyName) {
     throw '引数がありません'
   }
@@ -70,8 +65,13 @@ const isImageExist = async (keyName: string) => {
 }
 
 /// S3上に画像をアップロードする
-const uploadImage = async (keyName: string, temporaryUrl: string) => {
+const uploadImage = async (
+  keyName: string,
+  temporaryUrl: string,
+  extension: string
+) => {
   try {
+    const blob = await fetch(temporaryUrl).then((r) => r.blob())
     if (!blob) {
       return false
     }
