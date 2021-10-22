@@ -9,15 +9,13 @@ const imageUrlAtS3 = (keyName: string, temporaryUrl: string) => {
     return ''
   }
 
-  return (
-    'https://' +
-    hostName +
-    '/' +
-    bucketName +
-    '/' +
-    keyName +
-    path.extname(temporaryUrl).split('?')[0]
-  )
+  let extension = path.extname(temporaryUrl).split('?')[0]
+  // upload時に.jpegとして保存されるため、Notionへのアップロードの拡張子が.jpgだとアクセスできなくなる
+  if (extension === '.jpg') {
+    extension = '.jpeg'
+  }
+
+  return 'https://' + hostName + '/' + bucketName + '/' + keyName + extension
 }
 
 export default imageUrlAtS3
