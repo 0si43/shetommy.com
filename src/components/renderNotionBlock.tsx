@@ -1,4 +1,6 @@
 import styles from '../styles/articles/post.module.css'
+import imageUrlAtS3 from './imageUrlAtS3'
+import putS3IfNeeded from './putS3IfNeeded'
 import type { blockWithChildren } from './notion'
 import { Fragment } from 'react'
 
@@ -113,6 +115,27 @@ export const renderBlock = (block: blockWithChildren) => {
     case 'child_page':
       const childPageValue = block[type]
       return <p>{childPageValue.title}</p>
+    case 'image':
+      const imageValue = block.image
+      const src =
+        imageValue.type === 'file'
+          ? imageUrlAtS3(block.id, imageValue.file.url)
+          : imageValue.external.url
+      if (imageValue.type === 'file') {
+        try {
+          putS3IfNeeded(block.id, imageValue.file.url)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      const caption =
+        imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
+      return (
+        <figure>
+          <img src={src} alt={caption} />
+          {caption && <figcaption>{caption}</figcaption>}
+        </figure>
+      )
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
