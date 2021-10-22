@@ -122,7 +122,11 @@ export const renderBlock = (block: blockWithChildren) => {
           ? imageUrlAtS3(block.id, imageValue.file.url)
           : imageValue.external.url
       if (imageValue.type === 'file') {
-        putS3IfNeeded(block.id, imageValue.file.url)
+        try {
+          putS3IfNeeded(block.id, imageValue.file.url)
+        } catch (error) {
+          console.log(error)
+        }
       }
       const caption =
         imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
