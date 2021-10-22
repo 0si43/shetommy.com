@@ -1,5 +1,6 @@
 import styles from '../styles/articles/post.module.css'
 import imageUrlAtS3 from './imageUrlAtS3'
+import putS3IfNeeded from './putS3IfNeeded'
 import type { blockWithChildren } from './notion'
 import { Fragment } from 'react'
 
@@ -117,9 +118,12 @@ export const renderBlock = (block: blockWithChildren) => {
     case 'image':
       const imageValue = block.image
       const src =
-        imageValue.type === 'external'
-          ? imageValue.external.url
-          : imageUrlAtS3(block.id, imageValue.file.url)
+        imageValue.type === 'file'
+          ? imageUrlAtS3(block.id, imageValue.file.url)
+          : imageValue.external.url
+      if (imageValue.type === 'file') {
+        putS3IfNeeded(block.id, imageValue.file.url)
+      }
       const caption =
         imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
       return (
