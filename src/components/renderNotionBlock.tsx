@@ -113,6 +113,18 @@ export const renderBlock = (block: blockWithChildren) => {
     case 'child_page':
       const childPageValue = block[type]
       return <p>{childPageValue.title}</p>
+    case 'image':
+      const value = block.image
+      const src =
+        value.type === 'external' ? value.external.url : value.file.url
+      const caption =
+        value.caption?.length > 0 ? value.caption[0].plain_text : ''
+      return (
+        <figure>
+          <img src={src} alt={caption} />
+          {caption && <figcaption>{caption}</figcaption>}
+        </figure>
+      )
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
