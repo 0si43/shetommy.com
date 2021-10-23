@@ -6,6 +6,7 @@ import {
   isPublishDate,
 } from '../../components/notion'
 import { renderBlock } from '../../components/renderNotionBlock'
+import saveImageIfNeeded from '../../components/saveImageIfNeeded'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
 import Footer from '../../components/footer'
@@ -13,7 +14,6 @@ import Footer from '../../components/footer'
 import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import fs from 'fs'
 
 export default function Post({ title, blocks }: Props) {
   return (
@@ -89,27 +89,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     return block
   })
 
-  const path = 'public/blogImages'
-
-  if (!fs.existsSync(path)) {
-    fs.mkdirSync(path)
-  }
-
-  fs.writeFile(
-    'public/blogImages/output.txt',
-    'テキストファイルの中身2',
-    (err) => {
-      // 書き出しに失敗した場合
-      if (err) {
-        console.log('エラーが発生しました。' + err)
-        throw err
-      }
-      // 書き出しに成功した場合
-      else {
-        console.log('ファイルが正常に書き出しされました')
-      }
-    }
-  )
+  saveImageIfNeeded(blocksWithChildren)
 
   return {
     props: {
