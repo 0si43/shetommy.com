@@ -1,6 +1,4 @@
 import styles from '../styles/articles/post.module.css'
-import imageUrlAtS3 from './imageUrlAtS3'
-import putS3IfNeeded from './putS3IfNeeded'
 import type { blockWithChildren } from './notion'
 import { Fragment } from 'react'
 import Image from 'next/image'
@@ -118,25 +116,29 @@ export const renderBlock = (block: blockWithChildren) => {
       return <p>{childPageValue.title}</p>
     case 'image':
       const imageValue = block.image
-      const src =
-        imageValue.type === 'file'
-          ? imageUrlAtS3(block.id, imageValue.file.url)
-          : imageValue.external.url
-      if (imageValue.type === 'file') {
-        try {
-          putS3IfNeeded(block.id, imageValue.file.url)
-        } catch (error) {
-          console.log(error)
-        }
-      }
       const caption =
         imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
-      return (
-        <figure>
-          <Image src={src} alt={caption} width={480} height={320} />
-          {caption && <figcaption>{caption}</figcaption>}
-        </figure>
-      )
+      if (imageValue.type === 'file') {
+        return (
+          <figure>
+            <Image
+              src={'/blogImages/' + block.id + '.png'}
+              alt={caption}
+              width={480}
+              height={320}
+            />
+            {caption && <figcaption>{caption}</figcaption>}
+          </figure>
+        )
+      } else {
+        const src = imageValue.external.url
+        return (
+          <figure>
+            <img src={src} alt={caption} />
+            {caption && <figcaption>{caption}</figcaption>}
+          </figure>
+        )
+      }
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
