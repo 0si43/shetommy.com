@@ -3,6 +3,7 @@ import imageUrlAtS3 from './imageUrlAtS3'
 import putS3IfNeeded from './putS3IfNeeded'
 import type { blockWithChildren } from './notion'
 import { Fragment } from 'react'
+import Image from 'next/image'
 
 type richText = {
   type: 'text'
@@ -132,7 +133,7 @@ export const renderBlock = (block: blockWithChildren) => {
         imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
       return (
         <figure>
-          <img src={src} alt={caption} />
+          <Image src={src} alt={caption} width={480} height={320} />
           {caption && <figcaption>{caption}</figcaption>}
         </figure>
       )
