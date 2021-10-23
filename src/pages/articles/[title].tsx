@@ -6,6 +6,7 @@ import {
   isPublishDate,
 } from '../../components/notion'
 import { renderBlock } from '../../components/renderNotionBlock'
+import saveImageIfNeeded from '../../components/saveImageIfNeeded'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
 import Footer from '../../components/footer'
@@ -87,6 +88,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     }
     return block
   })
+
+  saveImageIfNeeded(blocksWithChildren)
 
   return {
     props: {
