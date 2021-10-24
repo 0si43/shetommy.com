@@ -1,9 +1,11 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import BuyMeACoffeeWidget from '../components/coffee'
 import OtherSites from '../components/otherSites'
 import styles from '../styles/home/profile.module.css'
 
 export default function Profile() {
+  const { locale } = useRouter()
   return (
     <div className={styles.profile}>
       <div className={styles.left}>
@@ -14,8 +16,8 @@ export default function Profile() {
         <BuyMeACoffeeWidget />
       </div>
       <div className={styles.right}>
-        <div className={styles.name}>蔀</div>
-        （しとみ）
+        <div className={styles.name}>{locale === 'ja' ? '蔀' : 'Shetommy'}</div>
+        {locale === 'ja' ? '（しとみ）' : ''}
         <ul>
           <li>iOSエンジニア</li>
           <li>楽天イーグルスファン</li>
