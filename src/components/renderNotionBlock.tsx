@@ -139,6 +139,17 @@ export const renderBlock = (block: blockWithChildren) => {
           </figure>
         )
       }
+    case 'quote':
+      const quoteValue = block.quote
+      return (
+        <blockquote>
+          <TextComponent richTexts={quoteValue.text as richText[]} />
+        </blockquote>
+      )
+    case 'divider':
+      return <hr></hr>
+    case 'table_of_contents':
+      return `（将来的にはここに目次が入るようにします。現在実装中）`
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
