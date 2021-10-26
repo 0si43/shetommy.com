@@ -54,3 +54,9 @@
 .container figcaption {
   opacity: 0.6;
 }
+
+.container blockquote {
+  background-color: whitesmoke;
+  padding: 1rem;
+  font-size: 90%;
+}
