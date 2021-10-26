@@ -139,6 +139,13 @@ export const renderBlock = (block: blockWithChildren) => {
           </figure>
         )
       }
+    case 'quote':
+      const quoteValue = block.quote
+      return (
+        <blockquote>
+          <TextComponent richTexts={quoteValue.text as richText[]} />
+        </blockquote>
+      )
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
