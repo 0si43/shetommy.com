@@ -148,6 +148,8 @@ export const renderBlock = (block: blockWithChildren) => {
       )
     case 'divider':
       return <hr></hr>
+    case 'table_of_contents':
+      return `（将来的にはここに目次が入るようにします。現在実装中）`
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
