@@ -14,6 +14,11 @@ export default function Works() {
         <Image src="/unity.svg" alt="Unity" width={24} height={24} />
         <p>Unity</p>
       </div>
+
+      <div className={styles.skill}>
+      <Image src="/nextjs.svg" alt="Next.js" width={24} height={24} />
+      <p>Next.js</p>
+      </div>
     </div>
   )
 }
