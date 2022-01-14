@@ -59,15 +59,17 @@ export default function Home({ db, openingSentences }: Props) {
 
             return (
               <li key={title} className={styles.post}>
-                <h3 className={styles.postTitle}>
-                  <Link href={`/articles/${title}`}>
-                    <a>{title}</a>
-                  </Link>
-                </h3>
-                <p className={styles.postDescription}>{date}</p>
-                <p className={styles.postDescription}>
-                  {openingSentences[index]}
-                </p>
+                <Link href={`/articles/${title}`}>
+                  <a>
+                    <h3 className={styles.postTitle}> 
+                      {title}
+                    </h3>
+                    <p className={styles.postDescription}>{date}</p>
+                    <p className={styles.postDescription}>
+                      {openingSentences[index]}
+                    </p>
+                  </a>
+                </Link>
               </li>
             )
           })}
