@@ -5,15 +5,13 @@ import styles from '../styles/home/works.module.css'
 export default function Works() {
   return (
     <div className={homeStyles.cardsRow}>
-      <div className={styles.work}>
-        <a href="https://github.com/0si43/shetommy.com">
-          <Image
-            src="/profile.png"
-            alt="Shetommy.com"
-            width={100}
-            height={100}
-          />
-        </a>
+      <a className={styles.work}　href="https://github.com/0si43/shetommy.com">
+        <Image
+          src="/profile.png"
+          alt="Shetommy.com"
+          width={100}
+          height={100}
+        />
         <div className={styles.content}>
           <p>Shetommy.com</p>
           <p className={homeStyles.subText}>2021</p>
@@ -21,17 +19,15 @@ export default function Works() {
             このWebサイトそのものです。Next.jsを使って開発しました。
           </p>
         </div>
-      </div>
+      </a>
 
-      <div className={styles.work}>
-        <a href="https://github.com/0si43/PiecesOfPaper">
-          <Image
-            src="/pieces_of_paper.png"
-            alt="Pieces of Paper's app icon"
-            width={100}
-            height={100}
-          />
-        </a>
+      <a className={styles.work}　href="https://github.com/0si43/PiecesOfPaper">
+        <Image
+          src="/pieces_of_paper.png"
+          alt="Pieces of Paper's app icon"
+          width={100}
+          height={100}
+        />
         <div className={styles.content}>
           <p>Pieces of Paper</p>
           <p className={homeStyles.subText}>2020</p>
@@ -40,7 +36,7 @@ export default function Works() {
             StoreにリリースしたiOSアプリ。ノートアプリです。「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
           </p>
         </div>
-      </div>
+      </a>
     </div>
   )
 }
