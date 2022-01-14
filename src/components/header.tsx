@@ -40,6 +40,7 @@ const Header = ({ titlePre = '' }) => {
           content="https://www.shetommy.com/_next/image?url=%2Fprofile.png&w=640&q=75"
         />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="Hatena::Bookmark" content="nocomment" />
       </Head>
       <ul>
         {navItems.map(({ label, page, link }) => (
