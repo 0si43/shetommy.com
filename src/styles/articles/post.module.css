@@ -6,12 +6,20 @@
   white-space: pre-wrap;
 }
 
-.container h1 {
+.container .name {
   font-size: 32px;
 }
 
-.container .name {
-  font-size: 50px;
+.container h1 {
+  font-size: 28px;
+}
+
+.container h2 {
+  font-size: 24px;
+}
+
+.container h3 {
+  font-size: 20px;
 }
 
 .back {
