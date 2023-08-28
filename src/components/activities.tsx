@@ -19,29 +19,6 @@ export default function Activities() {
         </p>
       </a>
 
-      <a className={styles.activity} href="https://zenn.dev/st43">
-        <Image src="/zenn.jpg" alt="Zenn" width={300} height={150} />
-        <p className={homeStyles.subText}>2020 - </p>
-        <p>Zenn</p>
-        <p className={styles.description}>技術記事を書いています</p>
-      </a>
-
-      <a className={styles.activity} href="https://note.com/st43">
-        <Image src="/note.svg" alt="note" width={300} height={150} />
-        <p className={homeStyles.subText}>2020 -</p>
-        <p>note</p>
-        <p className={styles.description}>実用的な記事を書いています</p>
-      </a>
-
-      <a className={styles.activity} href="https://qiita.com/st43">
-        <Image src="/qiita.png" alt="Qiita" width={320} height={150} />
-        <p className={homeStyles.subText}>2019 - 2020</p>
-        <p>Qiita</p>
-        <p className={styles.description}>
-          以前は技術記事はQiitaに書いていましたが、Zennに移行しました
-        </p>
-      </a>
-
       <a className={styles.activity} href="https://www.shetommy.com/articles/11%E5%B9%B4%E6%9B%B8%E3%81%8D%E7%B6%9A%E3%81%91%E3%81%9F%E3%81%AF%E3%81%A6%E3%81%AA%E3%83%96%E3%83%AD%E3%82%B0%E5%9B%9B%E5%8D%81%E4%B8%89%E5%BA%B5%E3%82%92%E9%9D%9E%E5%85%AC%E9%96%8B%E3%81%AB%E3%81%97%E3%81%9F%E3%81%AE%E3%81%A7%E6%80%9D%E3%81%84%E5%87%BA%E3%81%A8%E3%81%9D%E3%81%93%E3%81%8B%E3%82%89%E5%AD%A6%E3%82%93%E3%81%A0%E3%81%93%E3%81%A8%E3%82%92%E6%9B%B8%E3%81%8D%E3%81%BE%E3%81%99">
         <Image src="/hatena.svg" alt="Hatena" width={300} height={150} />
         <p className={homeStyles.subText}>2009 - 2020</p>
