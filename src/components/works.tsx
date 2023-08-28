@@ -5,6 +5,22 @@ import styles from '../styles/home/works.module.css'
 export default function Works() {
   return (
     <div className={homeStyles.cardsRow}>
+      <a className={styles.work}　href="https://apps.apple.com/app/wristcounter-watch-app/id6448880587">
+        <Image
+          src="/wrist_counter.png"
+          alt="WristCounter's app icon"
+          width={100}
+          height={100}
+        />
+        <div className={styles.content}>
+          <p>WristCounter</p>
+          <p className={homeStyles.subText}>2023</p>
+          <p className={styles.description}>
+            Apple Watchのカウンターアプリをつくりました。
+          </p>
+        </div>
+      </a>
+
       <a className={styles.work}　href="https://github.com/0si43/shetommy.com">
         <Image
           src="/profile.png"
@@ -32,8 +48,7 @@ export default function Works() {
           <p>Pieces of Paper</p>
           <p className={homeStyles.subText}>2020</p>
           <p className={styles.description}>
-            はじめて個人開発でApp
-            StoreにリリースしたiOSアプリ。ノートアプリです。「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
+            はじめて個人開発でApp StoreにリリースしたiOSアプリ。ノートアプリです。「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
           </p>
         </div>
       </a>
