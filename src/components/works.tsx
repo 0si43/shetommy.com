@@ -5,6 +5,22 @@ import styles from '../styles/home/works.module.css'
 export default function Works() {
   return (
     <div className={homeStyles.cardsRow}>
+      <a className={styles.work}　href="https://apps.apple.com/app/m-1-timer/id6474502299">
+        <Image
+          src="/m1_timer.png"
+          alt="M-1 Timer's app icon"
+          width={100}
+          height={100}
+        />
+        <div className={styles.content}>
+          <p>M-1 Timer</p>
+          <p className={homeStyles.subText}>2023</p>
+          <p className={styles.description}>
+            時計を見れないときのタイムマネジメント用に。Apple Watchのアプリです。
+          </p>
+        </div>
+      </a>
+
       <a className={styles.work}　href="https://apps.apple.com/app/wristcounter-watch-app/id6448880587">
         <Image
           src="/wrist_counter.png"
