@@ -139,6 +139,12 @@ export const renderBlock = (block: blockWithChildren) => {
           </figure>
         )
       }
+    case 'bookmark':
+      return (
+        <p>
+          {block.bookmark.url}
+        </p>
+      )
     case 'quote':
       const quoteValue = block.quote
       return (

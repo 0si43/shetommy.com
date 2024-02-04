@@ -8,12 +8,12 @@ export default function Dev() {
       </h1>
       <p>
         <Link href="/privacy_policy/wristcounter.html">
-        <a>WristCounter</a>
+        WristCounter
         </Link>
       </p>
       <p>
         <Link href="/privacy_policy/wristcounter_jp.html">
-        <a>WristCounter（日本語）</a>
+        WristCounter（日本語）
         </Link>
       </p>
     </>
