@@ -1,4 +1,5 @@
 import { Client, isNotionClientError } from '@notionhq/client'
+import { OgpData } from './getOgpData'
 import type {
   QueryDatabaseResponse,
   ListBlockChildrenResponse,
@@ -12,7 +13,9 @@ declare type NotionPage = QueryDatabaseResponse['results'][number]
 declare type NotionProperty =
   QueryDatabaseResponse['results'][number]['properties']
 export type BlockWithChildren = ListBlockChildrenResponse['results'][number] & {
-  children?: BlockWithChildren[]
+  children?: BlockWithChildren[],
+  // bookmark用
+  ogpData?: OgpData 
 }
 
 /// Blog記事のデータベースを取得する

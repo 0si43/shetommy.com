@@ -116,6 +116,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
             text: updatedRichTexts,
           },
         }
+      } else if (block.type === 'bookmark') {
+        block.ogpData = await getOgpData(block.bookmark.url)
       }
       return block
     })

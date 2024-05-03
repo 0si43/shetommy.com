@@ -149,11 +149,15 @@ export const renderBlock = (block: BlockWithChildren) => {
         )
       }
     case 'bookmark':
-      return (
-        <p>
-          {block.bookmark.url}
-        </p>
-      )
+      if (block.ogpData) {
+        return linkCard(block.ogpData?.requestUrl, block.ogpData)
+      } else {
+        return (
+          <p>
+            {block.bookmark.url}
+          </p>
+        )
+      }
     case 'quote':
       const quoteValue = block.quote
       return (
