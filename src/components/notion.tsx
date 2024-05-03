@@ -11,8 +11,8 @@ const notion = new Client({
 declare type NotionPage = QueryDatabaseResponse['results'][number]
 declare type NotionProperty =
   QueryDatabaseResponse['results'][number]['properties']
-export type blockWithChildren = ListBlockChildrenResponse['results'][number] & {
-  children?: blockWithChildren[]
+export type BlockWithChildren = ListBlockChildrenResponse['results'][number] & {
+  children?: BlockWithChildren[]
 }
 
 /// Blog記事のデータベースを取得する
@@ -99,7 +99,7 @@ export const getOpeningSentence = async (blockId: string) => {
 
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
 export const getBlocks = async (blockId: string) => {
-  const blocks: blockWithChildren[] = []
+  const blocks: BlockWithChildren[] = []
   let cursor: undefined | string = undefined
 
   while (true) {

@@ -5,9 +5,9 @@ import {
   getBlocks,
   isPublishDate,
 } from '../../components/notion'
-import { renderBlock } from '../../components/renderNotionBlock'
-import saveImageIfNeeded from '../../components/saveImageIfNeeded'
+import { renderBlock, type RichText } from '../../components/renderNotionBlock'
 import getOgpData from '../../components/getOgpData'
+import saveImageIfNeeded from '../../components/saveImageIfNeeded'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
 import Footer from '../../components/footer'
@@ -15,7 +15,6 @@ import Footer from '../../components/footer'
 import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-
 
 export default function Post({ title, blocks }: Props) {
   return (
@@ -68,8 +67,6 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   // NotionのDB上にあったタイトルをパスにしているので、存在は保証されている
   const id = page!.id
   const blocks = await getBlocks(id)
-  const image = await getOgpData(['https://zenn.dev/st43/scraps/ac20e59cf6614b'])
-  console.log(image.ogImage)
 
   // Retrieve block children for nested blocks (one level deep), for example toggle blocks
   // https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
@@ -95,10 +92,39 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   saveImageIfNeeded(blocksWithChildren)
 
+  /// OG情報を取得する
+  const blocksWithOGP = await Promise.all(
+    blocksWithChildren.map(async (block) => {
+      if (block.type === 'paragraph') {
+        const richTexts = block.paragraph.text as RichText[]
+        const updatedRichTexts = await Promise.all(
+          richTexts.map(async (richText) => {
+            if (richText.text.link?.url) {
+              const ogpData = await getOgpData(richText.text.link?.url)
+              return {
+                ...richText,
+                ogpData: ogpData,
+              }
+            }
+            return richText
+          })
+        )
+        return {
+          ...block,
+          paragraph: {
+            ...block.paragraph,
+            text: updatedRichTexts,
+          },
+        }
+      }
+      return block
+    })
+  )
+
   return {
     props: {
       title,
-      blocks: blocksWithChildren,
+      blocks: blocksWithOGP,
     },
     revalidate: 1,
   }
