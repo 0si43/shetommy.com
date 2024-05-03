@@ -1,11 +1,11 @@
 import fs from 'fs'
-import type { blockWithChildren } from './notion'
+import type { BlockWithChildren } from './notion'
 
 export const imagesPath = 'public/blogImages'
 
 /// Notion内の画像は一時ファイル扱いなので、ブロックの画像をpublic/blogImagesに保存する
 /// 拡張子がjpeg, pngでわかれているとパスの取得時に判定が必要になるので、.pngで統一する
-const saveImageIfNeeded = async (blocksWithChildren: blockWithChildren[]) => {
+const saveImageIfNeeded = async (blocksWithChildren: BlockWithChildren[]) => {
   if (!fs.existsSync(imagesPath)) {
     fs.mkdirSync(imagesPath)
   }
@@ -18,7 +18,7 @@ const saveImageIfNeeded = async (blocksWithChildren: blockWithChildren[]) => {
   })
 }
 
-const checkBlock = async (block: blockWithChildren) => {
+const checkBlock = async (block: BlockWithChildren) => {
   if (block.type === 'image' && block.image.type == 'file') {
     const blob = await getTemporaryImage(block.image.file.url)
 
