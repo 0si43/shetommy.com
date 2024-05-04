@@ -70,6 +70,7 @@
 .container blockquote {
   background-color: whitesmoke;
   padding: 1rem;
+  margin: 8px;
   font-size: 90%;
 }
 
