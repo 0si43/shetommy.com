@@ -32,7 +32,7 @@ export default function Home() {
 
             <h1>Development</h1>
             <Link href="/dev">
-              <a>実験場</a>
+              実験場
             </Link>
             <p>※個人的な技術検証のためのページです</p>
           </div>

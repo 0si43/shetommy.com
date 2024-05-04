@@ -5,6 +5,7 @@ import {
   getPageDate,
   getOpeningSentence,
   isPublishDate,
+  type NotionPage
 } from '../../components/notion'
 import styles from '../../styles/articles/index.module.css'
 import Footer from '../../components/footer'
@@ -22,11 +23,11 @@ export const getStaticProps = async () => {
   // データベースから「publish date」とタイトルがないものを除いて、降順にソートする
   const database = (await getDatabase(databaseId))
     .filter(
-      (page) => isPublishDate(page) && getPageTitle(page.properties) !== ''
+      (page) => isPublishDate(page as NotionPage) && getPageTitle(page as NotionPage) !== ''
     )
     .sort(
       (page, page2) =>
-        getPageDate(page2).getTime() - getPageDate(page).getTime()
+        getPageDate(page2 as NotionPage).getTime() - getPageDate(page as NotionPage).getTime()
     )
 
   const openingSentences = await Promise.all(
@@ -50,8 +51,8 @@ export default function Home({ db, openingSentences }: Props) {
         <h2 className={styles.heading}>All Posts</h2>
         <ol className={styles.posts}>
           {db.map((post, index) => {
-            const title = getPageTitle(post.properties)
-            const date = getPageDate(post).toLocaleDateString()
+            const title = getPageTitle(post as NotionPage)
+            const date = getPageDate(post as NotionPage).toLocaleDateString()
 
             if (title.length <= 0) {
               return <></>
@@ -60,15 +61,13 @@ export default function Home({ db, openingSentences }: Props) {
             return (
               <li key={title} className={styles.post}>
                 <Link href={`/articles/${title}`}>
-                  <a>
-                    <h3 className={styles.postTitle}> 
-                      {title}
-                    </h3>
-                    <p className={styles.postDescription}>{date}</p>
-                    <p className={styles.postDescription}>
-                      {openingSentences[index]}
-                    </p>
-                  </a>
+                  <h3 className={styles.postTitle}> 
+                    {title}
+                  </h3>
+                  <p className={styles.postDescription}>{date}</p>
+                  <p className={styles.postDescription}>
+                    {openingSentences[index]}
+                  </p>
                 </Link>
               </li>
             )

@@ -1,9 +1,11 @@
 import styles from '../styles/articles/post.module.css'
-import type { blockWithChildren } from './notion'
+import type { NotionBlockWithChildren } from './notion'
+import linkCard from './linkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
 
-type richText = {
+
+export type RichText = {
   type: 'text'
   text: {
     content: string
@@ -43,39 +45,42 @@ type richText = {
 }
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
-export const renderBlock = (block: blockWithChildren) => {
-  const { type, id } = block
+export const renderBlock = (block: NotionBlockWithChildren) => {
+  if (block.ogpData?.requestUrl) {
+    return linkCard(block.ogpData.requestUrl, block.ogpData)
+  }
 
+  const { type, id } = block
   switch (type) {
     case 'paragraph':
       return (
         <p>
-          <TextComponent richTexts={block.paragraph.text as richText[]} />
+          <TextComponent richTexts={block.paragraph.text as RichText[]} />
         </p>
       )
     case 'heading_1':
       return (
         <h1>
-          <TextComponent richTexts={block.heading_1.text as richText[]} />
+          <TextComponent richTexts={block.heading_1.text as RichText[]} />
         </h1>
       )
     case 'heading_2':
       return (
         <h2>
-          <TextComponent richTexts={block.heading_2.text as richText[]} />
+          <TextComponent richTexts={block.heading_2.text as RichText[]} />
         </h2>
       )
     case 'heading_3':
       return (
         <h3>
-          <TextComponent richTexts={block.heading_3.text as richText[]} />
+          <TextComponent richTexts={block.heading_3.text as RichText[]} />
         </h3>
       )
     case 'bulleted_list_item':
       return (
         <li>
           <TextComponent
-            richTexts={block.bulleted_list_item.text as richText[]}
+            richTexts={block.bulleted_list_item.text as RichText[]}
           />
         </li>
       )
@@ -83,7 +88,7 @@ export const renderBlock = (block: blockWithChildren) => {
       return (
         <li>
           <TextComponent
-            richTexts={block.numbered_list_item.text as richText[]}
+            richTexts={block.numbered_list_item.text as RichText[]}
           />
         </li>
       )
@@ -93,7 +98,7 @@ export const renderBlock = (block: blockWithChildren) => {
         <div>
           <label htmlFor={id}>
             <input type="checkbox" id={id} defaultChecked={toDoValue.checked} />{' '}
-            <TextComponent richTexts={toDoValue.text as richText[]} />
+            <TextComponent richTexts={toDoValue.text as RichText[]} />
           </label>
         </div>
       )
@@ -102,7 +107,7 @@ export const renderBlock = (block: blockWithChildren) => {
       return (
         <details>
           <summary>
-            <TextComponent richTexts={blockValue.text as richText[]} />
+            <TextComponent richTexts={blockValue.text as RichText[]} />
           </summary>
           <>
             {block.children?.map((block) => (
@@ -143,8 +148,22 @@ export const renderBlock = (block: blockWithChildren) => {
       const quoteValue = block.quote
       return (
         <blockquote>
-          <TextComponent richTexts={quoteValue.text as richText[]} />
+          <TextComponent richTexts={quoteValue.text as RichText[]} />
         </blockquote>
+      )
+    // OGP情報が取れていたら来ない
+    case 'bookmark':
+      return (
+        <p>
+          {block.bookmark.url}
+        </p>
+      )
+    // OGP情報が取れていたら来ない
+    case 'link_preview':
+      return (
+        <p>
+          {block.link_preview.url}
+        </p>
       )
     case 'divider':
       return <hr></hr>
@@ -158,7 +177,7 @@ export const renderBlock = (block: blockWithChildren) => {
 }
 
 /// Notionの1ブロックのテキストをReactのコンポーネント要素として返す
-const TextComponent = ({ richTexts }: { richTexts: richText[] }) => {
+const TextComponent = ({ richTexts }: { richTexts: RichText[] }) => {
   if (!richTexts) {
     return null
   }
