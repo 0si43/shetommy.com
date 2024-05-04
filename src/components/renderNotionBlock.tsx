@@ -60,19 +60,19 @@ export const renderBlock = (block: NotionBlockWithChildren) => {
       )
     case 'heading_1':
       return (
-        <h1>
+        <h1 id={block.id}>
           <TextComponent richTexts={block.heading_1.text as RichText[]} />
         </h1>
       )
     case 'heading_2':
       return (
-        <h2>
+        <h2 id={block.id}>
           <TextComponent richTexts={block.heading_2.text as RichText[]} />
         </h2>
       )
     case 'heading_3':
       return (
-        <h3>
+        <h3 id={block.id}>
           <TextComponent richTexts={block.heading_3.text as RichText[]} />
         </h3>
       )
