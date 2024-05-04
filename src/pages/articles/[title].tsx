@@ -118,6 +118,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
         }
       } else if (block.type === 'bookmark') {
         block.ogpData = await getOgpData(block.bookmark.url)
+      } else if (block.type === 'link_preview') {
+        block.ogpData = await getOgpData(block.link_preview.url)
       }
       return block
     })

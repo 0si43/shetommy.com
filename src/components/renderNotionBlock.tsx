@@ -165,6 +165,10 @@ export const renderBlock = (block: BlockWithChildren) => {
           <TextComponent richTexts={quoteValue.text as RichText[]} />
         </blockquote>
       )
+    case 'link_preview':
+      if (block.ogpData) {
+        return linkCard(block.ogpData?.requestUrl, block.ogpData)
+      }
     case 'divider':
       return <hr></hr>
     case 'table_of_contents':
