@@ -1,13 +1,7 @@
-import openGraphScraper, {
-  OpenGraphImage,
-  OpenGraphProperties,
-} from 'open-graph-scraper'
+import openGraphScraper from 'open-graph-scraper'
+import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
 
-export type OgpData = OpenGraphProperties & {
-  ogImage?: OpenGraphImage | OpenGraphImage[] | undefined;
-};
-
-const getOgpData = async (url: string): Promise<OgpData> => {
+const getOgpData = async (url: string): Promise<OgObject> => {
   const options = { url, onlyGetOpenGraphInfo: true }
 
   try {
@@ -20,7 +14,7 @@ const getOgpData = async (url: string): Promise<OgpData> => {
     return result
   } catch (error) {
     console.error('Error fetching OGP data:', error)
-    return {} as OgpData
+    return {} as OgObject
   }
 }
 

@@ -1,5 +1,5 @@
 import { Client, isNotionClientError } from '@notionhq/client'
-import { OgpData } from './getOgpData'
+import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
 import type {
   QueryDatabaseResponse,
   ListBlockChildrenResponse,
@@ -14,7 +14,7 @@ declare type NotionProperty =
   QueryDatabaseResponse['results'][number]['properties']
 export type BlockWithChildren = ListBlockChildrenResponse['results'][number] & {
   children?: BlockWithChildren[],
-  ogpData?: OgpData 
+  ogpData?: OgObject 
 }
 
 /// Blog記事のデータベースを取得する

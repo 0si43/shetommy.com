@@ -1,7 +1,7 @@
-import type { OgpData } from './getOgpData'
+import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
 import styles from '../styles/articles/post.module.css'
 
-export default function linkCard(url: string, ogpData: OgpData) {
+export default function linkCard(url: string, ogpData: OgObject) {
     return (
         <div className={styles.linkCard}>
             <a href={url} target="_blank" rel="noopener noreferrer">

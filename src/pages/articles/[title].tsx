@@ -98,7 +98,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       if (block.type === 'paragraph' 
           && block.paragraph.text.length == 1
           && block.paragraph.text[0].text.link?.url
-        　) {
+         ) {
           block.ogpData = await getOgpData(block.paragraph.text[0].text.link.url)
       } else if (block.type === 'bookmark') {
         block.ogpData = await getOgpData(block.bookmark.url)
