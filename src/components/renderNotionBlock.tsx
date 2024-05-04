@@ -1,5 +1,5 @@
 import styles from '../styles/articles/post.module.css'
-import type { BlockWithChildren } from './notion'
+import type { NotionBlockWithChildren } from './notion'
 import linkCard from './linkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
@@ -45,9 +45,9 @@ export type RichText = {
 }
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
-export const renderBlock = (block: BlockWithChildren) => {
-  if (block.ogpData) {
-    return linkCard(block.ogpData?.requestUrl, block.ogpData)
+export const renderBlock = (block: NotionBlockWithChildren) => {
+  if (block.ogpData?.requestUrl) {
+    return linkCard(block.ogpData.requestUrl, block.ogpData)
   }
 
   const { type, id } = block
@@ -56,7 +56,7 @@ export const renderBlock = (block: BlockWithChildren) => {
       return (
         <p>
           <TextComponent richTexts={block.paragraph.text as RichText[]} />
-        </p>        
+        </p>
       )
     case 'heading_1':
       return (
