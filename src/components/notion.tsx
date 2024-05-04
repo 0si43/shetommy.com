@@ -14,7 +14,6 @@ declare type NotionProperty =
   QueryDatabaseResponse['results'][number]['properties']
 export type BlockWithChildren = ListBlockChildrenResponse['results'][number] & {
   children?: BlockWithChildren[],
-  // bookmark用
   ogpData?: OgpData 
 }
 

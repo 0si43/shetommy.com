@@ -1,6 +1,5 @@
 import styles from '../styles/articles/post.module.css'
 import type { BlockWithChildren } from './notion'
-import type { OgpData } from './getOgpData'
 import linkCard from './linkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
@@ -43,25 +42,22 @@ export type RichText = {
   }
   plain_text: string
   href: string | null
-  ogpData: OgpData | null
 }
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
 export const renderBlock = (block: BlockWithChildren) => {
-  const { type, id } = block
+  if (block.ogpData) {
+    return linkCard(block.ogpData?.requestUrl, block.ogpData)
+  }
 
+  const { type, id } = block
   switch (type) {
     case 'paragraph':
-      const richTexts = block.paragraph.text as RichText[]
-      if (richTexts[0].ogpData) {
-        return linkCard(richTexts[0].text.link?.url ?? '', richTexts[0].ogpData)
-      } else {
-        return (
-          <p>
-            <TextComponent richTexts={richTexts} />
-          </p>        
-        )
-      }
+      return (
+        <p>
+          <TextComponent richTexts={block.paragraph.text as RichText[]} />
+        </p>        
+      )
     case 'heading_1':
       return (
         <h1>
@@ -148,16 +144,6 @@ export const renderBlock = (block: BlockWithChildren) => {
           </figure>
         )
       }
-    case 'bookmark':
-      if (block.ogpData) {
-        return linkCard(block.ogpData?.requestUrl, block.ogpData)
-      } else {
-        return (
-          <p>
-            {block.bookmark.url}
-          </p>
-        )
-      }
     case 'quote':
       const quoteValue = block.quote
       return (
@@ -165,10 +151,20 @@ export const renderBlock = (block: BlockWithChildren) => {
           <TextComponent richTexts={quoteValue.text as RichText[]} />
         </blockquote>
       )
+    // OGP情報が取れていたら来ない
+    case 'bookmark':
+      return (
+        <p>
+          {block.bookmark.url}
+        </p>
+      )
+    // OGP情報が取れていたら来ない
     case 'link_preview':
-      if (block.ogpData) {
-        return linkCard(block.ogpData?.requestUrl, block.ogpData)
-      }
+      return (
+        <p>
+          {block.link_preview.url}
+        </p>
+      )
     case 'divider':
       return <hr></hr>
     case 'table_of_contents':
