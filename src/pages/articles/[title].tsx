@@ -5,7 +5,7 @@ import {
   getBlocks,
   isPublishDate,
 } from '../../components/notion'
-import { renderBlock, type RichText } from '../../components/renderNotionBlock'
+import { renderBlock } from '../../components/renderNotionBlock'
 import getOgpData from '../../components/getOgpData'
 import saveImageIfNeeded from '../../components/saveImageIfNeeded'
 import { databaseId } from './index'
@@ -95,27 +95,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   /// OG情報を取得する
   const blocksWithOGP = await Promise.all(
     blocksWithChildren.map(async (block) => {
-      if (block.type === 'paragraph') {
-        const richTexts = block.paragraph.text as RichText[]
-        const updatedRichTexts = await Promise.all(
-          richTexts.map(async (richText) => {
-            if (richText.text.link?.url) {
-              const ogpData = await getOgpData(richText.text.link?.url)
-              return {
-                ...richText,
-                ogpData: ogpData,
-              }
-            }
-            return richText
-          })
-        )
-        return {
-          ...block,
-          paragraph: {
-            ...block.paragraph,
-            text: updatedRichTexts,
-          },
-        }
+      if (block.type === 'paragraph' 
+          && block.paragraph.text.length == 1
+          && block.paragraph.text[0].text.link?.url
+        　) {
+          block.ogpData = await getOgpData(block.paragraph.text[0].text.link.url)
       } else if (block.type === 'bookmark') {
         block.ogpData = await getOgpData(block.bookmark.url)
       } else if (block.type === 'link_preview') {
