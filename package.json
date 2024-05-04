@@ -9,12 +9,14 @@
   },
   "dependencies": {
     "@notionhq/client": "^0.4.4",
-    "next": "^12.1.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "next": "^14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "open-graph-scraper": "^6.4.0"
   },
   "devDependencies": {
     "@types/gtag.js": "0.0.7",
+    "@types/jsdom": "^21.1.6",
     "@types/react": "17.0.11",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
