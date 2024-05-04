@@ -9,11 +9,10 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
 
-declare type NotionPage = QueryDatabaseResponse['results'][number]
-declare type NotionProperty =
-  QueryDatabaseResponse['results'][number]['properties']
-export type BlockWithChildren = ListBlockChildrenResponse['results'][number] & {
-  children?: BlockWithChildren[],
+export declare type NotionPage = Extract<QueryDatabaseResponse['results'][number], { properties: Record<string, any> }>
+type NotionBlock = Extract<ListBlockChildrenResponse['results'][number], { type: string }>
+export type NotionBlockWithChildren = NotionBlock & {
+  children?: NotionBlockWithChildren[],
   ogpData?: OgObject 
 }
 
@@ -37,9 +36,13 @@ export const filterPages = (pages: NotionPage[]) => {
   return pages.filter((page) => page.properties['publish date'] !== null)
 }
 
-export const getPageTitle = (property: NotionProperty) => {
-  if (property.Name.type === 'title' && property.Name.title[0]) {
-    return property.Name.title[0].plain_text
+export const getPageTitle = (page: NotionPage) => {
+  if (page.properties == undefined) {
+    return ''
+  }
+
+  if (page.properties.Name.type === 'title' && page.properties.Name.title[0]) {
+    return page.properties.Name.title[0].plain_text
   }
   return ''
 }
@@ -84,10 +87,13 @@ export const getOpeningSentence = async (blockId: string) => {
       page_size: 1,
     })
 
-    if (block.results[0]?.type === 'paragraph') {
-      block.results[0].paragraph.text.forEach((textObject) => {
-        openingSentence += textObject.plain_text
-      })
+    if (block.results[0] && 'type' in block.results[0]) {
+      const blockType = block.results[0].type
+      if (blockType === 'paragraph') {
+        block.results[0].paragraph.text.forEach((textObject) => {
+          openingSentence += textObject.plain_text
+        })
+      }
     }
 
     const next_cursor = block.next_cursor as string | null
@@ -96,12 +102,12 @@ export const getOpeningSentence = async (blockId: string) => {
     }
     cursor = next_cursor
   }
-  return openingSentence.substr(0, 80)
+  return openingSentence.substring(0, 80)
 }
 
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
 export const getBlocks = async (blockId: string) => {
-  const blocks: BlockWithChildren[] = []
+  const blocks: NotionBlockWithChildren[] = []
   let cursor: undefined | string = undefined
 
   while (true) {
@@ -109,7 +115,12 @@ export const getBlocks = async (blockId: string) => {
       start_cursor: cursor,
       block_id: blockId,
     })
-    blocks.push(...blocksList.results)
+    const notionBlocks = blocksList.results.filter(
+      (block): block is NotionBlockWithChildren => {
+        return 'type' in block
+      }
+    )
+    blocks.push(...notionBlocks)
 
     const next_cursor = blocksList.next_cursor as string | null
     if (!next_cursor) {

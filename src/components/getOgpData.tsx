@@ -18,4 +18,4 @@ const getOgpData = async (url: string): Promise<OgObject> => {
   }
 }
 
-export default getOgpData;
+export default getOgpData

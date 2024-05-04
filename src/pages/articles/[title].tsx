@@ -4,6 +4,7 @@ import {
   getPageTitle,
   getBlocks,
   isPublishDate,
+  type NotionPage
 } from '../../components/notion'
 import { renderBlock } from '../../components/renderNotionBlock'
 import getOgpData from '../../components/getOgpData'
@@ -38,10 +39,10 @@ export const getStaticPaths = async () => {
 
   const paths = pages
     .filter(
-      (page) => isPublishDate(page) && getPageTitle(page.properties) !== ''
+      (page) => 'properties' in page && isPublishDate(page) && getPageTitle(page) !== ''
     )
     .map((page) => {
-      const title = getPageTitle(page.properties)
+      const title = getPageTitle(page as NotionPage)
       return {
         params: {
           title: title,
@@ -63,7 +64,7 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const { title } = context.params as IParams
   const database = await getDatabase(databaseId)
-  const page = database.find((page) => getPageTitle(page.properties) == title)
+  const page = database.find((page) => getPageTitle(page as NotionPage) == title)
   // NotionのDB上にあったタイトルをパスにしているので、存在は保証されている
   const id = page!.id
   const blocks = await getBlocks(id)
@@ -97,9 +98,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     blocksWithChildren.map(async (block) => {
       if (block.type === 'paragraph' 
           && block.paragraph.text.length == 1
+          && block.paragraph.text[0].type === 'text'
           && block.paragraph.text[0].text.link?.url
          ) {
-          block.ogpData = await getOgpData(block.paragraph.text[0].text.link.url)
+          const richText = block.paragraph.text[0] as { type: 'text'; text: { link: { url: string } } }
+          block.ogpData = await getOgpData(richText.text.link.url)
       } else if (block.type === 'bookmark') {
         block.ogpData = await getOgpData(block.bookmark.url)
       } else if (block.type === 'link_preview') {
