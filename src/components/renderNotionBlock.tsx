@@ -240,25 +240,11 @@ const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: Notion
         {groupedBlocks.map((blocks) => {
           switch (blocks[0]?.type) {
             case 'heading_1':
-              return (
-                <Fragment key={blocks[0]?.id}>
-                {blocks.flatMap((block) => renderBlock(block))}
-                </Fragment>
-              )
+              return (<>{blocks.flatMap((block) => renderBlock(block))}</>)
             case 'heading_2':
-              return (
-                <ol>
-                  {blocks.flatMap((block) => renderBlock(block))}
-                </ol>
-              )
+              return (<ol>{blocks.flatMap((block) => renderBlock(block))}</ol>)
             case 'heading_3':
-              return (
-                <ol>
-                  <ol>
-                    {blocks.flatMap((block) => renderBlock(block)) }
-                  </ol>
-                </ol>
-              )
+              return (<ol><ol>{blocks.flatMap((block) => renderBlock(block))}</ol></ol>)
             default:
               return null
           }
