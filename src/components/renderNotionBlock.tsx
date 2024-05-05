@@ -4,7 +4,6 @@ import linkCard from './linkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
 
-
 export type RichText = {
   type: 'text'
   text: {
@@ -45,7 +44,12 @@ export type RichText = {
 }
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
-export const renderBlock = (block: NotionBlockWithChildren) => {
+export const renderBlock = (
+  { block, tableOfContents }: {
+    block: NotionBlockWithChildren,
+    tableOfContents: NotionBlockWithChildren[]
+  }
+) => {
   if (block.ogpData?.requestUrl) {
     return linkCard(block.ogpData.requestUrl, block.ogpData)
   }
@@ -60,19 +64,19 @@ export const renderBlock = (block: NotionBlockWithChildren) => {
       )
     case 'heading_1':
       return (
-        <h1>
+        <h1 id={block.id}>
           <TextComponent richTexts={block.heading_1.text as RichText[]} />
         </h1>
       )
     case 'heading_2':
       return (
-        <h2>
+        <h2 id={block.id}>
           <TextComponent richTexts={block.heading_2.text as RichText[]} />
         </h2>
       )
     case 'heading_3':
       return (
-        <h3>
+        <h3 id={block.id}>
           <TextComponent richTexts={block.heading_3.text as RichText[]} />
         </h3>
       )
@@ -111,7 +115,7 @@ export const renderBlock = (block: NotionBlockWithChildren) => {
           </summary>
           <>
             {block.children?.map((block) => (
-              <Fragment key={block.id}>{renderBlock(block)}</Fragment>
+              <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContents })}</Fragment>
             ))}
           </>
         </details>
@@ -168,7 +172,7 @@ export const renderBlock = (block: NotionBlockWithChildren) => {
     case 'divider':
       return <hr></hr>
     case 'table_of_contents':
-      return `（将来的にはここに目次が入るようにします。現在実装中）`
+      return (<TableOfContentsComponent tableOfContents={tableOfContents}/>)
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
@@ -205,4 +209,79 @@ const TextComponent = ({ richTexts }: { richTexts: RichText[] }) => {
   })
 
   return <>{elements}</>
+}
+
+const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: NotionBlockWithChildren[] }) => {
+  if (tableOfContents.length === 0) {
+    return null
+  }
+
+  const renderTableOfContents = (blocks: NotionBlockWithChildren[]) => {
+    const groupedBlocks: NotionBlockWithChildren[][] = []
+    const sameHeadingBlocks: NotionBlockWithChildren[] = []
+
+    blocks.forEach((block, index) => {
+      if (sameHeadingBlocks[sameHeadingBlocks.length - 1] &&
+          block.type != sameHeadingBlocks[sameHeadingBlocks.length - 1].type) {
+        groupedBlocks.push([...sameHeadingBlocks])
+        sameHeadingBlocks.length = 0
+      }
+      
+      sameHeadingBlocks.push(block)
+      
+      if (index == blocks.length - 1) {
+        groupedBlocks.push([...sameHeadingBlocks])
+      }  
+    })
+    
+    return (
+      <ol>
+        {groupedBlocks.map((blocks) => {
+          switch (blocks[0]?.type) {
+            case 'heading_1':
+              return blocks.flatMap((block) => renderBlock(block))
+            case 'heading_2':
+              return (<ol key={blocks[0]?.id}>{blocks.flatMap((block) => renderBlock(block))}</ol>)
+            case 'heading_3':
+              return (<ol key={blocks[0]?.id}><ol>{blocks.flatMap((block) => renderBlock(block))}</ol></ol>)
+            default:
+              return null
+          }
+        })}
+      </ol>
+    )
+  }
+
+  const renderBlock = (block: NotionBlockWithChildren) => {
+      switch (block.type) {
+        case 'heading_1':
+          return (
+            <li key={block.id}>
+              <a href={`#${block.id}`}>{block.heading_1.text[0].plain_text}</a>
+            </li>
+          )
+        case 'heading_2':
+          return (
+            <li key={block.id}>
+              <a href={`#${block.id}`}>{block.heading_2.text[0].plain_text}</a>
+            </li>
+          )
+        case 'heading_3':
+          return (
+            <li key={block.id}>
+              <a href={`#${block.id}`}>{block.heading_3.text[0].plain_text}</a>
+            </li>
+          )
+          
+        default:
+          return null
+    }
+  }
+
+  return (
+    <nav>
+      <h1>目次</h1>
+      {renderTableOfContents(tableOfContents)}
+    </nav>
+  )
 }
