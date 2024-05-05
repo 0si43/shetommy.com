@@ -15,7 +15,7 @@ const Header = ({ titlePre = '' }) => {
     <header className={styles.header}>
       <Head>
         <link rel="icon" href="/profile.png" />
-        <title>{titlePre} </title>
+        <title>{`${titlePre}`}</title>
         <meta
           name="description"
           content="Shetommy's portfolio website and personal blog"
