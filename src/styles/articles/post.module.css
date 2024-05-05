@@ -134,6 +134,7 @@
 .container nav h1 {
   font-size: 16px;
   font-weight: bold;
+  margin: 0;
   margin-bottom: 16px;
 }
 
