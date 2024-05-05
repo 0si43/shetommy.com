@@ -4,7 +4,8 @@ import {
   getPageTitle,
   getBlocks,
   isPublishDate,
-  type NotionPage
+  type NotionPage,
+  NotionBlockWithChildren
 } from '../../components/notion'
 import { renderBlock } from '../../components/renderNotionBlock'
 import getOgpData from '../../components/getOgpData'
@@ -17,7 +18,7 @@ import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-export default function Post({ title, blocks }: Props) {
+export default function Post({ title, blocks, tableOfContentsBlocks }: Props) {
   return (
     <div>
       <Header titlePre={title} />
@@ -25,7 +26,7 @@ export default function Post({ title, blocks }: Props) {
         <h1 className={styles.name}>{title}</h1>
         <section>
           {blocks.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
+            <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContentsBlocks })}</Fragment>
           ))}
         </section>
       </article>
@@ -93,14 +94,22 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   saveImageIfNeeded(blocksWithChildren)
 
-  /// OG情報を取得する
-  const blocksWithOGP = await Promise.all(
+  const blocksWithOGP: NotionBlockWithChildren[] = []
+  const tableOfContentsBlocks: NotionBlockWithChildren[] = []
+  
+  await Promise.all(
     blocksWithChildren.map(async (block) => {
+      /// 目次用のブロックを抽出
+      if (['heading_1', 'heading_2', 'heading_3'].includes(block.type)) {
+        tableOfContentsBlocks.push(block)
+      }
+      
+      /// OG情報を取得する
       if (block.type === 'paragraph' 
           && block.paragraph.text.length == 1
           && block.paragraph.text[0].type === 'text'
           && block.paragraph.text[0].text.link?.url
-         ) {
+          ) {
           const richText = block.paragraph.text[0] as { type: 'text'; text: { link: { url: string } } }
           block.ogpData = await getOgpData(richText.text.link.url)
       } else if (block.type === 'bookmark') {
@@ -108,7 +117,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       } else if (block.type === 'link_preview') {
         block.ogpData = await getOgpData(block.link_preview.url)
       }
-      return block
+  
+      blocksWithOGP.push(block)
     })
   )
 
@@ -116,6 +126,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     props: {
       title,
       blocks: blocksWithOGP,
+      tableOfContentsBlocks: tableOfContentsBlocks,
     },
     revalidate: 1,
   }
