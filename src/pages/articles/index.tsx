@@ -3,7 +3,6 @@ import {
   getDatabase,
   getPageTitle,
   getPageDate,
-  getLocaleDateString,
   getOpeningSentence,
   isPublishDate,
   type NotionPage

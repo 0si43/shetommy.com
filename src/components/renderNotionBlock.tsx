@@ -45,7 +45,12 @@ export type RichText = {
 }
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
-export const renderBlock = (block: NotionBlockWithChildren) => {
+export const renderBlock = (
+  { block, tableOfContents }: {
+    block: NotionBlockWithChildren,
+    tableOfContents: NotionBlockWithChildren[]
+  }
+) => {
   if (block.ogpData?.requestUrl) {
     return linkCard(block.ogpData.requestUrl, block.ogpData)
   }
@@ -111,7 +116,7 @@ export const renderBlock = (block: NotionBlockWithChildren) => {
           </summary>
           <>
             {block.children?.map((block) => (
-              <Fragment key={block.id}>{renderBlock(block)}</Fragment>
+              <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContents })}</Fragment>
             ))}
           </>
         </details>
@@ -168,7 +173,7 @@ export const renderBlock = (block: NotionBlockWithChildren) => {
     case 'divider':
       return <hr></hr>
     case 'table_of_contents':
-      return `（将来的にはここに目次が入るようにします。現在実装中）`
+      return (<TableOfContentsComponent tableOfContents={tableOfContents}/>)
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
@@ -205,4 +210,93 @@ const TextComponent = ({ richTexts }: { richTexts: RichText[] }) => {
   })
 
   return <>{elements}</>
+}
+
+const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: NotionBlockWithChildren[] }) => {
+  if (tableOfContents.length === 0) {
+    return null
+  }
+
+  const renderTableOfContents = (blocks: NotionBlockWithChildren[]) => {
+    const groupedBlocks: NotionBlockWithChildren[][] = []
+    const sameHeadingBlocks: NotionBlockWithChildren[] = []
+
+    blocks.forEach((block, index) => {
+      if (sameHeadingBlocks[sameHeadingBlocks.length - 1] &&
+          block.type != sameHeadingBlocks[sameHeadingBlocks.length - 1].type) {
+        groupedBlocks.push([...sameHeadingBlocks])
+        sameHeadingBlocks.length = 0
+      }
+      
+      sameHeadingBlocks.push(block)
+      
+      if (index == blocks.length - 1) {
+        groupedBlocks.push([...sameHeadingBlocks])
+      }  
+    })
+    
+    return (
+      <ol>
+        {groupedBlocks.map((blocks) => {
+          switch (blocks[0]?.type) {
+            case 'heading_1':
+              return (
+                <Fragment key={blocks[0]?.id}>
+                {blocks.flatMap((block) => renderBlock(block))}
+                </Fragment>
+              )
+            case 'heading_2':
+              return (
+                <ol>
+                  {blocks.flatMap((block) => renderBlock(block))}
+                </ol>
+              )
+            case 'heading_3':
+              return (
+                <ol>
+                  <ol>
+                    {blocks.flatMap((block) => renderBlock(block)) }
+                  </ol>
+                </ol>
+              )
+            default:
+              return null
+          }
+        })}
+      </ol>
+    )
+  }
+
+  const renderBlock = (block: NotionBlockWithChildren) => {
+      switch (block.type) {
+        case 'heading_1':
+          return (
+            <li key={block.id}>
+              <a href={`#${block.id}`}>{block.heading_1.text[0].plain_text}</a>
+            </li>
+          )
+        case 'heading_2':
+          return (
+            <li key={block.id}>
+              <a href={`#${block.id}`}>{block.heading_2.text[0].plain_text}</a>
+            </li>
+          )
+        case 'heading_3':
+          return (
+            <li key={block.id}>
+              <a href={`#${block.id}`}>{block.heading_3.text[0].plain_text}</a>
+            </li>
+          )
+          
+        default:
+          return null
+    }
+  }
+
+  return (
+    <nav>
+      <h1>目次</h1>
+      {renderTableOfContents(tableOfContents)}
+    </nav>
+  )
 }
