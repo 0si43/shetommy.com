@@ -98,7 +98,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   const tableOfContentsBlocks: NotionBlockWithChildren[] = []
   
   await Promise.all(
-    blocksWithChildren.map(async (block) => {
+    blocksWithChildren.map(async (block, index) => {
       /// 目次用のブロックを抽出
       if (['heading_1', 'heading_2', 'heading_3'].includes(block.type)) {
         tableOfContentsBlocks.push(block)
@@ -118,7 +118,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
         block.ogpData = await getOgpData(block.link_preview.url)
       }
   
-      blocksWithOGP.push(block)
+      blocksWithOGP[index] = block
     })
   )
 
