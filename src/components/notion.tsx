@@ -135,15 +135,15 @@ export const getBlocks = async (blockId: string) => {
 export const getBlockWithChildren = async (block: NotionBlockWithChildren): Promise<NotionBlockWithChildren> => {
   if (block.has_children) {
     const childBlocks = await getBlocks(block.id)
-    if (childBlocks[0]) {
-      if (childBlocks[0].has_children) {
-        return await getBlockWithChildren(childBlocks[0])
-      } else {
-        return {
-          ...block,
-          children: childBlocks
-        };
-      }
+    const childrenWithNestedBlocks = await Promise.all(
+      childBlocks.map(childBlock => 
+        getBlockWithChildren(childBlock)
+      )
+    )
+    
+    return {
+      ...block,
+      children: childrenWithNestedBlocks
     }
   }
   return block 
