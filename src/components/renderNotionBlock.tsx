@@ -81,21 +81,9 @@ export const renderBlock = (
         </h3>
       )
     case 'bulleted_list_item':
-      return (
-        <li>
-          <TextComponent
-            richTexts={block.bulleted_list_item.text as RichText[]}
-          />
-        </li>
-      )
+      return renderBulletedListItem(block)
     case 'numbered_list_item':
-      return (
-        <li>
-          <TextComponent
-            richTexts={block.numbered_list_item.text as RichText[]}
-          />
-        </li>
-      )
+      return renderNumberedListItem(block)
     case 'to_do':
       const toDoValue = block[type]
       return (
@@ -209,6 +197,68 @@ const TextComponent = ({ richTexts }: { richTexts: RichText[] }) => {
   })
 
   return <>{elements}</>
+}
+
+const BulletedListItem: React.FC<{ block: NotionBlockWithChildren }> = ({ block }) => {
+  if (block.type !== 'bulleted_list_item') {
+    return null;
+  }
+
+  return (
+    <li>
+      <TextComponent richTexts={block.bulleted_list_item.text as RichText[]} />
+      {block.has_children && block.children && (
+        <ul>
+          {block.children.map(childBlock => (
+            <BulletedListItem key={childBlock.id} block={childBlock} />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+};
+
+const renderBulletedListItem = (block: NotionBlockWithChildren) => {
+  if (block.type !== 'bulleted_list_item') {
+    return null
+  }
+
+  return (
+    <ul>
+      <BulletedListItem block={block} />
+    </ul>
+  )
+}
+
+const NumberedListItem: React.FC<{ block: NotionBlockWithChildren }> = ({ block }) => {
+  if (block.type !== 'numbered_list_item') {
+    return null;
+  }
+
+  return (
+    <li>
+      <TextComponent richTexts={block.numbered_list_item.text as RichText[]} />
+      {block.has_children && block.children && (
+        <ol>
+          {block.children.map(childBlock => (
+            <NumberedListItem key={childBlock.id} block={childBlock} />
+          ))}
+        </ol>
+      )}
+    </li>
+  );
+};
+
+const renderNumberedListItem = (block: NotionBlockWithChildren) => {
+  if (block.type !== 'numbered_list_item') {
+    return null
+  }
+
+  return (
+    <ol>
+      <NumberedListItem block={block} />
+    </ol>
+  )
 }
 
 const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: NotionBlockWithChildren[] }) => {
