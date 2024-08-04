@@ -83,13 +83,7 @@ export const renderBlock = (
     case 'bulleted_list_item':
       return renderBulletedListItem(block)
     case 'numbered_list_item':
-      return (
-        <li>
-          <TextComponent
-            richTexts={block.numbered_list_item.text as RichText[]}
-          />
-        </li>
-      )
+      return renderNumberedListItem(block)
     case 'to_do':
       const toDoValue = block[type]
       return (
@@ -233,6 +227,37 @@ const renderBulletedListItem = (block: NotionBlockWithChildren) => {
     <ul>
       <BulletedListItem block={block} />
     </ul>
+  )
+}
+
+const NumberedListItem: React.FC<{ block: NotionBlockWithChildren }> = ({ block }) => {
+  if (block.type !== 'numbered_list_item') {
+    return null;
+  }
+
+  return (
+    <li>
+      <TextComponent richTexts={block.numbered_list_item.text as RichText[]} />
+      {block.has_children && block.children && (
+        <ol>
+          {block.children.map(childBlock => (
+            <NumberedListItem key={childBlock.id} block={childBlock} />
+          ))}
+        </ol>
+      )}
+    </li>
+  );
+};
+
+const renderNumberedListItem = (block: NotionBlockWithChildren) => {
+  if (block.type !== 'numbered_list_item') {
+    return null
+  }
+
+  return (
+    <ol>
+      <NumberedListItem block={block} />
+    </ol>
   )
 }
 
