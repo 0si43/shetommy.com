@@ -3,6 +3,7 @@ import {
   getDatabase,
   getPageTitle,
   getBlocks,
+  getBlockWithChildren,
   isPublishDate,
   type NotionPage,
   NotionBlockWithChildren
@@ -69,28 +70,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   // NotionのDB上にあったタイトルをパスにしているので、存在は保証されている
   const id = page!.id
   const blocks = await getBlocks(id)
-
-  // Retrieve block children for nested blocks (one level deep), for example toggle blocks
-  // https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
-  const childBlocks = await Promise.all(
-    blocks
-      .filter((block) => block.has_children)
-      .map(async (block) => {
-        return {
-          id: block.id,
-          children: await getBlocks(block.id),
-        }
-      })
+  const blocksWithChildren = await Promise.all(
+    blocks.map((block) => {
+      return getBlockWithChildren(block)
+    })
   )
-
-  /// ブロックに子ブロックがあった場合に全て付与する
-  const blocksWithChildren = blocks.map((block) => {
-    // Add child blocks if the block should contain children but none exists
-    if (block.has_children) {
-      block.children = childBlocks.find((x) => x.id === block.id)?.children
-    }
-    return block
-  })
 
   saveImageIfNeeded(blocksWithChildren)
 
