@@ -130,3 +130,21 @@ export const getBlocks = async (blockId: string) => {
   }
   return blocks
 }
+
+/// ブロックにネストされた子ブロックがあれば付与して返す
+export const getBlockWithChildren = async (block: NotionBlockWithChildren): Promise<NotionBlockWithChildren> => {
+  if (block.has_children) {
+    const childBlocks = await getBlocks(block.id)
+    const childrenWithNestedBlocks = await Promise.all(
+      childBlocks.map(childBlock => 
+        getBlockWithChildren(childBlock)
+      )
+    )
+    
+    return {
+      ...block,
+      children: childrenWithNestedBlocks
+    }
+  }
+  return block 
+}
