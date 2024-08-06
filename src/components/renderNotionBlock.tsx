@@ -250,13 +250,15 @@ const NumberedListItem: React.FC<{ block: ExtendNotionBlock }> = ({ block }) => 
 };
 
 const renderNumberedListItem = (block: ExtendNotionBlock) => {
-  if (block.type !== 'numbered_list_item') {
+  if (block.type !== 'numbered_list_item' || !block.numberedListBlocks) {
     return null
   }
 
   return (
     <ol>
-      <NumberedListItem block={block} />
+      {block.numberedListBlocks.map(block =>
+        <NumberedListItem key={block.id} block={block} />
+      )}
     </ol>
   )
 }
