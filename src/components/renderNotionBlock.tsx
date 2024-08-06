@@ -1,5 +1,5 @@
 import styles from '../styles/articles/post.module.css'
-import type { NotionBlockWithChildren } from './notion'
+import type { ExtendNotionBlock } from './notion'
 import linkCard from './linkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
@@ -46,8 +46,8 @@ export type RichText = {
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
 export const renderBlock = (
   { block, tableOfContents }: {
-    block: NotionBlockWithChildren,
-    tableOfContents: NotionBlockWithChildren[]
+    block: ExtendNotionBlock,
+    tableOfContents: ExtendNotionBlock[]
   }
 ) => {
   if (block.ogpData?.requestUrl) {
@@ -199,7 +199,7 @@ const TextComponent = ({ richTexts }: { richTexts: RichText[] }) => {
   return <>{elements}</>
 }
 
-const BulletedListItem: React.FC<{ block: NotionBlockWithChildren }> = ({ block }) => {
+const BulletedListItem: React.FC<{ block: ExtendNotionBlock }> = ({ block }) => {
   if (block.type !== 'bulleted_list_item') {
     return null;
   }
@@ -218,7 +218,7 @@ const BulletedListItem: React.FC<{ block: NotionBlockWithChildren }> = ({ block 
   );
 };
 
-const renderBulletedListItem = (block: NotionBlockWithChildren) => {
+const renderBulletedListItem = (block: ExtendNotionBlock) => {
   if (block.type !== 'bulleted_list_item') {
     return null
   }
@@ -230,7 +230,7 @@ const renderBulletedListItem = (block: NotionBlockWithChildren) => {
   )
 }
 
-const NumberedListItem: React.FC<{ block: NotionBlockWithChildren }> = ({ block }) => {
+const NumberedListItem: React.FC<{ block: ExtendNotionBlock }> = ({ block }) => {
   if (block.type !== 'numbered_list_item') {
     return null;
   }
@@ -249,26 +249,28 @@ const NumberedListItem: React.FC<{ block: NotionBlockWithChildren }> = ({ block 
   );
 };
 
-const renderNumberedListItem = (block: NotionBlockWithChildren) => {
-  if (block.type !== 'numbered_list_item') {
+const renderNumberedListItem = (block: ExtendNotionBlock) => {
+  if (block.type !== 'numbered_list_item' || !block.numberedListBlocks) {
     return null
   }
 
   return (
     <ol>
-      <NumberedListItem block={block} />
+      {block.numberedListBlocks.map(block =>
+        <NumberedListItem key={block.id} block={block} />
+      )}
     </ol>
   )
 }
 
-const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: NotionBlockWithChildren[] }) => {
+const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: ExtendNotionBlock[] }) => {
   if (tableOfContents.length === 0) {
     return null
   }
 
-  const renderTableOfContents = (blocks: NotionBlockWithChildren[]) => {
-    const groupedBlocks: NotionBlockWithChildren[][] = []
-    const sameHeadingBlocks: NotionBlockWithChildren[] = []
+  const renderTableOfContents = (blocks: ExtendNotionBlock[]) => {
+    const groupedBlocks: ExtendNotionBlock[][] = []
+    const sameHeadingBlocks: ExtendNotionBlock[] = []
 
     blocks.forEach((block, index) => {
       if (sameHeadingBlocks[sameHeadingBlocks.length - 1] &&
@@ -302,7 +304,7 @@ const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: Notion
     )
   }
 
-  const renderBlock = (block: NotionBlockWithChildren) => {
+  const renderBlock = (block: ExtendNotionBlock) => {
       switch (block.type) {
         case 'heading_1':
           return (
