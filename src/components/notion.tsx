@@ -117,9 +117,6 @@ export const getBlocks = async (blockId: string) => {
       start_cursor: cursor,
       block_id: blockId,
     })
-    blocksList.results.forEach((block) => {
-      console.log(block)
-    })
     const extendNotionBlock = await Promise.all(
       blocksList.results.filter(
         (block): block is ExtendNotionBlock => {
@@ -147,11 +144,11 @@ export const getBlocks = async (blockId: string) => {
     if (block.type == 'numbered_list_item') {
       numberedListItems.push(block)
       if (blocks[index + 1]?.type != 'numbered_list_item') {
-        const targetBlock = blocks[index - numberedListItems.length - 1];
-        if (targetBlock && 'numberedListBlocks' in targetBlock) {
-          targetBlock.numberedListBlocks = numberedListItems
-          numberedListItems = []
+        blocks[index - numberedListItems.length + 1] = {
+          ...blocks[index - numberedListItems.length + 1],
+          numberedListBlocks: numberedListItems
         }
+        numberedListItems = []
       }
     }
   })
