@@ -11,8 +11,10 @@ const notion = new Client({
 
 export declare type NotionPage = Extract<QueryDatabaseResponse['results'][number], { properties: Record<string, any> }>
 type NotionBlock = Extract<ListBlockChildrenResponse['results'][number], { type: string }>
-export type NotionBlockWithChildren = NotionBlock & {
-  children?: NotionBlockWithChildren[],
+export type ExtendNotionBlock = NotionBlock & {
+  // 番号付きリストの1階層目要素
+  numberedListBlocks?: ExtendNotionBlock[],
+  children?: ExtendNotionBlock[],
   ogpData?: OgObject 
 }
 
@@ -107,7 +109,7 @@ export const getOpeningSentence = async (blockId: string) => {
 
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
 export const getBlocks = async (blockId: string) => {
-  const blocks: NotionBlockWithChildren[] = []
+  const blocks: ExtendNotionBlock[] = []
   let cursor: undefined | string = undefined
 
   while (true) {
@@ -115,12 +117,23 @@ export const getBlocks = async (blockId: string) => {
       start_cursor: cursor,
       block_id: blockId,
     })
-    const notionBlocks = blocksList.results.filter(
-      (block): block is NotionBlockWithChildren => {
-        return 'type' in block
-      }
+    blocksList.results.forEach((block) => {
+      console.log(block)
+    })
+    const extendNotionBlock = await Promise.all(
+      blocksList.results.filter(
+        (block): block is ExtendNotionBlock => {
+          return 'type' in block
+        }
+      )
+      .map(
+        (block) => {
+          return appendChildren(block)
+        }
+      )
     )
-    blocks.push(...notionBlocks)
+
+    blocks.push(...extendNotionBlock)
 
     const next_cursor = blocksList.next_cursor as string | null
     if (!next_cursor) {
@@ -128,16 +141,31 @@ export const getBlocks = async (blockId: string) => {
     }
     cursor = next_cursor
   }
+  // 番号付きリストの順序性を保つためにリスト1ブロック目に全てのブロックを保持させる
+  var numberedListItems: ExtendNotionBlock[] = []
+  blocks.forEach((block, index) => {
+    if (block.type == 'numbered_list_item') {
+      numberedListItems.push(block)
+      if (blocks[index + 1]?.type != 'numbered_list_item') {
+        const targetBlock = blocks[index - numberedListItems.length - 1];
+        if (targetBlock && 'numberedListBlocks' in targetBlock) {
+          targetBlock.numberedListBlocks = numberedListItems
+          numberedListItems = []
+        }
+      }
+    }
+  })
+
   return blocks
 }
 
-/// ブロックにネストされた子ブロックがあれば付与して返す
-export const getBlockWithChildren = async (block: NotionBlockWithChildren): Promise<NotionBlockWithChildren> => {
+/// ブロックに子ブロックがあれば付与する（リストブロック・トグルブロック）
+const appendChildren = async (block: ExtendNotionBlock): Promise<ExtendNotionBlock> => {
   if (block.has_children) {
     const childBlocks = await getBlocks(block.id)
     const childrenWithNestedBlocks = await Promise.all(
       childBlocks.map(childBlock => 
-        getBlockWithChildren(childBlock)
+        appendChildren(childBlock)
       )
     )
     
