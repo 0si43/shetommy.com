@@ -3,10 +3,9 @@ import {
   getDatabase,
   getPageTitle,
   getBlocks,
-  getBlockWithChildren,
   isPublishDate,
   type NotionPage,
-  NotionBlockWithChildren
+  ExtendNotionBlock
 } from '../../components/notion'
 import { renderBlock } from '../../components/renderNotionBlock'
 import getOgpData from '../../components/getOgpData'
@@ -70,19 +69,13 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   // NotionのDB上にあったタイトルをパスにしているので、存在は保証されている
   const id = page!.id
   const blocks = await getBlocks(id)
-  const blocksWithChildren = await Promise.all(
-    blocks.map((block) => {
-      return getBlockWithChildren(block)
-    })
-  )
+  saveImageIfNeeded(blocks)
 
-  saveImageIfNeeded(blocksWithChildren)
-
-  const blocksWithOGP: NotionBlockWithChildren[] = []
-  const tableOfContentsBlocks: NotionBlockWithChildren[] = []
+  const blocksWithOGP: ExtendNotionBlock[] = []
+  const tableOfContentsBlocks: ExtendNotionBlock[] = []
   
   await Promise.all(
-    blocksWithChildren.map(async (block, index) => {
+    blocks.map(async (block, index) => {
       /// 目次用のブロックを抽出
       if (['heading_1', 'heading_2', 'heading_3'].includes(block.type)) {
         tableOfContentsBlocks.push(block)
