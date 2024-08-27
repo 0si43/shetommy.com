@@ -310,19 +310,19 @@ const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: Extend
         case 'heading_1':
           return (
             <li key={block.id}>
-              <a href={`#${block.id}`}>{block.heading_1.text[0].plain_text}</a>
+              <a href={`#${block.id}`}>{block.heading_1?.text[0]?.plain_text ?? ""}</a>
             </li>
           )
         case 'heading_2':
           return (
             <li key={block.id}>
-              <a href={`#${block.id}`}>{block.heading_2.text[0].plain_text}</a>
+              <a href={`#${block.id}`}>{block.heading_2?.text[0]?.plain_text ?? ""}</a>
             </li>
           )
         case 'heading_3':
           return (
             <li key={block.id}>
-              <a href={`#${block.id}`}>{block.heading_3.text[0].plain_text}</a>
+              <a href={`#${block.id}`}>{block.heading_3?.text[0]?.plain_text ?? ""}</a>
             </li>
           )
           
