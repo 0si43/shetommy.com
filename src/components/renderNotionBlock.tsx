@@ -121,8 +121,9 @@ export const renderBlock = (
             <Image
               src={'/blogImages/' + block.id + '.png'}
               alt={caption}
+              style={{ width: '60%', height: 'auto' }}
               width={480}
-              height={320}
+              height={360}
             />
             {caption && <figcaption>{caption}</figcaption>}
           </figure>
