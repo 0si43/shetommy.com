@@ -5,6 +5,20 @@ import styles from '../styles/home/activities.module.css'
 export default function Activities() {
   return (
     <div className={homeStyles.cardsRow}>
+      <a className={styles.activity} href="https://fortee.jp/iosdc-japan-2024/proposal/370206f7-82a4-4f7d-800e-995dc58178a6">
+        <Image
+          src="/iosdc2024.png"
+          alt="iOSDC 2024"
+          width={300}
+          height={150}
+        />
+        <p className={homeStyles.subText}>2024</p>
+        <p>iOSDC 2024登壇</p>
+        <p className={styles.description}>
+          「StoreKit 2によるモダンなアプリ内課金」というタイトルで登壇しました
+        </p>
+      </a>
+
       <a className={styles.activity} href="https://fortee.jp/iosdc-japan-2023/proposal/251cd59e-46f8-4445-a8a5-df43bc8a2add">
         <Image
           src="/iosdc2023.png"
