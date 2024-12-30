@@ -34,4 +34,3 @@ function findBestImage(originalUrls: string[], domain: string) {
         return originalUrls[0]
     }
 }
-  

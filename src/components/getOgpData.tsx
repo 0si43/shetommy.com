@@ -6,7 +6,6 @@ const getOgpData = async (url: string): Promise<OgObject> => {
 
   try {
     const { result } = await openGraphScraper(options)
-    console.log(JSON.stringify(result, null, 2))
 
     if (!result.success) {
       throw new Error('Failed to fetch OGP data')
