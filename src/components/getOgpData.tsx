@@ -2,7 +2,7 @@ import openGraphScraper from 'open-graph-scraper'
 import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
 
 const getOgpData = async (url: string): Promise<OgObject> => {
-  const options = { url, onlyGetOpenGraphInfo: true }
+  const options = { url }
 
   try {
     const { result } = await openGraphScraper(options)
