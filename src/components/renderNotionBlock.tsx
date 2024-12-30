@@ -162,6 +162,30 @@ export const renderBlock = (
       return <hr></hr>
     case 'table_of_contents':
       return (<TableOfContentsComponent tableOfContents={tableOfContents}/>)
+    case 'video':
+      if (block.video.type === 'external') {
+        const videoUrl = block.video.external.url
+        const isYoutube = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')
+        if (isYoutube) {
+          const videoId = videoUrl.includes('youtube.com')
+            ? videoUrl.split('v=')[1]?.split('&')[0]
+            : videoUrl.split('youtu.be/')[1]?.split('?')[0]
+          if (videoId) {
+            return (
+              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%' }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            )
+          }
+        }
+      }
+      return <p>Unsupported video type</p>
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
