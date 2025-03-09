@@ -1,0 +1,29 @@
+.themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  margin-left: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: background-color 0.3s ease;
+  background-color: var(--accents-1);
+}
+
+.themeToggle:hover {
+  background-color: var(--accents-2);
+}
+
+@media (max-width: 600px) {
+  .themeToggle {
+    font-size: 1.2rem;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0.5rem;
+  }
+}

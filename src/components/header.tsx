@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import styles from '../styles/header.module.css'
+import ThemeToggle from './ThemeToggle'
 
 const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Home', page: '/' },
@@ -57,6 +58,9 @@ const Header = ({ titlePre = '' }) => {
           </li>
         ))}
       </ul>
+      <div className={styles.themeToggleContainer}>
+        <ThemeToggle />
+      </div>
     </header>
   )
 }

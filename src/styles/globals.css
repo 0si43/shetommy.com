@@ -1,14 +1,55 @@
+:root {
+  /* Light theme variables */
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --accent-color: #0070f3;
+  --secondary-color: #666666;
+  --border-color: #eaeaea;
+  --card-background: #f9f9f9;
+  --accents-1: #fafafa;
+  --accents-2: #eaeaea;
+  --accents-3: #999999;
+}
+
+.light-theme {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --accent-color: #0070f3;
+  --secondary-color: #666666;
+  --border-color: #eaeaea;
+  --card-background: #f9f9f9;
+  --accents-1: #fafafa;
+  --accents-2: #eaeaea;
+  --accents-3: #999999;
+}
+
+.dark-theme {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --accent-color: #0070f3;
+  --secondary-color: #a0a0a0;
+  --border-color: #333333;
+  --card-background: #1e1e1e;
+  --accents-1: #111111;
+  --accents-2: #333333;
+  --accents-3: #666666;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
-  color: inherit;
+  color: var(--accent-color);
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 a:hover,

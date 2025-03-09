@@ -1,9 +1,12 @@
 .header {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 64px;
   padding: 2em 0;
   text-align: center;
   letter-spacing: -0.02em;
+  position: relative;
 }
 
 .header ul {
@@ -22,12 +25,23 @@
 }
 
 .header :global(p.active) {
-  color: #0070f3;
+  color: var(--accent-color);
   font-weight: 600;
+}
+
+.themeToggleContainer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 @media (max-width: 600px) {
   .header {
     padding: 0.5em 0 2em;
+  }
+  
+  .themeToggleContainer {
+    top: 0.5rem;
+    right: 0.5rem;
   }
 }
