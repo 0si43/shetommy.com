@@ -6,6 +6,16 @@
   filter: brightness(0);
 }
 
+/* ライトモードではSVGを暗く */
+:global([data-theme="light"]) .links {
+  filter: brightness(0);
+}
+
+/* ダークモードではSVGを明るく */
+:global([data-theme="dark"]) .links {
+  filter: brightness(10);
+}
+
 .links a {
   width: 48px;
   height: 48px;
