@@ -29,6 +29,19 @@
   font-size: 0.9rem;
 }
 
+@media (max-width: 1024px) and (min-width: 768px) {
+  .cardsRow {
+    max-width: 50rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .contents {
+    margin: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   .cardsRow {
     max-width: 35rem;

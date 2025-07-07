@@ -27,3 +27,14 @@
   font-size: 0.9rem;
   max-width: 10rem;
 }
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .work {
+    margin: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .content .description {
+    max-width: 12rem;
+  }
+}
