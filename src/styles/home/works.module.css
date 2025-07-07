@@ -27,3 +27,19 @@
   font-size: 0.9rem;
   max-width: 10rem;
 }
+
+@media (max-width: 768px) {
+  .work {
+    margin: 1rem;
+    padding: 1.5rem;
+    min-width: 280px;
+  }
+  
+  .content {
+    font-size: 1.1rem;
+  }
+  
+  .content .description {
+    max-width: 12rem;
+  }
+}

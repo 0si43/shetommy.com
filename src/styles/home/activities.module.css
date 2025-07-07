@@ -20,3 +20,15 @@
   margin-right: 0;
   margin-bottom: 0.2rem;
 }
+
+@media (max-width: 768px) {
+  .activity {
+    margin: 1rem;
+    padding: 1.5rem;
+    min-width: 280px;
+  }
+  
+  .activity .description {
+    max-width: 15rem;
+  }
+}

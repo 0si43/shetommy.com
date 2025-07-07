@@ -11,3 +11,16 @@
   margin-left: 1rem;
   margin-right: 1rem;
 }
+
+@media (max-width: 768px) {
+  .skill {
+    margin: 0.8rem;
+    padding: 0 0.8rem;
+    min-width: 120px;
+  }
+  
+  .skill p {
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+  }
+}

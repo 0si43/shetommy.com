@@ -26,6 +26,16 @@
   font-weight: 600;
 }
 
+@media (max-width: 768px) {
+  .header {
+    padding: 1em 0 2em;
+  }
+  
+  .header ul li {
+    padding: 0 15px;
+  }
+}
+
 @media (max-width: 600px) {
   .header {
     padding: 0.5em 0 2em;

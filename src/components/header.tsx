@@ -15,6 +15,7 @@ const Header = ({ titlePre = '' }) => {
     <header className={styles.header}>
       <Head>
         <link rel="icon" href="/profile.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{`${titlePre}`}</title>
         <meta
           name="description"

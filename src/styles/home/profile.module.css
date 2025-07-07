@@ -32,6 +32,27 @@
   }
 }
 
+@media (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .right {
+    align-items: center;
+    max-width: 22rem;
+    text-align: center;
+  }
+  
+  .name {
+    font-size: 2.5rem;
+  }
+  
+  .image {
+    margin: 1.5rem;
+  }
+}
+
 @media (max-width: 600px) {
   .profile {
     flex-direction: column;
