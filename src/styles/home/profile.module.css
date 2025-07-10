@@ -1,19 +1,18 @@
-.profile {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-
 .image {
-  align-items: center;
+  text-align: center;
 }
 
-.name {
-  font-size: 3rem;
+.link {
+  color: royalblue;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: darkblue;
 }
 
 @media (max-width: 900px) {
-  .right {
+  .profile {
     max-width: 16rem;
   }
 }
@@ -21,9 +20,6 @@
 @media (max-width: 600px) {
   .profile {
     flex-direction: column;
-  }
-
-  .right {
     align-items: center;
     max-width: 25rem;
   }
