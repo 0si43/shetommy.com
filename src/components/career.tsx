@@ -7,11 +7,11 @@ export default function Career() {
         <tbody>
           <tr>
             <th>
-              Start<br></br>
+              Start<br />
               (year)
             </th>
             <th>
-              End<br></br>
+              End<br />
               (year)
             </th>
             <th>Role</th>
