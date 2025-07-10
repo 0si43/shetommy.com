@@ -4,22 +4,8 @@
   justify-content: flex-start;
 }
 
-.left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.right {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-}
-
 .image {
-  margin: 2rem;
+  align-items: center;
 }
 
 .name {
