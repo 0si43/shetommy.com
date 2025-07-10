@@ -7,11 +7,11 @@
 .heading {
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid lightgray;
   text-transform: uppercase;
   font-size: 15px;
   opacity: 0.6;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .posts {
@@ -21,12 +21,12 @@
 }
 
 .post {
-  margin-bottom: 50px;
+  margin-bottom: 48px;
 }
 
 .postTitle {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
+  margin-bottom: 8px;
+  font-size: 24px;
 }
 
 .postTitle a {
@@ -34,7 +34,7 @@
 }
 
 .postDescription {
+  color: dimgray;
   margin-top: 0;
   margin-bottom: 12px;
-  opacity: 0.65;
 }

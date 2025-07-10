@@ -13,7 +13,7 @@
 
 @media (max-width: 900px) {
   .profile {
-    max-width: 16rem;
+    max-width: 256px;
   }
 }
 
@@ -21,6 +21,6 @@
   .profile {
     flex-direction: column;
     align-items: center;
-    max-width: 25rem;
+    max-width: 400px;
   }
 }

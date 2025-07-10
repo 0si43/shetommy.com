@@ -1,6 +1,6 @@
 .skill {
-  margin: 1rem;
-  padding: 0 1rem 0 1rem;
+  margin: 16px;
+  padding: 0 16px 0 16px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -8,6 +8,6 @@
 }
 
 .skill p {
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 16px;
+  margin-right: 16px;
 }

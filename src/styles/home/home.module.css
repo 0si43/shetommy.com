@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  padding: 0.5rem;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,8 +16,8 @@
 }
 
 .contents {
-  margin: 2rem;
-  padding: 2rem;
+  margin: 32px;
+  padding: 32px;
 }
 
 .cardsRow {
@@ -26,20 +26,20 @@
 }
 
 .subText {
-  font-size: 0.9rem;
+  font-size: 14px;
 }
 
 @media (max-width: 900px) {
   .cardsRow {
-    max-width: 35rem;
+    max-width: 560px;
   }
 }
 
 @media (max-width: 600px) {
   .contents {
     width: 100%;
-    margin: 0.5rem;
-    padding: 0.5rem;
+    margin: 8px;
+    padding: 8px;
   }
 
   .main {
@@ -48,6 +48,6 @@
 
   .cardsRow {
     width: 100%;
-    max-width: 100rem;
+    max-width: 1600px;
   }
 }
