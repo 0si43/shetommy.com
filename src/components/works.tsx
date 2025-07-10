@@ -5,7 +5,7 @@ import styles from '../styles/home/works.module.css'
 export default function Works() {
   return (
     <div className={homeStyles.cardsRow}>
-      <a className={styles.work}　href="https://apps.apple.com/app/m-1-timer/id6474502299">
+      <a className={styles.work} href="https://apps.apple.com/app/m-1-timer/id6474502299">
         <Image
           src="/m1_timer.png"
           alt="M-1 Timer's app icon"
@@ -21,7 +21,7 @@ export default function Works() {
         </div>
       </a>
 
-      <a className={styles.work}　href="https://apps.apple.com/app/wristcounter-watch-app/id6448880587">
+      <a className={styles.work} href="https://apps.apple.com/app/wristcounter-watch-app/id6448880587">
         <Image
           src="/wrist_counter.png"
           alt="WristCounter's app icon"
@@ -37,7 +37,7 @@ export default function Works() {
         </div>
       </a>
 
-      <a className={styles.work}　href="https://github.com/0si43/shetommy.com">
+      <a className={styles.work} href="https://github.com/0si43/shetommy.com">
         <Image
           src="/profile.png"
           alt="Shetommy.com"
@@ -53,7 +53,7 @@ export default function Works() {
         </div>
       </a>
 
-      <a className={styles.work}　href="https://github.com/0si43/PiecesOfPaper">
+      <a className={styles.work} href="https://github.com/0si43/PiecesOfPaper">
         <Image
           src="/pieces_of_paper.png"
           alt="Pieces of Paper's app icon"
