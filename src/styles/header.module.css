@@ -6,6 +6,7 @@
 .header ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .header ul li {
@@ -13,18 +14,11 @@
   padding: 0 10px;
 }
 
-.header :global(a) {
-  color: var(--accents-3);
-  font-weight: 400;
-}
-
 .header :global(p.active) {
-  color: #0070f3;
-  font-weight: 600;
-}
-
-@media (max-width: 600px) {
-  .header {
-    padding: 0.5em 0 2em;
-  }
+  color: white;
+  background-color: royalblue;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px aliceblue;
 }
