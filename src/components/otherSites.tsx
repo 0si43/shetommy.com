@@ -34,7 +34,7 @@ export default function OtherSites() {
       {otherSites.map(({ Comp, link, alt }) => {
         return (
           <a key={link} href={link} aria-label={alt}>
-            <Comp height={32} />
+            <Comp />
           </a>
         )
       })}
