@@ -1,6 +1,6 @@
 .work {
-  margin: 2rem;
-  padding: 2rem;
+  margin: 32px;
+  padding: 32px;
   display: flex;
   flex-shrink: 0;
   box-shadow: 1px 0 5px 1px #999;
@@ -8,22 +8,22 @@
 }
 
 .content {
-  padding: 1rem;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  font-size: 1.2rem;
+  font-size: 20px;
 }
 
 .content p {
   margin-left: 0;
   margin-top: 0;
   margin-right: 0;
-  margin-bottom: 0.2rem;
+  margin-bottom: 4px;
 }
 
 .content .description {
-  margin-top: 1.5rem;
+  margin-top: 24px;
   color: darkgray;
-  font-size: 0.9rem;
-  max-width: 10rem;
+  font-size: 14px;
+  max-width: 160px;
 }
