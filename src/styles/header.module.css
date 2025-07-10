@@ -11,14 +11,22 @@
 
 .header ul li {
   display: inline-block;
-  padding: 0 10px;
+  padding: 16px;
 }
 
-.header :global(p.active) {
+.active {
   color: white;
   background-color: royalblue;
-  text-decoration: none;
   padding: 8px 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px aliceblue;
+}
+
+.active:hover {
+  color: darkgray;
+  background-color: darkblue;
+  padding: 8px 16px;
+  text-decoration: none;
   border-radius: 16px;
   box-shadow: 0 4px 8px aliceblue;
 }

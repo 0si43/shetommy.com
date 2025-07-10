@@ -45,10 +45,8 @@ const Header = ({ titlePre = '' }) => {
       <ul>
         {navItems.map(({ label, page }) => (
           <li key={label}>
-            <Link href={page}>
-              <p className={pathname === page ? 'active' : undefined}>
-                {label}
-              </p>
+            <Link href={page} className={pathname === page ? styles.active : styles.inactive}>
+              {label}
             </Link>
           </li>
         ))}
