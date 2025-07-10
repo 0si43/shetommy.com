@@ -10,10 +10,12 @@ export default function Profile() {
       </div>
       <p>
         本サイトshetommy.comは蔀（しとみ）の個人サイトです。<br />
+      </p>
         <ul>
           <li>Home: ソフトウェアエンジニアとしてのポートフォリオサイト</li>
           <li>Articles: 雑多なネタを扱う<a href="https://www.shetommy.com/articles" className={styles.link}>個人ブログ</a>。学生時代に書いた記事も一部公開しています</li>
         </ul>
+      <p>
         インターネット上に公開した成果物が、様々なプラットフォームに散らばっているので、このサイトに集約します。<br />
       </p>
       <h1>各種アカウント一覧</h1>
