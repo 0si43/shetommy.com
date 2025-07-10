@@ -45,7 +45,7 @@ export default function Works() {
           height={100}
         />
         <div className={styles.content}>
-          <p>Shetommy.com</p>
+          <p>shetommy.com</p>
           <p className={homeStyles.subText}>2021</p>
           <p className={styles.description}>
             このWebサイトそのものです。Next.jsを使って開発しました。

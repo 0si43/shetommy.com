@@ -18,17 +18,17 @@ export default function Home() {
         <main className={styles.main}>
           <Profile />
           <div className={styles.contents}>
-            <h1>Works</h1>
-            <Works />
-
-            <h1>Activities</h1>
-            <Activities />
-
             <h1>Skill Set</h1>
             <Skills />
 
             <h1>Career</h1>
             <Career />
+            
+            <h1>Works</h1>
+            <Works />
+
+            <h1>Activities</h1>
+            <Activities />
 
             <h1>Development</h1>
             <Link href="/dev">
