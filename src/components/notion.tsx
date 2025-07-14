@@ -99,12 +99,12 @@ export const getOpeningSentence = async (blockId: string) => {
     }
 
     const next_cursor = block.next_cursor as string | null
-    if (openingSentence.length >= 80 || !next_cursor) {
+    if (openingSentence.length >= 200 || !next_cursor) {
       break
     }
     cursor = next_cursor
   }
-  return openingSentence.substring(0, 80)
+  return openingSentence.substring(0, 200)
 }
 
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
