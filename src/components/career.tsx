@@ -3,7 +3,6 @@ import styles from '../styles/home/career.module.css'
 export default function Career() {
   return (
     <div className={styles.career}>
-      <p>2014年に新卒で金融系の会社に就職、2019年にiOSエンジニアとしてキャリアチェンジしました</p>
       <table>
         <tbody>
           <tr>

@@ -15,7 +15,7 @@ export default function Works() {
           <p>M-1 Timer</p>
           <p className={styles.subText}>2023</p>
           <p className={styles.description}>
-            時計を見れないときのタイムマネジメント用に。Apple Watchのアプリです。
+            時計を見れないときのタイムマネジメント用に。Apple Watchのアプリです
           </p>
         </div>
       </a>
@@ -31,7 +31,7 @@ export default function Works() {
           <p>WristCounter</p>
           <p className={styles.subText}>2023</p>
           <p className={styles.description}>
-            Apple Watchのカウンターアプリをつくりました。
+            Apple Watchのカウンターアプリをつくりました
           </p>
         </div>
       </a>
@@ -47,7 +47,7 @@ export default function Works() {
           <p>shetommy.com</p>
           <p className={styles.subText}>2021</p>
           <p className={styles.description}>
-            このWebサイトそのものです。Next.jsを使って開発しました。
+            このWebサイトそのものです。Next.jsを使って開発しました
           </p>
         </div>
       </a>
@@ -63,7 +63,7 @@ export default function Works() {
           <p>Pieces of Paper</p>
           <p className={styles.subText}>2020</p>
           <p className={styles.description}>
-            はじめての個人開発。ノートアプリです。Apple Pencilで「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
+            はじめての個人開発。ノートアプリです。Apple Pencilで「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました
           </p>
         </div>
       </a>

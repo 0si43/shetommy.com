@@ -8,8 +8,8 @@ export default function Activities() {
         <Image
           src="/iosdc2024.png"
           alt="iOSDC 2024"
-          width={500}
-          height={250}
+          width={300}
+          height={150}
         />
         <p className={styles.subText}>2024</p>
         <p>iOSDC 2024登壇</p>
@@ -22,8 +22,8 @@ export default function Activities() {
         <Image
           src="/iosdc2023.png"
           alt="iOSDC 2023"
-          width={500}
-          height={250}
+          width={300}
+          height={150}
         />
         <p className={styles.subText}>2023</p>
         <p>iOSDC 2023登壇</p>
@@ -36,8 +36,8 @@ export default function Activities() {
         <Image
           src="/iosdc2020.png"
           alt="iOSDC 2020"
-          width={500}
-          height={250}
+          width={300}
+          height={150}
         />
         <p className={styles.subText}>2020</p>
         <p>iOSDC 2020登壇</p>
@@ -50,13 +50,13 @@ export default function Activities() {
         <Image
           src="/hatena.svg"
           alt="Hatena"
-          width={400}
-          height={200}
+          width={300}
+          height={150}
         />
         <p className={styles.subText}>2009 - 2020</p>
         <p>四十三庵</p>
         <p className={styles.description}>
-          学生時代から11年間、四十三庵という名前の雑記ブログを公開していました。過去の記事の内容のアップデートが追いつかなくなったのを感じて、非公開にしました。
+          学生時代から11年間、四十三庵という名前の雑記ブログを公開していました。過去の記事の内容のアップデートが追いつかなくなったのを感じて、非公開にしました
         </p>
       </a>
     </>
