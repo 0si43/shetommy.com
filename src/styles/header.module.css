@@ -22,7 +22,8 @@
   box-shadow: 0 4px 8px aliceblue;
 }
 
-.active:hover {
+.active:hover,
+.active:focus {
   color: darkgray;
   background-color: darkblue;
   padding: 8px 16px;

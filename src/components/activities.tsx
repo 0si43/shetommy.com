@@ -8,8 +8,8 @@ export default function Activities() {
         <Image
           src="/iosdc2024.png"
           alt="iOSDC 2024"
-          width={300}
-          height={150}
+          width={500}
+          height={250}
         />
         <p className={styles.subText}>2024</p>
         <p>iOSDC 2024登壇</p>
@@ -22,8 +22,8 @@ export default function Activities() {
         <Image
           src="/iosdc2023.png"
           alt="iOSDC 2023"
-          width={300}
-          height={150}
+          width={500}
+          height={250}
         />
         <p className={styles.subText}>2023</p>
         <p>iOSDC 2023登壇</p>
@@ -36,8 +36,8 @@ export default function Activities() {
         <Image
           src="/iosdc2020.png"
           alt="iOSDC 2020"
-          width={300}
-          height={150}
+          width={500}
+          height={250}
         />
         <p className={styles.subText}>2020</p>
         <p>iOSDC 2020登壇</p>
@@ -47,7 +47,12 @@ export default function Activities() {
       </a>
 
       <a className={styles.activity} href="https://www.shetommy.com/articles/11%E5%B9%B4%E6%9B%B8%E3%81%8D%E7%B6%9A%E3%81%91%E3%81%9F%E3%81%AF%E3%81%A6%E3%81%AA%E3%83%96%E3%83%AD%E3%82%B0%E5%9B%9B%E5%8D%81%E4%B8%89%E5%BA%B5%E3%82%92%E9%9D%9E%E5%85%AC%E9%96%8B%E3%81%AB%E3%81%97%E3%81%9F%E3%81%AE%E3%81%A7%E6%80%9D%E3%81%84%E5%87%BA%E3%81%A8%E3%81%9D%E3%81%93%E3%81%8B%E3%82%89%E5%AD%A6%E3%82%93%E3%81%A0%E3%81%93%E3%81%A8%E3%82%92%E6%9B%B8%E3%81%8D%E3%81%BE%E3%81%99">
-        <Image src="/hatena.svg" alt="Hatena" width={300} height={150} />
+        <Image
+          src="/hatena.svg"
+          alt="Hatena"
+          width={400}
+          height={200}
+        />
         <p className={styles.subText}>2009 - 2020</p>
         <p>四十三庵</p>
         <p className={styles.description}>
