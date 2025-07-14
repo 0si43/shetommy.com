@@ -63,7 +63,7 @@ export default function Works() {
           <p>Pieces of Paper</p>
           <p className={styles.subText}>2020</p>
           <p className={styles.description}>
-            はじめて個人開発でApp StoreにリリースしたiOSアプリ。ノートアプリです。「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
+            はじめての個人開発。ノートアプリです。Apple Pencilで「紙にペンで書きこむ感覚」に限りなく近い操作感を目指しました。
           </p>
         </div>
       </a>

@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  box-shadow: 1px 0 5px 1px #999;
+  box-shadow: 1px 0 4px 1px gray;
 }
 
 .skill p {

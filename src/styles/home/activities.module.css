@@ -1,17 +1,15 @@
 .activity {
-  margin: 32px;
-  padding: 32px;
+  margin: 4px 16px;
+  padding: 16px 48px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  box-shadow: 1px 0 5px 1px #999;
+  box-shadow: 1px 0 4px 1px gray;
 }
-
 .activity .description {
-  margin-top: 24px;
   color: darkgray;
   font-size: 14px;
-  max-width: 320px;
+  max-width: 480px;
 }
 
 .activity p {
@@ -19,4 +17,20 @@
   margin-top: 0;
   margin-right: 0;
   margin-bottom: 4px;
+}
+
+.activity img {
+  display: block;
+  margin: 0 auto;
+}
+
+.activity:hover {
+  background-color: dimgray;
+  box-shadow: 1px 0 4px 1px black;
+  text-decoration: none;;
+}
+
+.activity:hover,
+.activity:hover .description {
+  color: white;
 }
