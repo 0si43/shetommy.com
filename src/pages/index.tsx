@@ -16,20 +16,24 @@ export default function Home() {
       <Header titlePre="Home" />
       <div className={styles.container}>
         <main className={styles.main}>
-          <Profile />
           <div className={styles.contents}>
+            <Profile />
             <h1>Skill Set</h1>
             <Skills />
-
             <h1>Career</h1>
             <Career />
-            
             <h1>Works</h1>
-            <Works />
-
+          </div>
+          <div className={styles.cardsRow}>
+              <Works />
+          </div>
+          <div className={styles.contents}>
             <h1>Activities</h1>
+          </div>
+          <div className={styles.cardsRow}>
             <Activities />
-
+          </div>
+          <div className={styles.contents}>
             <h1>Development</h1>
             <Link href="/dev">
               実験場
