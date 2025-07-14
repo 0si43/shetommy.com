@@ -4,7 +4,6 @@ import styles from '../styles/home/skills.module.css'
 export default function Works() {
   return (
     <>
-      <p>メインはiOS開発。Unity / Next.jsがすこしできます</p>
       <div className={styles.skillRow}>
         <div className={styles.skill}>
           <Image src="/apple.svg" alt="Apple" width={24} height={24} />

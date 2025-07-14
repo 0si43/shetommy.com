@@ -8,6 +8,7 @@
 }
 
 .content {
+  color: black;
   padding: 0 0 0 24px;
   display: flex;
   flex-direction: column;

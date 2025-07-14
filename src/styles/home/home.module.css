@@ -10,13 +10,13 @@
 }
 
 .contents {
-  margin: 0 16px;
+  margin: 0 32px;
 }
 
 .cardsRow {
   display: flex;
   overflow: scroll;
-  margin: 0 0 0 16px;
+  padding: 0 16px 0 0;
 }
 
 @media (min-width: 768px) {
@@ -41,10 +41,19 @@
 
 @media (min-width: 1200px) {
   .contents {
-    margin: 0 300px;
+    margin: 0 30%;
   }
 
   .cardsRow {
-    margin: 0 0 0 300px;
+    margin: 0 0 0 30%;
   }
+}
+
+.container a {
+  color: royalblue;
+  text-decoration: none;
+}
+
+.container a:hover {
+  color: darkblue;
 }
