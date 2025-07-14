@@ -4,7 +4,7 @@ import styles from '../styles/home/profile.module.css'
 
 export default function Profile() {
   return (
-    <div className={styles.profile}>
+    <>
       <div className={styles.image}>
         <Image src="/profile.png" alt="Tsubakuro icon" width={140} height={140} />
       </div>
@@ -35,6 +35,6 @@ export default function Profile() {
           noteにはたくさん読まれたい内容を書き、そうでないときは個人ブログに書くという運用にしております。
         </li>
       </ul>
-    </div>
+    </>
   )
 }

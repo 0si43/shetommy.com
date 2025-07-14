@@ -10,17 +10,3 @@
 .link:hover {
   color: darkblue;
 }
-
-@media (max-width: 900px) {
-  .profile {
-    max-width: 256px;
-  }
-}
-
-@media (max-width: 600px) {
-  .profile {
-    flex-direction: column;
-    align-items: center;
-    max-width: 400px;
-  }
-}
