@@ -127,7 +127,7 @@ export default function Home({ initialArticles, hasMore: initialHasMore, nextCur
           })}
         </ol>
         
-        {/* もっと読み込むボタン */}
+        {/* もっと読むボタン */}
         {hasMore && (
           <div className={styles.loadMore}>
             <button 
@@ -135,7 +135,7 @@ export default function Home({ initialArticles, hasMore: initialHasMore, nextCur
               disabled={loading}
               className={styles.loadMoreButton}
             >
-              {loading ? '読み込み中...' : 'もっと読み込む'}
+              {loading ? '読み込み中' : 'もっと読む'}
             </button>
           </div>
         )}
