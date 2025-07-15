@@ -13,25 +13,25 @@ export default function Profile() {
       </p>
         <ul>
           <li>Home: ソフトウェアエンジニアとしてのポートフォリオサイト</li>
-          <li>Articles: 雑多なネタを扱う<a href="https://www.shetommy.com/articles">個人ブログ</a>。学生時代に書いた記事も一部公開しています</li>
+          <li>Articles: 雑多なネタを扱う<a href="https://www.shetommy.com/articles">個人ブログ</a>。学生時代に書いた記事も一部サルベージしています</li>
         </ul>
       <p>
-        インターネット上に公開した成果物が、様々なプラットフォームに散らばっているので、このサイトに集約します<br />
+        インターネット上に散らばった成果物をこのサイトに集約します<br />
       </p>
-      <h1>各種アカウント一覧</h1>
+      <h1>アカウント一覧</h1>
       <p>
-        下記が他サイトで動かしているアカウントです
+        他サイトで動かしているアカウントがこちらです
       </p>
       <OtherSites />
       <ul>
-        <li>TwitterがメインのSNSです。もし連絡取りたい方はリプライいただければDM開放します</li>
+        <li>TwitterはメインのSNSです。もし連絡取りたい方はリプライいただければDM開放します</li>
         <li>GitHubアカウントで個人開発のソースコードを公開しています</li>
         <li>
           Zennで技術記事の公開を行っています<br />
-          （昔はQiitaに書いていましたが、移行しました<a href="https://qiita.com/st43">過去記事</a>はQiitaに残っています）
+          （昔はQiitaに書いていましたが、移行しました。<a href="https://qiita.com/st43">過去記事</a>は残しています）
         </li>
         <li>
-          noteはなるべく誰にでも読める記事（not技術記事）を書いています<br />
+          noteも書いています<br />
           noteにはPV稼げそうなネタを、個人ブログには個人的なネタを書くという運用にしております
         </li>
       </ul>
