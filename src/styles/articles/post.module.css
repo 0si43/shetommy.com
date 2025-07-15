@@ -8,6 +8,14 @@
 
 .container .name {
   font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.container .date {
+  display: block;
+  color: darkgray;
+  font-size: 14px;
+  margin-bottom: 8px;
 }
 
 .container h1 {
