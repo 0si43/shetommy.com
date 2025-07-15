@@ -76,7 +76,6 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   saveImageIfNeeded(blocks)
 
   const publishDate = getPageDate(page as NotionPage).toISOString()
-
   const blocksWithOGP: ExtendNotionBlock[] = []
   const tableOfContentsBlocks: ExtendNotionBlock[] = []
   

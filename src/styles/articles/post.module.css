@@ -13,9 +13,9 @@
 
 .container .date {
   display: block;
-  color: #666;
+  color: darkgray;
   font-size: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 
 .container h1 {
