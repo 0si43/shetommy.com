@@ -77,7 +77,7 @@ export const getPage = async (pageId: string) => {
   return response
 }
 
-/// 冒頭80字を返す。存在しなかったらnullを返す
+/// 冒頭140字を返す。存在しなかったらnullを返す
 export const getOpeningSentence = async (blockId: string) => {
   let openingSentence = ''
   let cursor: undefined | string = undefined
@@ -99,12 +99,12 @@ export const getOpeningSentence = async (blockId: string) => {
     }
 
     const next_cursor = block.next_cursor as string | null
-    if (openingSentence.length >= 200 || !next_cursor) {
+    if (openingSentence.length >= 140 || !next_cursor) {
       break
     }
     cursor = next_cursor
   }
-  return openingSentence.substring(0, 200)
+  return openingSentence.substring(0, 140)
 }
 
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
