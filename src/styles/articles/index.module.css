@@ -33,18 +33,18 @@
 }
 
 .post {
-  margin-bottom: 24px;
+  padding: 8px;
+  margin: 0 0 16px 0;
 }
 
 .postTitle {
-  margin-bottom: 8px;
   font-size: 24px;
+  margin: 0;
 }
 
 .postDescription {
   color: dimgray;
-  margin-top: 0;
-  margin-bottom: 12px;
+  margin: 0 0 8px 0;
 }
 
 .post:hover,
@@ -52,6 +52,7 @@
 .post:hover .postTitle,
 .post:hover .postDescription {
   color: white;
-  background-color: grey;
+  background-color: dimgray;
+  border-radius: 8px;
   text-decoration: none;
 }
