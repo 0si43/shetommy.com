@@ -4,6 +4,7 @@ import {
   getPageTitle,
   getBlocks,
   isPublishDate,
+  getPageDate,
   type NotionPage,
   ExtendNotionBlock
 } from '../../components/notion'
@@ -18,12 +19,15 @@ import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-export default function Post({ title, blocks, tableOfContentsBlocks }: Props) {
+export default function Post({ title, blocks, tableOfContentsBlocks, publishDate }: Props) {
   return (
     <div>
       <Header titlePre={title} />
       <article className={styles.container}>
         <h1 className={styles.name}>{title}</h1>
+        <time className={styles.date} dateTime={publishDate}>
+          {new Date(publishDate).toLocaleDateString()}
+        </time>
         <section>
           {blocks.map((block) => (
             <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContentsBlocks })}</Fragment>
@@ -71,6 +75,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   const blocks = await getBlocks(id)
   saveImageIfNeeded(blocks)
 
+  const publishDate = getPageDate(page as NotionPage).toISOString()
+
   const blocksWithOGP: ExtendNotionBlock[] = []
   const tableOfContentsBlocks: ExtendNotionBlock[] = []
   
@@ -104,6 +110,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       title,
       blocks: blocksWithOGP,
       tableOfContentsBlocks: tableOfContentsBlocks,
+      publishDate,
     },
     revalidate: 1,
   }
