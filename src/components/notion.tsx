@@ -18,6 +18,12 @@ export type ExtendNotionBlock = NotionBlock & {
   ogpData?: OgObject 
 }
 
+export type PaginatedDatabaseResponse = {
+  results: NotionPage[]
+  hasMore: boolean
+  nextCursor: string | null
+}
+
 /// Blog記事のデータベースを取得する
 export const getDatabase = async (databaseId: string) => {
   try {
@@ -30,6 +36,31 @@ export const getDatabase = async (databaseId: string) => {
       console.log(error.message)
     }
     return []
+  }
+}
+
+/// ページング対応でBlog記事のデータベースを取得する
+export const getDatabaseWithPagination = async (databaseId: string, startCursor?: string, pageSize: number = 100): Promise<PaginatedDatabaseResponse> => {
+  try {
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      start_cursor: startCursor,
+      page_size: pageSize,
+    })
+    return {
+      results: response.results as NotionPage[],
+      hasMore: response.has_more,
+      nextCursor: response.next_cursor,
+    }
+  } catch (error: unknown) {
+    if (isNotionClientError(error)) {
+      console.log(error.message)
+    }
+    return {
+      results: [],
+      hasMore: false,
+      nextCursor: null,
+    }
   }
 }
 
