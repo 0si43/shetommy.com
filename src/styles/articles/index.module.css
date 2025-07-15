@@ -57,6 +57,12 @@
   text-decoration: none;
 }
 
+.loadMore {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
 .loadMoreButton {
   padding: 8px 16px;
   border: 1px solid dimgray;
@@ -81,10 +87,4 @@
 .loadMoreButton:disabled:hover {
   background-color: white;
   color: dimgray;
-}
-
-.loadMore {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
 }
