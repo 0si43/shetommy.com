@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import styles from '../styles/header.module.css'
 
-const navItems: { label: string; page?: string; link?: string }[] = [
+const navItems: { label: string; page: string }[] = [
   { label: 'Home', page: '/' },
   { label: 'Articles', page: '/articles' },
 ]
@@ -43,17 +43,11 @@ const Header = ({ titlePre = '' }) => {
         <meta name="Hatena::Bookmark" content="nocomment" />
       </Head>
       <ul>
-        {navItems.map(({ label, page, link }) => (
+        {navItems.map(({ label, page }) => (
           <li key={label}>
-            {page ? (
-              <Link href={page}>
-                <p className={pathname === page ? 'active' : undefined}>
-                 {label}
-                </p>
-              </Link>
-            ) : (
-              <br></br>
-            )}
+            <Link href={page} className={pathname === page ? styles.active : styles.inactive}>
+              {label}
+            </Link>
           </li>
         ))}
       </ul>

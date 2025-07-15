@@ -1,17 +1,29 @@
 .container {
-  padding: 0 20px;
-  max-width: 700px;
-  margin: 0 auto;
+  margin: 0 32px;
 }
 
-.heading {
-  margin-bottom: 20px;
+@media (min-width: 768px) {
+  .container {
+    margin: 0 120px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    margin: 0 200px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    margin: 0 30%;
+  }
+}
+
+ .container h2 {
   padding-bottom: 20px;
-  border-bottom: 1px solid #dedede;
-  text-transform: uppercase;
-  font-size: 15px;
-  opacity: 0.6;
-  letter-spacing: 0.5px;
+  border-bottom: 1px solid lightgray;
+  font-size: 16px;
 }
 
 .posts {
@@ -21,20 +33,26 @@
 }
 
 .post {
-  margin-bottom: 50px;
+  padding: 8px;
+  margin: 0 0 16px 0;
 }
 
 .postTitle {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
-}
-
-.postTitle a {
-  color: inherit;
+  font-size: 24px;
+  margin: 0;
 }
 
 .postDescription {
-  margin-top: 0;
-  margin-bottom: 12px;
-  opacity: 0.65;
+  color: dimgray;
+  margin: 0 0 8px 0;
+}
+
+.post:hover,
+.post:hover a,
+.post:hover .postTitle,
+.post:hover .postDescription {
+  color: white;
+  background-color: dimgray;
+  border-radius: 8px;
+  text-decoration: none;
 }

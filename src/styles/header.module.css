@@ -1,33 +1,34 @@
 .header {
   display: block;
-  min-height: 64px;
-  padding: 2em 0;
   text-align: center;
-  letter-spacing: -0.02em;
+  padding: 0 0 16px 0;
 }
 
 .header ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .header ul li {
   display: inline-block;
-  padding: 0 10px;
+  padding: 16px;
 }
 
-.header :global(a) {
-  color: var(--accents-3);
-  font-weight: 400;
+.active {
+  color: white;
+  background-color: royalblue;
+  padding: 8px 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px aliceblue;
 }
 
-.header :global(p.active) {
-  color: #0070f3;
-  font-weight: 600;
-}
-
-@media (max-width: 600px) {
-  .header {
-    padding: 0.5em 0 2em;
-  }
+.active:hover,
+.active:focus {
+  color: darkgray;
+  background-color: darkblue;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px aliceblue;
 }
