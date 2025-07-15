@@ -1,18 +1,20 @@
 import Header from '../../components/header'
 import {
-  getDatabase,
+  getDatabaseWithPagination,
   getPageTitle,
   getPageDate,
   getOpeningSentence,
   isPublishDate,
-  type NotionPage
+  type NotionPage,
+  type PaginatedDatabaseResponse
 } from '../../components/notion'
 import styles from '../../styles/articles/index.module.css'
 import Footer from '../../components/footer'
 
 import { useEffect, useState } from 'react'
-import { InferGetStaticPropsType } from 'next'
+import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 
 export const databaseId = process.env.NOTION_DATABASE_ID
@@ -21,9 +23,14 @@ export const databaseId = process.env.NOTION_DATABASE_ID
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-export const getStaticProps = async () => {
-  // データベースから「publish date」とタイトルがないものを除いて、降順にソートする
-  const database = (await getDatabase(databaseId))
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const pageSize = 30
+  
+  // ページング対応で記事を取得
+  const response = await getDatabaseWithPagination(databaseId, undefined, pageSize)
+  
+  // フィルタリングとソート
+  const filteredDatabase = response.results
     .filter(
       (page) => isPublishDate(page as NotionPage) && getPageTitle(page as NotionPage) !== ''
     )
@@ -33,20 +40,24 @@ export const getStaticProps = async () => {
     )
 
   const openingSentences = await Promise.all(
-    database.map((page) => getOpeningSentence(page.id))
+    filteredDatabase.map((page) => getOpeningSentence(page.id))
   )
 
   return {
     props: {
-      db: database,
+      db: filteredDatabase,
       openingSentences: openingSentences,
+      hasMore: response.hasMore,
+      nextCursor: response.nextCursor,
+      currentPage: 1,
     },
     revalidate: 1,
   }
 }
 
-export default function Home({ db, openingSentences }: Props) {
+export default function Home({ db, openingSentences, hasMore, nextCursor, currentPage }: Props) {
   const [formattedDates, setFormattedDates] = useState<string[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const dates = db.map((page) => {
@@ -91,6 +102,24 @@ export default function Home({ db, openingSentences }: Props) {
             )
           })}
         </ol>
+        
+        {/* ページング UI */}
+        <div className={styles.pagination}>
+          <div className={styles.pageInfo}>
+            Page {currentPage}
+          </div>
+          
+          {hasMore && (
+            <div className={styles.loadMore}>
+              <button 
+                onClick={() => router.push(`/articles/page/2`)}
+                className={styles.loadMoreButton}
+              >
+                次のページ
+              </button>
+            </div>
+          )}
+        </div>
       </main>
       <Footer />
     </>
