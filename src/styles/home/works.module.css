@@ -1,29 +1,46 @@
 .work {
-  margin: 2rem;
-  padding: 2rem;
+  margin: 4px 16px;
+  padding: 16px 48px;
   display: flex;
   flex-shrink: 0;
-  box-shadow: 1px 0 5px 1px #999;
   align-items: center;
+  border-radius: 8px;
+  box-shadow: 1px 0 4px 1px gray;
 }
 
 .content {
-  padding: 1rem;
+  color: black;
+  padding: 0 0 0 24px;
   display: flex;
   flex-direction: column;
-  font-size: 1.2rem;
+  font-size: 20px;
+}
+
+.subText {
+  font-size: 14px;
 }
 
 .content p {
   margin-left: 0;
   margin-top: 0;
   margin-right: 0;
-  margin-bottom: 0.2rem;
+  margin-bottom: 4px;
 }
 
 .content .description {
-  margin-top: 1.5rem;
+  margin-top: 16px;
   color: darkgray;
-  font-size: 0.9rem;
-  max-width: 10rem;
+  font-size: 14px;
+  max-width: 140px;
+}
+
+.work:hover {
+  background-color: dimgray;
+  box-shadow: 1px 0 4px 1px black;
+  text-decoration: none;;
+}
+
+.work:hover .content,
+.work:hover .description {
+  color: white;
 }

@@ -30,11 +30,11 @@ const otherSites = [
 
 export default function OtherSites() {
   return (
-    <div className={otherSiteStyles.links}>
+    <div className={otherSiteStyles.row}>
       {otherSites.map(({ Comp, link, alt }) => {
         return (
-          <a key={link} href={link} aria-label={alt}>
-            <Comp height={32} />
+          <a key={link} href={link} aria-label={alt} className={otherSiteStyles.button}>
+            <Comp />
           </a>
         )
       })}

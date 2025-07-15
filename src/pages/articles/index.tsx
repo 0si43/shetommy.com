@@ -61,10 +61,11 @@ export default function Home({ db, openingSentences }: Props) {
   }, [db])
 
   return (
-    <div>
-      <main className={styles.container}>
-        <Header titlePre="Articles" />
-        <h2 className={styles.heading}>All Posts</h2>
+    <>
+      <Header titlePre="Articles" />
+      <main className={styles.container}>   
+        {/* h1だとHydration Errorなのでh2 */}
+        <h2>All Posts</h2>
         <ol className={styles.posts}>
           {db.map((post, index) => {
             const title = getPageTitle(post as NotionPage)
@@ -92,6 +93,6 @@ export default function Home({ db, openingSentences }: Props) {
         </ol>
       </main>
       <Footer />
-    </div>
+    </>
   )
 }
