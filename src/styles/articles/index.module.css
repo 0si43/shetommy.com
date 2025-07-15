@@ -93,6 +93,16 @@
   color: white;
 }
 
+.loadMoreButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loadMoreButton:disabled:hover {
+  background-color: white;
+  color: dimgray;
+}
+
 .loadMore {
   display: flex;
   justify-content: center;
