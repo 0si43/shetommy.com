@@ -56,3 +56,35 @@
   border-radius: 8px;
   text-decoration: none;
 }
+
+.loadMore {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.loadMoreButton {
+  padding: 8px 16px;
+  border: 1px solid dimgray;
+  background-color: white;
+  color: dimgray;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: dimgray;
+  color: white;
+}
+
+.loadMoreButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loadMoreButton:disabled:hover {
+  background-color: white;
+  color: dimgray;
+}
