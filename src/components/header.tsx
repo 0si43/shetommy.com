@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useAppearance, getAppearanceLabel } from './hooks/useAppearance'
+import { useAppearance } from './hooks/useAppearance'
 import styles from '../styles/header.module.css'
 
 const navigationItems: { name: string; path: string }[] = [
@@ -12,7 +11,7 @@ const navigationItems: { name: string; path: string }[] = [
 
 const Header = ({ titlePre = '' }) => {
   const { pathname } = useRouter()
-  const { appearance, changeAppearance } = useAppearance();
+  const { appearance, changeAppearance, getAppearanceLabel } = useAppearance();
 
   return (
     <header className={styles.header}>
