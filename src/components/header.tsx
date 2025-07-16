@@ -3,9 +3,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import styles from '../styles/header.module.css'
 
-const navItems: { label: string; page: string }[] = [
-  { label: 'Home', page: '/' },
-  { label: 'Articles', page: '/articles' },
+const navigationItems: { name: string; path: string }[] = [
+  { name: 'Home', path: '/' },
+  { name: 'Articles', path: '/articles' },
 ]
 
 const Header = ({ titlePre = '' }) => {
@@ -42,15 +42,11 @@ const Header = ({ titlePre = '' }) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="Hatena::Bookmark" content="nocomment" />
       </Head>
-      <ul>
-        {navItems.map(({ label, page }) => (
-          <li key={label}>
-            <Link href={page} className={pathname === page ? styles.active : styles.inactive}>
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {navigationItems.map(({ name, path }) => (
+          <Link href={path} className={pathname === path ? styles.active : styles.inactive}>
+            <button>{name}</button>
+          </Link>
+      ))}
     </header>
   )
 }
