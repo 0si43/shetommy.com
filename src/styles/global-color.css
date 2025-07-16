@@ -1,0 +1,30 @@
+:root {
+  --background-color: white;
+  --text-color: black;
+}
+
+[site-apperance="light"] {
+  --background-color: white;
+  --text-color: black;
+}
+
+[site-apperance="dark"] {
+  --background-color: black;
+  --text-color: white;
+}
+
+@media (prefers-color-scheme: light) {
+  [site-apperance="auto"],
+  :root:not([site-apperance]) {
+    --background-color: white;
+    --text-color: black;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  [site-apperance="auto"],
+  :root:not([site-apperance]) {
+    --background-color: black;  
+    --text-color: white;
+  }
+}

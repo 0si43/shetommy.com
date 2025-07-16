@@ -1,3 +1,5 @@
+@import './global-color.css';
+
 html,
 body {
   padding: 16px 0;
