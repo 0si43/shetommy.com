@@ -42,11 +42,16 @@ const Header = ({ titlePre = '' }) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="Hatena::Bookmark" content="nocomment" />
       </Head>
-      {navigationItems.map(({ name, path }) => (
+      <div className={styles.navigationContainer}>
+        {navigationItems.map(({ name, path }) => (
           <Link href={path} className={pathname === path ? styles.active : styles.inactive}>
             <button>{name}</button>
           </Link>
-      ))}
+        ))}
+      </div>
+      <div className={styles.actionButtonContainer}>
+        <button>⚙️auto</button>
+      </div>
     </header>
   )
 }
