@@ -29,7 +29,7 @@
 }
 
 .activity:hover {
-  background-color: var(--card-hover-color);
+  background-color: var(--hover-background-color);
   box-shadow: 1px 0 4px 1px var(--shadow-color);
   text-decoration: none;
 }
@@ -37,5 +37,5 @@
 .activity:hover,
 .activity:hover p,
 .activity:hover .description {
-  color: white;
+  color: var(--surface-text-color);
 }
