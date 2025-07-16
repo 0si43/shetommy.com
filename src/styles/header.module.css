@@ -2,9 +2,10 @@
   display: block;
   padding: 0 0 16px 0;
   text-align: center;
+  position: relative;
 }
 
-.header button {
+.navigationContainer button {
   background: none;
   border: none;
   padding: 0 8px;
@@ -34,4 +35,13 @@
 
 .header .inactive button:hover {
   text-decoration: underline;
+}
+
+.actionButtonContainer button {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  font: inherit;
+  padding: 0 8px;
+  margin: 8px;
 }
