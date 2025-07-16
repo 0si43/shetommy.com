@@ -5,11 +5,11 @@
   flex-shrink: 0;
   align-items: center;
   border-radius: 8px;
-  box-shadow: 1px 0 4px 1px gray;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
 }
 
 .content {
-  color: black;
+  color: var(--primary-text-color);
   padding: 0 0 0 24px;
   display: flex;
   flex-direction: column;
@@ -29,14 +29,14 @@
 
 .content .description {
   margin-top: 16px;
-  color: gray;
+  color: var(--sub-text-color);
   font-size: 14px;
   max-width: 140px;
 }
 
 .work:hover {
-  background-color: dimgray;
-  box-shadow: 1px 0 4px 1px black;
+  background-color: var(--card-hover-color);
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
   text-decoration: none;;
 }
 

@@ -21,7 +21,7 @@
   background-color: royalblue;
   padding: 8px 16px;
   border-radius: 16px;
-  box-shadow: 0 4px 8px aliceblue;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
 }
 
 .active:hover button,
@@ -30,7 +30,7 @@
   background-color: darkblue;
   padding: 8px 16px;
   border-radius: 16px;
-  box-shadow: 0 4px 8px aliceblue;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
 }
 
 .header .inactive button:hover {
