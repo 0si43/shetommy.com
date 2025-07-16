@@ -1,21 +1,21 @@
 .header {
   display: block;
-  text-align: center;
   padding: 0 0 16px 0;
+  text-align: center;
 }
 
-.header ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.header button {
+  background: none;
+  border: none;
+  padding: 0 8px;
+  margin: 8px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  color: inherit;
 }
 
-.header ul li {
-  display: inline-block;
-  padding: 16px;
-}
-
-.active {
+.active button {
   color: white;
   background-color: royalblue;
   padding: 8px 16px;
@@ -23,12 +23,15 @@
   box-shadow: 0 4px 8px aliceblue;
 }
 
-.active:hover,
-.active:focus {
+.active:hover button,
+.active:focus button {
   color: darkgray;
   background-color: darkblue;
   padding: 8px 16px;
-  text-decoration: none;
   border-radius: 16px;
   box-shadow: 0 4px 8px aliceblue;
+}
+
+.header .inactive button:hover {
+  text-decoration: underline;
 }
