@@ -40,7 +40,7 @@
 .actionButtonContainer button {
   position: absolute;
   top: 4px;
-  right: 0;
+  right: 16px;
   font: inherit;
   padding: 0 8px;
   margin: 8px;
