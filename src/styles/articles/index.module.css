@@ -43,7 +43,7 @@
 }
 
 .postDescription {
-  color: gray;
+  color: var(--sub-text-color);
   margin: 0 0 8px 0;
 }
 

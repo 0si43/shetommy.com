@@ -1,30 +1,42 @@
 :root {
   --background-color: white;
-  --text-color: black;
+  --primary-text-color: black;
+  --sub-text-color: gray;
+  --shadow-color: gray;
+  --card-hover-color: dimgray;
 }
 
-[site-apperance="light"] {
+[site-appearance="light"] {
   --background-color: white;
-  --text-color: black;
+  --primary-text-color: black;
+  --sub-text-color: gray;
+  --shadow-color: gray;
+  --card-hover-color: dimgray;
 }
 
-[site-apperance="dark"] {
+[site-appearance="dark"] {
   --background-color: black;
-  --text-color: white;
+  --primary-text-color: white;
+  --sub-text-color: dimgray;
+  --shadow-color: dimgray;
+  --card-hover-color: dimgray;
 }
 
 @media (prefers-color-scheme: light) {
-  [site-apperance="auto"],
-  :root:not([site-apperance]) {
+  [site-appearance="auto"],
+  :root:not([site-appearance]) {
     --background-color: white;
-    --text-color: black;
+    --primary-text-color: black;
+    --sub-text-color: gray;
+    --shadow-color: gray;
+    --card-hover-color: dimgray;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  [site-apperance="auto"],
-  :root:not([site-apperance]) {
+  [site-appearance="auto"],
+  :root:not([site-appearance]) {
     --background-color: black;  
-    --text-color: white;
+    --primary-text-color: white;
   }
 }
