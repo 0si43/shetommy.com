@@ -37,19 +37,20 @@ export const useAppearance = () => {
     }
   };
 
+  const getAppearanceLabel = (appearance: Appearance): string => {
+    switch (appearance) {
+      case Appearance.Auto:
+        return '⚙️ auto';
+      case Appearance.Light:
+        return '☀️ light';
+      case Appearance.Dark:
+        return '🌑 dark';
+    }
+  };
+
   return {
     appearance,
     changeAppearance,
+    getAppearanceLabel,
   };
-};
-
-export const getAppearanceLabel = (appearance: Appearance): string => {
-  switch (appearance) {
-    case Appearance.Auto:
-      return '⚙️ auto';
-    case Appearance.Light:
-      return '☀️ light';
-    case Appearance.Dark:
-      return '🌑 dark';
-  }
 };
