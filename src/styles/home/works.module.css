@@ -35,7 +35,7 @@
 }
 
 .work:hover {
-  background-color: var(--card-hover-color);
+  background-color: var(--hover-background-color);
   box-shadow: 1px 0 4px 1px var(--shadow-color);
   text-decoration: none;;
 }

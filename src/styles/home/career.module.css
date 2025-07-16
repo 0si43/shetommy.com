@@ -1,10 +1,10 @@
 .career th {
-  background: navy;
-  color: white;
+  background: var(--surface-background-color);
+  color: var(--surface-text-color);
 }
 
 .career th,
 .career td {
   padding: 16px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--border-color);
 }

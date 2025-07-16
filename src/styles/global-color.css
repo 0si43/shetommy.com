@@ -1,42 +1,75 @@
 :root {
-  --background-color: white;
+  /* text color */
   --primary-text-color: black;
+  --surface-text-color: white;
   --sub-text-color: gray;
+  /* background color */
+  --background-color: white;
+  --surface-background-color: navy;
+  --hover-background-color: dimgray;
+  /* other color */
   --shadow-color: gray;
-  --card-hover-color: dimgray;
+  --border-color: black;
 }
 
 [site-appearance="light"] {
-  --background-color: white;
+  /* text color */
   --primary-text-color: black;
+  --surface-text-color: white;
   --sub-text-color: gray;
+  /* background color */
+  --background-color: white;
+  --surface-background-color: navy;
+  --hover-background-color: dimgray;
+  /* other color */
   --shadow-color: gray;
-  --card-hover-color: dimgray;
+  --border-color: black;
 }
 
 [site-appearance="dark"] {
-  --background-color: black;
+  /* text color */
   --primary-text-color: white;
+  --surface-text-colorr: white;
   --sub-text-color: dimgray;
+  /* background color */
+  --background-color: black;
+  --surface-background-color: navy;
+  --hover-background-color: dimgray;
+  /* other color */
   --shadow-color: dimgray;
-  --card-hover-color: dimgray;
+  --border-color: white;
 }
 
 @media (prefers-color-scheme: light) {
   [site-appearance="auto"],
-  :root:not([site-appearance]) {
-    --background-color: white;
+    :root:not([site-appearance]) {
+    /* text color */
     --primary-text-color: black;
+    --surface-text-color: white;
     --sub-text-color: gray;
+    /* background color */
+    --background-color: white;
+    --surface-background-color: navy;
+    --hover-background-color: dimgray;
+    /* other color */
     --shadow-color: gray;
-    --card-hover-color: dimgray;
+    --border-color: black;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   [site-appearance="auto"],
   :root:not([site-appearance]) {
-    --background-color: black;  
+    /* text color */
     --primary-text-color: white;
+    --surface-text-colorr: white;
+    --sub-text-color: dimgray;
+    /* background color */
+    --background-color: black;
+    --surface-background-color: navy;
+    --hover-background-color: dimgray;
+    /* other color */
+    --shadow-color: dimgray;
+    --border-color: white;
   }
 }
