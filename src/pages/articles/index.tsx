@@ -11,7 +11,7 @@ import {
 import styles from '../../styles/articles/index.module.css'
 import Footer from '../../components/footer'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import Link from 'next/link'
 
