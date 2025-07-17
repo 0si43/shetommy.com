@@ -22,7 +22,7 @@
 
  .container h2 {
   padding-bottom: 20px;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid var(--shadow-color);
   font-size: 16px;
 }
 
@@ -51,8 +51,8 @@
 .post:hover a,
 .post:hover .postTitle,
 .post:hover .postDescription {
-  color: white;
-  background-color: dimgray;
+  color: var(--surface-text-color);
+  background-color: var(--hover-background-color);
   border-radius: 8px;
   text-decoration: none;
 }
@@ -65,26 +65,21 @@
 
 .loadMoreButton {
   padding: 8px 16px;
-  border: 1px solid dimgray;
-  background-color: white;
-  color: dimgray;
-  border-radius: 4px;
+  color: var(--primary-text-color);
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s ease;
 }
 
 .loadMoreButton:hover {
-  background-color: dimgray;
-  color: white;
+  color: var(--surface-text-color);
+  background-color: var(--hover-background-color);
 }
 
 .loadMoreButton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.loadMoreButton:disabled:hover {
-  background-color: white;
-  color: dimgray;
 }
