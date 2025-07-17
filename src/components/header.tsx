@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useAppearance } from './hooks/useAppearance'
+import dynamic from 'next/dynamic'
 import styles from '../styles/header.module.css'
 
 const navigationItems: { name: string; path: string }[] = [
@@ -9,9 +9,13 @@ const navigationItems: { name: string; path: string }[] = [
   { name: 'Articles', path: '/articles' },
 ]
 
+const AppearanceToggleButton = dynamic(() => import('./AppearanceToggleButton'), {
+  ssr: false,
+  loading: () => <button>⚙️ auto</button>
+});
+
 const Header = ({ titlePre = '' }) => {
   const { pathname } = useRouter()
-  const { appearance, changeAppearance, getAppearanceLabel } = useAppearance();
 
   return (
     <header className={styles.header}>
@@ -52,9 +56,7 @@ const Header = ({ titlePre = '' }) => {
         ))}
       </div>
       <div className={styles.actionButtonContainer}>
-        <button onClick={changeAppearance}>
-          {getAppearanceLabel(appearance)}
-        </button>
+        <AppearanceToggleButton />
       </div>
     </header>
   )
