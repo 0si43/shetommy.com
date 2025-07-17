@@ -7,8 +7,11 @@
   --hover-link-text-color: darkblue;
   /* background color */
   --background-color: white;
-  --surface-background-color: navy;
   --hover-background-color: dimgray;
+  --button-background-color: royalblue;
+  --hover-button-background-color: darkblue;
+  --system-background-color: whitesmoke;
+  --surface-background-color: navy;
   --quote-background-color: whitesmoke;
   /* other color */
   --shadow-color: lightgray;
@@ -25,8 +28,11 @@
   --hover-link-text-color: deepskyblue;
   /* background color */
   --background-color: black;
-  --surface-background-color: blue;
   --hover-background-color: dimgray;
+  --button-background-color: royalblue;
+  --hover-button-background-color: darkblue;
+  --system-background-color: whitesmoke;
+  --surface-background-color: blue;
   --quote-background-color: gray;
   /* other color */
   --shadow-color: darkgray;
@@ -45,8 +51,11 @@
     --hover-link-text-color: deepskyblue;
     /* background color */
     --background-color: black;
-    --surface-background-color: blue;
     --hover-background-color: dimgray;
+    --button-background-color: royalblue;
+    --hover-button-background-color: darkblue;
+    --system-background-color: whitesmoke;
+    --surface-background-color: blue;
     --quote-background-color: gray;
     /* other color */
     --shadow-color: darkgray;

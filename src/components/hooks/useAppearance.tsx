@@ -49,7 +49,7 @@ export const useAppearance = () => {
       case Appearance.Light:
         return '☀️ light';
       case Appearance.Dark:
-        return '🌑 dark';
+        return '🕶️ dark';
     }
   };
 
