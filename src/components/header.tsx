@@ -46,7 +46,7 @@ const Header = ({ titlePre = '' }) => {
       </Head>
       <div className={styles.navigationContainer}>
         {navigationItems.map(({ name, path }) => (
-          <Link href={path} className={pathname === path ? styles.active : styles.inactive}>
+          <Link href={path} className={pathname === path ? styles.active : styles.inactive} key={name}>
             <button>{name}</button>
           </Link>
         ))}
