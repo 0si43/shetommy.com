@@ -42,5 +42,5 @@
 
 .work:hover .content,
 .work:hover .description {
-  color: white;
+  color: var(--surface-text-color);
 }

@@ -9,9 +9,10 @@
   --background-color: white;
   --surface-background-color: navy;
   --hover-background-color: dimgray;
+  --quote-background-color: whitesmoke;
   /* other color */
-  --shadow-color: gray;
-  --border-color: black;
+  --shadow-color: lightgray;
+  --border-color: gainsboro;
 }
 
 /* ダークモード: ユーザー設定 */
@@ -26,12 +27,14 @@
   --background-color: black;
   --surface-background-color: blue;
   --hover-background-color: dimgray;
+  --quote-background-color: gray;
   /* other color */
-  --shadow-color: dimgray;
-  --border-color: white;
+  --shadow-color: darkgray;
+  --border-color: dimgray;
 }
 
 /* ダークモード: OS設定 */
+/* CSS内の条件分岐の都合上書いているが、設定が重複しているので消したい */
 :root:is([site-appearance="auto"], :not([site-appearance])) {
   @media (prefers-color-scheme: dark) {
     /* text color */
@@ -44,8 +47,9 @@
     --background-color: black;
     --surface-background-color: blue;
     --hover-background-color: dimgray;
+    --quote-background-color: gray;
     /* other color */
-    --shadow-color: dimgray;
-    --border-color: white;
+    --shadow-color: darkgray;
+    --border-color: dimgray;
   }
 }
