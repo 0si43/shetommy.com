@@ -1,7 +1,7 @@
 import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
 import styles from '../styles/articles/post.module.css'
 
-export default function linkCard(url: string, ogpData: OgObject) {
+export default function LinkCard(url: string, ogpData: OgObject) {
     const urls = ogpData.ogImage?.map(image => image.url).filter(url => url != null && url != undefined) ?? []
     const bestImageUrl = findBestImage(urls, url)
     return (
