@@ -1,34 +1,58 @@
 .header {
   display: block;
-  text-align: center;
   padding: 0 0 16px 0;
+  text-align: center;
+  position: relative;
 }
 
-.header ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.navigationContainer button {
+  background: none;
+  border: none;
+  padding: 0 8px;
+  margin: 8px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  color: inherit;
 }
 
-.header ul li {
-  display: inline-block;
-  padding: 16px;
-}
-
-.active {
-  color: white;
-  background-color: royalblue;
+.active button {
+  color: var(--surface-text-color);
+  background-color: var(--button-background-color);
   padding: 8px 16px;
   border-radius: 16px;
-  box-shadow: 0 4px 8px aliceblue;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
 }
 
-.active:hover,
-.active:focus {
-  color: darkgray;
-  background-color: darkblue;
+.active:hover button,
+.active:focus button {
+  color: var(--sub-text-color);
+  background-color: var(--hover-button-background-color);
   padding: 8px 16px;
-  text-decoration: none;
   border-radius: 16px;
-  box-shadow: 0 4px 8px aliceblue;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
+}
+
+.header .inactive button:hover {
+  text-decoration: underline;
+}
+
+.actionButtonContainer button {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  font: inherit;
+  color: var(--reverse-surface-text-color);
+  background-color: var(--system-background-color);
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  border-radius: 16px;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
+  margin: 8px;
+  cursor: pointer;
+}
+
+.actionButtonContainer:hover button {
+  color: var(--surface-text-color);
+  background-color: var(--hover-background-color);
 }

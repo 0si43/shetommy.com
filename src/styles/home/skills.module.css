@@ -4,13 +4,15 @@
 }
 
 .skill {
+  fill: var(--primary-text-color);
   margin: 16px;
   padding: 0 16px 0 16px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
   border-radius: 8px;
-  box-shadow: 1px 0 4px 1px gray;
+  border: 1px solid var(--border-color);
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
 }
 
 .skill p {

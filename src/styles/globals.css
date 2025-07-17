@@ -1,9 +1,13 @@
+@import './global-color.css';
+
 html,
 body {
   padding: 16px 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: var(--primary-text-color);
+  background-color: var(--background-color);
 }
 
 a {

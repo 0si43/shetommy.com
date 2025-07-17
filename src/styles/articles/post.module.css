@@ -13,7 +13,7 @@
 
 .container .date {
   display: block;
-  color: darkgray;
+  color: var(--sub-text-color);
   font-size: 14px;
   margin-bottom: 8px;
 }
@@ -41,7 +41,7 @@
 
 .code {
   font-family: monospace;
-  background-color: gainsboro;
+  background-color: var(--quote-background-color);
   padding: 2px 4px;
   border-radius: 2px;
 }
@@ -76,7 +76,7 @@
 }
 
 .container blockquote {
-  background-color: whitesmoke;
+  background-color: var(--quote-background-color);
   padding: 24px;
   margin: 8px;
   font-size: 90%;
@@ -87,8 +87,9 @@
 
 .linkCard {
   display: block;
-  border: 1px solid lightgray;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 4px 1px var(--shadow-color);
+  border-radius: 8px;
   overflow: hidden;
   margin-bottom: 16px;
 }
@@ -125,19 +126,19 @@
 
 .linkCardDescription {
   margin: 0 0 8px;
-  font-size: 12x;
-  color: darkgray;
+  font-size: 12px;
+  color: var(--sub-text-color);
   white-space: nowrap;
 }
 
 .linkCardContent a {
   font-size: 12px;
-  color: darkgray;
+  color: var(--sub-text-color);
   white-space: nowrap;
 }
 
 .container nav {
-  background-color: whitesmoke;
+  background-color: var(--quote-background-color);
   padding: 16px;
   border-radius: 5px;
 }
@@ -162,7 +163,7 @@
 .container nav li {
   margin-bottom: 4px;
   padding-bottom: 4px;
-  border-bottom: 1px solid gainsboro;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .container nav > ol > li:last-child,

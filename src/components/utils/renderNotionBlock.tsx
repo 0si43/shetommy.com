@@ -1,6 +1,6 @@
-import styles from '../styles/articles/post.module.css'
-import type { ExtendNotionBlock } from './notion'
-import linkCard from './linkCard'
+import styles from '../../styles/articles/post.module.css'
+import type { ExtendNotionBlock } from '../Notion'
+import LinkCard from '../LinkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
 
@@ -51,7 +51,7 @@ export const renderBlock = (
   }
 ) => {
   if (block.ogpData?.requestUrl) {
-    return linkCard(block.ogpData.requestUrl, block.ogpData)
+    return LinkCard(block.ogpData.requestUrl, block.ogpData)
   }
 
   const { type, id } = block

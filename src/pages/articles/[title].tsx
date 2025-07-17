@@ -1,4 +1,4 @@
-import Header from '../../components/header'
+import Header from '../../components/Header'
 import {
   getDatabase,
   getPageTitle,
@@ -7,13 +7,13 @@ import {
   getPageDate,
   type NotionPage,
   ExtendNotionBlock
-} from '../../components/notion'
-import { renderBlock } from '../../components/renderNotionBlock'
-import getOgpData from '../../components/getOgpData'
-import saveImageIfNeeded from '../../components/saveImageIfNeeded'
+} from '../../components/Notion'
+import { renderBlock } from '../../components/utils/renderNotionBlock'
+import getOgpData from '../../components/utils/getOgpData'
+import saveImageIfNeeded from '../../components/utils/saveImageIfNeeded'
 import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
-import Footer from '../../components/footer'
+import Footer from '../../components/Footer'
 
 import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'

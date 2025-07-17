@@ -1,13 +1,13 @@
 import Link from 'next/link'
-import Header from '../components/header'
+import Header from '../components/Header'
 
-import Profile from '../components/profile'
-import Works from '../components/works'
-import Activities from '../components/activities'
-import Skills from '../components/skills'
-import Career from '../components/career'
+import Profile from '../components/Profile'
+import Works from '../components/Works'
+import Activities from '../components/Activities'
+import Skills from '../components/Skills'
+import Career from '../components/Career'
 
-import Footer from '../components/footer'
+import Footer from '../components/Footer'
 import styles from '../styles/home/home.module.css'
 
 export default function Home() {

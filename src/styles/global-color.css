@@ -1,0 +1,68 @@
+:root {
+  /* text color */
+  --primary-text-color: black;
+  --surface-text-color: white;
+  --reverse-surface-text-color: black;
+  --sub-text-color: gray;
+  --link-text-color: royalblue;
+  --hover-link-text-color: darkblue;
+
+  /* background color */
+  --background-color: white;
+  --hover-background-color: dimgray;
+  --button-background-color: royalblue;
+  --hover-button-background-color: darkblue;
+  --system-background-color: whitesmoke;
+  --surface-background-color: navy;
+  --quote-background-color: whitesmoke;
+  /* other color */
+  --shadow-color: lightgray;
+  --border-color: gainsboro;
+}
+
+/* ダークモード: ユーザー設定 */
+[site-appearance="dark"] {
+  /* text color */
+  --primary-text-color: white;
+  --surface-text-color: white;
+  --reverse-surface-text-color: black;
+  --sub-text-color: lightgray;
+  --link-text-color: dodgerblue;
+  --hover-link-text-color: deepskyblue;
+  /* background color */
+  --background-color: black;
+  --hover-background-color: dimgray;
+  --button-background-color: royalblue;
+  --hover-button-background-color: darkblue;
+  --system-background-color: whitesmoke;
+  --surface-background-color: blue;
+  --quote-background-color: gray;
+  /* other color */
+  --shadow-color: darkgray;
+  --border-color: dimgray;
+}
+
+/* ダークモード: OS設定 */
+/* CSS内の条件分岐の都合上書いているが、設定が重複しているので消したい */
+:root:is([site-appearance="auto"], :not([site-appearance])) {
+  @media (prefers-color-scheme: dark) {
+    /* text color */
+    --primary-text-color: white;
+    --surface-text-color: white;
+    --reverse-surface-text-color: black;
+    --sub-text-color: lightgray;
+    --link-text-color: dodgerblue;
+    --hover-link-text-color: deepskyblue;
+    /* background color */
+    --background-color: black;
+    --hover-background-color: dimgray;
+    --button-background-color: royalblue;
+    --hover-button-background-color: darkblue;
+    --system-background-color: whitesmoke;
+    --surface-background-color: blue;
+    --quote-background-color: gray;
+    /* other color */
+    --shadow-color: darkgray;
+    --border-color: dimgray;
+  }
+}
