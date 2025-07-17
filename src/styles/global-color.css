@@ -2,9 +2,11 @@
   /* text color */
   --primary-text-color: black;
   --surface-text-color: white;
+  --reverse-surface-text-color: black;
   --sub-text-color: gray;
   --link-text-color: royalblue;
   --hover-link-text-color: darkblue;
+
   /* background color */
   --background-color: white;
   --hover-background-color: dimgray;
@@ -23,6 +25,7 @@
   /* text color */
   --primary-text-color: white;
   --surface-text-color: white;
+  --reverse-surface-text-color: black;
   --sub-text-color: lightgray;
   --link-text-color: dodgerblue;
   --hover-link-text-color: deepskyblue;
@@ -46,6 +49,7 @@
     /* text color */
     --primary-text-color: white;
     --surface-text-color: white;
+    --reverse-surface-text-color: black;
     --sub-text-color: lightgray;
     --link-text-color: dodgerblue;
     --hover-link-text-color: deepskyblue;
