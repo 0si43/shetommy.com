@@ -4,22 +4,10 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 1px 0 4px 1px gray;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
   max-width: 380px;
-}
-.activity .description {
-  color: gray;
-  font-size: 14px;
-  max-width: 480px;
-}
-
-.activity p {
-  color: black;
-  margin-left: 0;
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: 4px;
 }
 
 .activity img {
@@ -27,14 +15,28 @@
   margin: 0 auto;
 }
 
+.activity p {
+  color: var(--primary-text-color);
+  margin-left: 0;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 4px;
+}
+
+.activity .description {
+  color: var(--sub-text-color);
+  font-size: 14px;
+  max-width: 480px;
+}
+
 .activity:hover {
-  background-color: dimgray;
-  box-shadow: 1px 0 4px 1px black;
-  text-decoration: none;;
+  background-color: var(--hover-background-color);
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
+  text-decoration: none;
 }
 
 .activity:hover,
 .activity:hover p,
 .activity:hover .description {
-  color: white;
+  color: var(--surface-text-color);
 }

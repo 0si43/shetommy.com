@@ -50,10 +50,10 @@
 }
 
 .container a {
-  color: royalblue;
+  color: var(--link-text-color);
   text-decoration: none;
 }
 
 .container a:hover {
-  color: darkblue;
+  color: var(--hover-link-text-color);
 }

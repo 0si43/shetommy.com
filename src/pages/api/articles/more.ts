@@ -6,7 +6,7 @@ import {
   getOpeningSentence,
   isPublishDate,
   type NotionPage,
-} from '../../../components/notion'
+} from '../../../components/Notion'
 
 const databaseId = process.env.NOTION_DATABASE_ID || ''
 

@@ -5,7 +5,7 @@ import type {
   ListBlockChildrenResponse,
 } from '@notionhq/client/build/src/api-endpoints.d'
 
-const notion = new Client({
+const Notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
 
@@ -27,7 +27,7 @@ export type PaginatedDatabaseResponse = {
 /// Blog記事のデータベースを取得する
 export const getDatabase = async (databaseId: string) => {
   try {
-    const response = await notion.databases.query({
+    const response = await Notion.databases.query({
       database_id: databaseId,
     })
     return response.results
@@ -42,7 +42,7 @@ export const getDatabase = async (databaseId: string) => {
 /// ページング対応でBlog記事のデータベースを取得する
 export const getDatabaseWithPagination = async (databaseId: string, startCursor?: string, pageSize: number = 100): Promise<PaginatedDatabaseResponse> => {
   try {
-    const response = await notion.databases.query({
+    const response = await Notion.databases.query({
       database_id: databaseId,
       start_cursor: startCursor,
       page_size: pageSize,
@@ -104,7 +104,7 @@ export const isPublishDate = (page: NotionPage) => {
 }
 
 export const getPage = async (pageId: string) => {
-  const response = await notion.pages.retrieve({ page_id: pageId })
+  const response = await Notion.pages.retrieve({ page_id: pageId })
   return response
 }
 
@@ -114,7 +114,7 @@ export const getOpeningSentence = async (blockId: string) => {
   let cursor: undefined | string = undefined
 
   while (true) {
-    const block = await notion.blocks.children.list({
+    const block = await Notion.blocks.children.list({
       start_cursor: cursor,
       block_id: blockId,
       page_size: 1,
@@ -144,7 +144,7 @@ export const getBlocks = async (blockId: string) => {
   let cursor: undefined | string = undefined
 
   while (true) {
-    const blocksList = await notion.blocks.children.list({
+    const blocksList = await Notion.blocks.children.list({
       start_cursor: cursor,
       block_id: blockId,
     })

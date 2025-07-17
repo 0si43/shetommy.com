@@ -9,11 +9,12 @@
   width: 40px;
   height: 40px;
   margin: 0 12px;
-  border: 1px solid dimgray;
+  fill: var(--primary-text-color);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
 }
 
 .button:hover {
-  fill: white;
-  background-color: dimgray;
+  fill: var(--surface-text-color);
+  background-color: var(--hover-background-color);
 }
