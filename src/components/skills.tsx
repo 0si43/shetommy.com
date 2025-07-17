@@ -3,7 +3,7 @@ import Unity from '../svgs/unity'
 import Nextjs from '../svgs/nextjs'
 import styles from '../styles/home/skills.module.css'
 
-export default function Works() {
+export default function Skills() {
   return (
     <>
       <div className={styles.skillRow}>

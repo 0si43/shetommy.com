@@ -39,12 +39,13 @@
 
 .actionButtonContainer button {
   position: absolute;
-  top: 4px;
-  right: 16px;
+  top: 0;
+  right: 8px;
   font: inherit;
+  color: var(--reverse-surface-text-color);
   background-color: var(--system-background-color);
   border: 1px solid var(--border-color);
-  padding: 8px 16px;
+  padding: 8px;
   border-radius: 16px;
   box-shadow: 1px 0 4px 1px var(--shadow-color);
   margin: 8px;
