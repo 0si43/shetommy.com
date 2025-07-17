@@ -1,5 +1,5 @@
 import fs from 'fs'
-import type { ExtendNotionBlock } from './notion'
+import type { ExtendNotionBlock } from '../Notion'
 
 export const imagesPath = 'public/blogImages'
 

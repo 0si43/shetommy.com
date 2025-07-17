@@ -1,4 +1,4 @@
-import Header from '../../components/header'
+import Header from '../../components/Header'
 import {
   getDatabaseWithPagination,
   getPageTitle,
@@ -7,9 +7,9 @@ import {
   isPublishDate,
   type NotionPage,
   type PaginatedDatabaseResponse
-} from '../../components/notion'
+} from '../../components/Notion'
 import styles from '../../styles/articles/index.module.css'
-import Footer from '../../components/footer'
+import Footer from '../../components/Footer'
 
 import { useState } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'

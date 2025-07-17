@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import OtherSites from '../components/otherSites'
+import OtherSites from './OtherSites'
 import styles from '../styles/home/profile.module.css'
 
 export default function Profile() {
