@@ -1,6 +1,7 @@
 import Header from '../../components/Header'
 import {
   getDatabaseWithPagination,
+  sanitizeForUrl,
   getPageTitle,
   getPageDate,
   getOpeningSentence,
@@ -104,14 +105,14 @@ export default function Home({ initialArticles, hasMore: initialHasMore, nextCur
         {/* h1だとHydration Errorなのでh2 */}
         <h2>All Posts</h2>
         <ol className={styles.posts}>
-          {articles.map((article) => {
-            if (article.title.length <= 0) {
-              return <></>
-            }
+          {articles
+            .filter(article => article.title.length > 0)
+            .map((article) => {
+            const slug = sanitizeForUrl(article.title)
 
             return (
               <li key={article.id} className={styles.post}>
-                <Link href={`/articles/${article.title}`}>
+                <Link href={`/articles/${slug}`}>
                   <h3 className={styles.postTitle}> 
                     {article.title}
                   </h3>

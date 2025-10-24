@@ -69,6 +69,10 @@ export const filterPages = (pages: NotionPage[]) => {
   return pages.filter((page) => page.properties['publish date'] !== null)
 }
 
+export const sanitizeForUrl = (title: string): string => {
+  return title.replace(/[?#/&%]/g, '')
+};
+
 export const getPageTitle = (page: NotionPage) => {
   if (page.properties == undefined) {
     return ''
