@@ -1,6 +1,7 @@
 import Header from '../../components/Header'
 import {
   getDatabase,
+  sanitizeForUrl,
   getPageTitle,
   getBlocks,
   isPublishDate,
@@ -48,9 +49,10 @@ export const getStaticPaths = async () => {
     )
     .map((page) => {
       const title = getPageTitle(page as NotionPage)
+      const slug = sanitizeForUrl(title)
       return {
         params: {
-          title: title,
+          slug: slug,
         },
       }
     })
@@ -63,15 +65,19 @@ export const getStaticPaths = async () => {
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 interface IParams extends ParsedUrlQuery {
-  title: string
+  slug: string
 }
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const { title } = context.params as IParams
+  const { slug } = context.params as IParams
   const database = await getDatabase(databaseId)
-  const page = database.find((page) => getPageTitle(page as NotionPage) == title)
-  // NotionのDB上にあったタイトルをパスにしているので、存在は保証されている
+  const page = database.find((page) => {
+    const title = getPageTitle(page as NotionPage)
+    const sanitizeTitle = sanitizeForUrl(title)
+    return sanitizeTitle == slug
+  })
   const id = page!.id
+  const title = getPageTitle(page as NotionPage)
   const blocks = await getBlocks(id)
   saveImageIfNeeded(blocks)
 
