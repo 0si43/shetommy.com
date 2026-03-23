@@ -45,9 +45,10 @@ export type RichText = {
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
 export const renderBlock = (
-  { block, tableOfContents }: {
+  { block, tableOfContents, imageSizeMap }: {
     block: ExtendNotionBlock,
-    tableOfContents: ExtendNotionBlock[]
+    tableOfContents: ExtendNotionBlock[],
+    imageSizeMap: Record<string, { width: number; height: number }>
   }
 ) => {
   if (block.ogpData?.requestUrl) {
@@ -103,7 +104,7 @@ export const renderBlock = (
           </summary>
           <>
             {block.children?.map((block) => (
-              <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContents })}</Fragment>
+              <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContents, imageSizeMap: imageSizeMap })}</Fragment>
             ))}
           </>
         </details>
@@ -116,14 +117,15 @@ export const renderBlock = (
       const caption =
         imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
       if (imageValue.type === 'file') {
+        const size = imageSizeMap[block.id] ?? { width: 480, height: 360 }
         return (
           <figure>
             <Image
               src={'/blogImages/' + block.id + '.png'}
               alt={caption}
               style={{ width: '60%', height: 'auto' }}
-              width={480}
-              height={360}
+              width={size.width}
+              height={size.height}
             />
             {caption && <figcaption>{caption}</figcaption>}
           </figure>
