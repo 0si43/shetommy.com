@@ -1,5 +1,6 @@
 import styles from '../../styles/articles/post.module.css'
 import type { ExtendNotionBlock } from '../Notion'
+import type { ImageSizeMap } from './saveImageIfNeeded'
 import LinkCard from '../LinkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
@@ -48,7 +49,7 @@ export const renderBlock = (
   { block, tableOfContents, imageSizeMap }: {
     block: ExtendNotionBlock,
     tableOfContents: ExtendNotionBlock[],
-    imageSizeMap: Record<string, { width: number; height: number; extension: string }>
+    imageSizeMap: ImageSizeMap
   }
 ) => {
   if (block.ogpData?.requestUrl) {

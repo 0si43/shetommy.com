@@ -4,13 +4,16 @@ import type { ExtendNotionBlock } from '../Notion'
 
 export const imagesPath = 'public/blogImages'
 
+export type ImageInfo = { width: number; height: number; extension: string }
+export type ImageSizeMap = Record<string, ImageInfo>
+
 /// Notion内の画像は一時ファイル扱いなので、ブロックの画像をpublic/blogImagesに保存する
-const saveImageIfNeeded = async (blocksWithChildren: ExtendNotionBlock[]): Promise<Record<string, { width: number; height: number; extension: string }>> => {
+const saveImageIfNeeded = async (blocksWithChildren: ExtendNotionBlock[]): Promise<ImageSizeMap> => {
   if (!fs.existsSync(imagesPath)) {
     fs.mkdirSync(imagesPath)
   }
 
-  const imageSizeMap: Record<string, { width: number; height: number; extension: string }> = {}
+  const imageSizeMap: ImageSizeMap = {}
 
   await Promise.all(
     blocksWithChildren.map(async (block) => {
@@ -34,7 +37,7 @@ const saveImageIfNeeded = async (blocksWithChildren: ExtendNotionBlock[]): Promi
   return imageSizeMap
 }
 
-const checkBlock = async (block: ExtendNotionBlock): Promise<{ width: number; height: number; extension: string } | null> => {
+const checkBlock = async (block: ExtendNotionBlock): Promise<ImageInfo | null> => {
   if (block.type === 'image' && block.image.type == 'file') {
     const blob = await getTemporaryImage(block.image.file.url)
 
