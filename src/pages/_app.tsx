@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import usePageView from '../components/hooks/usePageView'
 import GoogleAnalytics from '../components/GoogleAnalytics'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -9,6 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <GoogleAnalytics />
+      <SpeedInsights />
       <Component {...pageProps} />
     </>
   )

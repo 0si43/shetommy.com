@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^0.4.4",
+    "@vercel/speed-insights": "^2.0.0",
     "image-size": "^2.0.2",
     "next": "^14.1.0",
     "open-graph-scraper": "^6.4.0",
