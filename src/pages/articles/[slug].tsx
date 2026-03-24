@@ -20,7 +20,7 @@ import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
-export default function Post({ title, blocks, tableOfContentsBlocks, publishDate }: Props) {
+export default function Post({ title, blocks, tableOfContentsBlocks, publishDate, imageSizeMap }: Props) {
   return (
     <div>
       <Header titlePre={title} />
@@ -31,7 +31,7 @@ export default function Post({ title, blocks, tableOfContentsBlocks, publishDate
         </time>
         <section>
           {blocks.map((block) => (
-            <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContentsBlocks })}</Fragment>
+            <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContentsBlocks, imageSizeMap: imageSizeMap })}</Fragment>
           ))}
         </section>
       </article>
@@ -79,7 +79,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   const id = page!.id
   const title = getPageTitle(page as NotionPage)
   const blocks = await getBlocks(id)
-  saveImageIfNeeded(blocks)
+  const imageSizeMap = await saveImageIfNeeded(blocks)
 
   const publishDate = getPageDate(page as NotionPage).toISOString()
   const blocksWithOGP: ExtendNotionBlock[] = []
@@ -116,6 +116,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       blocks: blocksWithOGP,
       tableOfContentsBlocks: tableOfContentsBlocks,
       publishDate,
+      imageSizeMap,
     },
     revalidate: 1,
   }
