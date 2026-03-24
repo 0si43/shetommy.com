@@ -46,6 +46,12 @@ export const getDatabaseWithPagination = async (databaseId: string, startCursor?
       database_id: databaseId,
       start_cursor: startCursor,
       page_size: pageSize,
+      sorts: [
+        {
+          property: 'publish date',
+          direction: 'descending',
+        },
+      ],
     })
     return {
       results: response.results as NotionPage[],
