@@ -15,7 +15,9 @@ export type ExtendNotionBlock = NotionBlock & {
   // 番号付きリストの1階層目要素
   numberedListBlocks?: ExtendNotionBlock[],
   children?: ExtendNotionBlock[],
-  ogpData?: OgObject 
+  ogpData?: OgObject,
+  isAmazon?: boolean,
+  amazonUrl?: string,
 }
 
 export type PaginatedDatabaseResponse = {
