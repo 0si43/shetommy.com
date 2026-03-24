@@ -75,6 +75,11 @@
   opacity: 0.6;
 }
 
+.container ul,
+.container ol {
+  padding-left: 1.5em;
+}
+
 .container blockquote {
   background-color: var(--quote-background-color);
   padding: 24px;
