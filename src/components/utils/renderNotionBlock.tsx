@@ -48,7 +48,7 @@ export const renderBlock = (
   { block, tableOfContents, imageSizeMap }: {
     block: ExtendNotionBlock,
     tableOfContents: ExtendNotionBlock[],
-    imageSizeMap: Record<string, { width: number; height: number }>
+    imageSizeMap: Record<string, { width: number; height: number; extension: string }>
   }
 ) => {
   if (block.ogpData?.requestUrl) {
@@ -117,11 +117,11 @@ export const renderBlock = (
       const caption =
         imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
       if (imageValue.type === 'file') {
-        const size = imageSizeMap[block.id] ?? { width: 480, height: 360 }
+        const size = imageSizeMap[block.id] ?? { width: 480, height: 360, extension: 'png' }
         return (
           <figure>
             <Image
-              src={'/blogImages/' + block.id + '.png'}
+              src={`/blogImages/${block.id}.${size.extension}`}
               alt={caption}
               width={size.width}
               height={size.height}

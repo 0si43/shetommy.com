@@ -5,13 +5,12 @@ import type { ExtendNotionBlock } from '../Notion'
 export const imagesPath = 'public/blogImages'
 
 /// Notion内の画像は一時ファイル扱いなので、ブロックの画像をpublic/blogImagesに保存する
-/// 拡張子がjpeg, pngでわかれているとパスの取得時に判定が必要になるので、.pngで統一する
-const saveImageIfNeeded = async (blocksWithChildren: ExtendNotionBlock[]): Promise<Record<string, { width: number; height: number }>> => {
+const saveImageIfNeeded = async (blocksWithChildren: ExtendNotionBlock[]): Promise<Record<string, { width: number; height: number; extension: string }>> => {
   if (!fs.existsSync(imagesPath)) {
     fs.mkdirSync(imagesPath)
   }
 
-  const imageSizeMap: Record<string, { width: number; height: number }> = {}
+  const imageSizeMap: Record<string, { width: number; height: number; extension: string }> = {}
 
   await Promise.all(
     blocksWithChildren.map(async (block) => {
@@ -35,7 +34,7 @@ const saveImageIfNeeded = async (blocksWithChildren: ExtendNotionBlock[]): Promi
   return imageSizeMap
 }
 
-const checkBlock = async (block: ExtendNotionBlock): Promise<{ width: number; height: number } | null> => {
+const checkBlock = async (block: ExtendNotionBlock): Promise<{ width: number; height: number; extension: string } | null> => {
   if (block.type === 'image' && block.image.type == 'file') {
     const blob = await getTemporaryImage(block.image.file.url)
 
@@ -45,16 +44,16 @@ const checkBlock = async (block: ExtendNotionBlock): Promise<{ width: number; he
 
     const extension = blob.type.replace('image/', '')
 
-    if (!isImageExist(block.id)) {
+    if (!isImageExist(block.id, extension)) {
       const binary = (await blob.arrayBuffer()) as Uint8Array
       const buffer = Buffer.from(binary)
-      await saveImage(buffer, block.id)
+      await saveImage(buffer, block.id, extension)
     }
 
-    const imagePath = imagesPath + '/' + block.id + '.png'
+    const imagePath = `${imagesPath}/${block.id}.${extension}`
     const dimensions = sizeOf(fs.readFileSync(imagePath))
     if (dimensions.width && dimensions.height) {
-      return { width: dimensions.width, height: dimensions.height }
+      return { width: dimensions.width, height: dimensions.height, extension }
     }
   }
   return null
@@ -71,13 +70,13 @@ const getTemporaryImage = async (url: string) => {
   }
 }
 
-const isImageExist = (keyName: string) => {
-  return fs.existsSync(imagesPath + '/' + keyName + '.png')
+const isImageExist = (keyName: string, extension: string) => {
+  return fs.existsSync(`${imagesPath}/${keyName}.${extension}`)
 }
 
-const saveImage = (imageBinary: Uint8Array, keyName: string): Promise<void> => {
+const saveImage = (imageBinary: Uint8Array, keyName: string, extension: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    fs.writeFile(imagesPath + '/' + keyName + '.png', imageBinary, (error) => {
+    fs.writeFile(`${imagesPath}/${keyName}.${extension}`, imageBinary, (error) => {
       if (error) {
         console.log(error)
         reject(error)
