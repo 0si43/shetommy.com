@@ -31,7 +31,7 @@ type ArticleData = {
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const pageSize = 30
+  const pageSize = 10
   
   // ページング対応で記事を取得
   const response = await getDatabaseWithPagination(databaseId, undefined, pageSize)

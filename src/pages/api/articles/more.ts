@@ -39,7 +39,7 @@ export default async function handler(
 
   try {
     const { cursor } = req.query
-    const pageSize = 30
+    const pageSize = 10
     
     const response = await getDatabaseWithPagination(
       databaseId,

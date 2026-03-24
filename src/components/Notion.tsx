@@ -48,6 +48,12 @@ export const getDatabaseWithPagination = async (databaseId: string, startCursor?
       database_id: databaseId,
       start_cursor: startCursor,
       page_size: pageSize,
+      sorts: [
+        {
+          property: 'publish date',
+          direction: 'descending',
+        },
+      ],
     })
     return {
       results: response.results as NotionPage[],
@@ -123,16 +129,16 @@ export const getOpeningSentence = async (blockId: string) => {
     const block = await Notion.blocks.children.list({
       start_cursor: cursor,
       block_id: blockId,
-      page_size: 1,
+      page_size: 10,
     })
 
-    if (block.results[0] && 'type' in block.results[0]) {
-      const blockType = block.results[0].type
-      if (blockType === 'paragraph') {
-        block.results[0].paragraph.text.forEach((textObject) => {
+    for (const result of block.results) {
+      if ('type' in result && result.type === 'paragraph') {
+        result.paragraph.text.forEach((textObject) => {
           openingSentence += textObject.plain_text
         })
       }
+      if (openingSentence.length >= 140) break
     }
 
     const next_cursor = block.next_cursor as string | null
