@@ -14,6 +14,12 @@ const notionLangMap: Record<string, string> = {
   'c#': 'csharp',
   'f#': 'fsharp',
   'java/c/c++/c#': 'java',
+  'objective-c': 'objectivec',
+  'vb.net': 'vbnet',
+  'visual basic': 'visual-basic',
+  'shell': 'bash',
+  'docker': 'docker',
+  'webassembly': 'wasm',
 }
 
 const mapLanguage = (lang: string): string => notionLangMap[lang] ?? lang
