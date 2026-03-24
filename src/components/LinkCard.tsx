@@ -1,15 +1,14 @@
-import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
+import type { SlimOgpData } from './Notion'
 import styles from '../styles/articles/post.module.css'
 
-export default function LinkCard(url: string, ogpData: OgObject) {
-    const urls = ogpData.ogImage?.map(image => image.url).filter(url => url != null && url != undefined) ?? []
-    const bestImageUrl = findBestImage(urls, url)
+export default function LinkCard(url: string, ogpData: SlimOgpData) {
+    const imageUrl = findBestImage(ogpData.ogImageUrl, url)
     return (
         <div className={styles.linkCard}>
             <a href={url} target="_blank" rel="noopener noreferrer">
-                {bestImageUrl && (
+                {imageUrl && (
                     <div className={styles.linkCardImage}>
-                    <img src={bestImageUrl} alt={ogpData.ogTitle} />
+                    <img src={imageUrl} alt={ogpData.ogTitle} />
                     </div>
                 )}
                 <div className={styles.linkCardContent}>
@@ -23,14 +22,13 @@ export default function LinkCard(url: string, ogpData: OgObject) {
 }
 
 // amazonが複数のOG画像を返してくるので、その対策
-function findBestImage(originalUrls: string[], domain: string) {
-    // ex: https://m.media-amazon.com/images/I/51tDCnOWe8L._SY445_SX342_.jpg
+function findBestImage(imageUrl: string | undefined, domain: string) {
+    if (!imageUrl) return undefined
     if (domain.includes('amazon') || domain.includes('amzn')) {
-        const urls = originalUrls.filter(url => {
-            return url.includes('/I/') && url.includes('_SX') && url.includes('_SY')
-        })
-        return urls[0] || originalUrls[0]
-    } else {
-        return originalUrls[0]
+        if (imageUrl.includes('/I/') && imageUrl.includes('_SX') && imageUrl.includes('_SY')) {
+            return imageUrl
+        }
+        return undefined
     }
+    return imageUrl
 }

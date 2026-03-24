@@ -1,5 +1,4 @@
 import { Client, isNotionClientError } from '@notionhq/client'
-import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
 import type {
   QueryDatabaseResponse,
   ListBlockChildrenResponse,
@@ -11,11 +10,24 @@ const Notion = new Client({
 
 export declare type NotionPage = Extract<QueryDatabaseResponse['results'][number], { properties: Record<string, any> }>
 type NotionBlock = Extract<ListBlockChildrenResponse['results'][number], { type: string }>
+export type SlimOgpData = {
+  ogTitle?: string
+  ogDescription?: string
+  ogImageUrl?: string
+  ogUrl?: string
+}
+
 export type ExtendNotionBlock = NotionBlock & {
   // 番号付きリストの1階層目要素
   numberedListBlocks?: ExtendNotionBlock[],
   children?: ExtendNotionBlock[],
-  ogpData?: OgObject 
+  ogpData?: SlimOgpData
+}
+
+export type TocEntry = {
+  id: string
+  type: 'heading_1' | 'heading_2' | 'heading_3'
+  text: string
 }
 
 export type PaginatedDatabaseResponse = {
@@ -188,7 +200,17 @@ export const getBlocks = async (blockId: string) => {
     }
   })
 
-  return blocks
+  return blocks.map(trimBlock)
+}
+
+// レンダリングに不要なNotionメタデータをブロックから除去する
+const trimBlock = (block: ExtendNotionBlock): ExtendNotionBlock => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { created_time, last_edited_time, created_by, last_edited_by, parent, archived, in_trash, object, children, numberedListBlocks, ...rest } = block as any
+  const trimmed: any = { ...rest }
+  if (children != null) trimmed.children = (children as ExtendNotionBlock[]).map(trimBlock)
+  if (numberedListBlocks != null) trimmed.numberedListBlocks = (numberedListBlocks as ExtendNotionBlock[]).map(trimBlock)
+  return trimmed
 }
 
 /// ブロックに子ブロックがあれば付与する（リストブロック・トグルブロック）

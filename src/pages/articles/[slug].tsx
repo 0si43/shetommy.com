@@ -7,7 +7,9 @@ import {
   isPublishDate,
   getPageDate,
   type NotionPage,
-  ExtendNotionBlock
+  ExtendNotionBlock,
+  TocEntry,
+  SlimOgpData
 } from '../../components/Notion'
 import { renderBlock } from '../../components/utils/renderNotionBlock'
 import getOgpData from '../../components/utils/getOgpData'
@@ -83,27 +85,41 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   const publishDate = getPageDate(page as NotionPage).toISOString()
   const blocksWithOGP: ExtendNotionBlock[] = []
-  const tableOfContentsBlocks: ExtendNotionBlock[] = []
-  
+  const tableOfContentsBlocks: TocEntry[] = []
+
   await Promise.all(
     blocks.map(async (block, index) => {
       /// 目次用のブロックを抽出
-      if (['heading_1', 'heading_2', 'heading_3'].includes(block.type)) {
-        tableOfContentsBlocks.push(block)
+      if (block.type === 'heading_1' || block.type === 'heading_2' || block.type === 'heading_3') {
+        const headingKey = block.type as 'heading_1' | 'heading_2' | 'heading_3'
+        tableOfContentsBlocks.push({
+          id: block.id,
+          type: headingKey,
+          text: (block as any)[headingKey]?.text[0]?.plain_text ?? '',
+        })
       }
       
       /// OG情報を取得する
-      if (block.type === 'paragraph' 
+      const toSlimOgp = async (url: string): Promise<SlimOgpData> => {
+        const ogp = await getOgpData(url)
+        const slim: SlimOgpData = {}
+        if (ogp.ogTitle != null) slim.ogTitle = ogp.ogTitle
+        if (ogp.ogDescription != null) slim.ogDescription = ogp.ogDescription
+        if (ogp.ogImage?.[0]?.url != null) slim.ogImageUrl = ogp.ogImage[0].url
+        if (ogp.ogUrl != null) slim.ogUrl = ogp.ogUrl
+        return slim
+      }
+      if (block.type === 'paragraph'
           && block.paragraph.text.length == 1
           && block.paragraph.text[0].type === 'text'
           && block.paragraph.text[0].text.link?.url
           ) {
           const richText = block.paragraph.text[0] as { type: 'text'; text: { link: { url: string } } }
-          block.ogpData = await getOgpData(richText.text.link.url)
+          block.ogpData = await toSlimOgp(richText.text.link.url)
       } else if (block.type === 'bookmark') {
-        block.ogpData = await getOgpData(block.bookmark.url)
+        block.ogpData = await toSlimOgp(block.bookmark.url)
       } else if (block.type === 'link_preview') {
-        block.ogpData = await getOgpData(block.link_preview.url)
+        block.ogpData = await toSlimOgp(block.link_preview.url)
       }
   
       blocksWithOGP[index] = block

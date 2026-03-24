@@ -1,5 +1,5 @@
 import styles from '../../styles/articles/post.module.css'
-import type { ExtendNotionBlock } from '../Notion'
+import type { ExtendNotionBlock, TocEntry } from '../Notion'
 import type { ImageSizeMap } from './saveImageIfNeeded'
 import LinkCard from '../LinkCard'
 import { Fragment } from 'react'
@@ -48,12 +48,12 @@ export type RichText = {
 export const renderBlock = (
   { block, tableOfContents, imageSizeMap }: {
     block: ExtendNotionBlock,
-    tableOfContents: ExtendNotionBlock[],
+    tableOfContents: TocEntry[],
     imageSizeMap: ImageSizeMap
   }
 ) => {
-  if (block.ogpData?.requestUrl) {
-    return LinkCard(block.ogpData.requestUrl, block.ogpData)
+  if (block.ogpData?.ogUrl) {
+    return LinkCard(block.ogpData.ogUrl, block.ogpData)
   }
 
   const { type, id } = block
@@ -291,39 +291,39 @@ const renderNumberedListItem = (block: ExtendNotionBlock) => {
   )
 }
 
-const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: ExtendNotionBlock[] }) => {
+const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: TocEntry[] }) => {
   if (tableOfContents.length === 0) {
     return null
   }
 
-  const renderTableOfContents = (blocks: ExtendNotionBlock[]) => {
-    const groupedBlocks: ExtendNotionBlock[][] = []
-    const sameHeadingBlocks: ExtendNotionBlock[] = []
+  const renderTableOfContents = (entries: TocEntry[]) => {
+    const groupedEntries: TocEntry[][] = []
+    const sameHeadingEntries: TocEntry[] = []
 
-    blocks.forEach((block, index) => {
-      if (sameHeadingBlocks[sameHeadingBlocks.length - 1] &&
-          block.type != sameHeadingBlocks[sameHeadingBlocks.length - 1].type) {
-        groupedBlocks.push([...sameHeadingBlocks])
-        sameHeadingBlocks.length = 0
+    entries.forEach((entry, index) => {
+      if (sameHeadingEntries[sameHeadingEntries.length - 1] &&
+          entry.type != sameHeadingEntries[sameHeadingEntries.length - 1].type) {
+        groupedEntries.push([...sameHeadingEntries])
+        sameHeadingEntries.length = 0
       }
-      
-      sameHeadingBlocks.push(block)
-      
-      if (index == blocks.length - 1) {
-        groupedBlocks.push([...sameHeadingBlocks])
-      }  
+
+      sameHeadingEntries.push(entry)
+
+      if (index == entries.length - 1) {
+        groupedEntries.push([...sameHeadingEntries])
+      }
     })
-    
+
     return (
       <ol>
-        {groupedBlocks.map((blocks) => {
-          switch (blocks[0]?.type) {
+        {groupedEntries.map((entries) => {
+          switch (entries[0]?.type) {
             case 'heading_1':
-              return blocks.flatMap((block) => renderBlock(block))
+              return entries.flatMap((entry) => renderEntry(entry))
             case 'heading_2':
-              return (<ol key={blocks[0]?.id}>{blocks.flatMap((block) => renderBlock(block))}</ol>)
+              return (<ol key={entries[0]?.id}>{entries.flatMap((entry) => renderEntry(entry))}</ol>)
             case 'heading_3':
-              return (<ol key={blocks[0]?.id}><ol>{blocks.flatMap((block) => renderBlock(block))}</ol></ol>)
+              return (<ol key={entries[0]?.id}><ol>{entries.flatMap((entry) => renderEntry(entry))}</ol></ol>)
             default:
               return null
           }
@@ -332,31 +332,11 @@ const TableOfContentsComponent = ({ tableOfContents }: { tableOfContents: Extend
     )
   }
 
-  const renderBlock = (block: ExtendNotionBlock) => {
-      switch (block.type) {
-        case 'heading_1':
-          return (
-            <li key={block.id}>
-              <a href={`#${block.id}`}>{block.heading_1?.text[0]?.plain_text ?? ""}</a>
-            </li>
-          )
-        case 'heading_2':
-          return (
-            <li key={block.id}>
-              <a href={`#${block.id}`}>{block.heading_2?.text[0]?.plain_text ?? ""}</a>
-            </li>
-          )
-        case 'heading_3':
-          return (
-            <li key={block.id}>
-              <a href={`#${block.id}`}>{block.heading_3?.text[0]?.plain_text ?? ""}</a>
-            </li>
-          )
-          
-        default:
-          return null
-    }
-  }
+  const renderEntry = (entry: TocEntry) => (
+    <li key={entry.id}>
+      <a href={`#${entry.id}`}>{entry.text}</a>
+    </li>
+  )
 
   return (
     <nav>
