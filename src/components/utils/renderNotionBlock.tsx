@@ -46,10 +46,11 @@ export type RichText = {
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
 export const renderBlock = (
-  { block, tableOfContents, imageSizeMap }: {
+  { block, tableOfContents, imageSizeMap, onImageClick }: {
     block: ExtendNotionBlock,
     tableOfContents: ExtendNotionBlock[],
-    imageSizeMap: ImageSizeMap
+    imageSizeMap: ImageSizeMap,
+    onImageClick?: (src: string, alt: string) => void,
   }
 ) => {
   if (block.ogpData?.requestUrl) {
@@ -105,7 +106,7 @@ export const renderBlock = (
           </summary>
           <>
             {block.children?.map((block) => (
-              <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContents, imageSizeMap: imageSizeMap })}</Fragment>
+              <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContents, imageSizeMap: imageSizeMap, onImageClick: onImageClick })}</Fragment>
             ))}
           </>
         </details>
@@ -119,14 +120,16 @@ export const renderBlock = (
         imageValue.caption?.length > 0 ? imageValue.caption[0].plain_text : ''
       if (imageValue.type === 'file') {
         const size = imageSizeMap[block.id] ?? { width: 480, height: 360, extension: 'png' }
+        const src = `/blogImages/${block.id}.${size.extension}`
         return (
           <figure>
             <Image
-              src={`/blogImages/${block.id}.${size.extension}`}
+              src={src}
               alt={caption}
               width={size.width}
               height={size.height}
-              style={{ width: 'auto', height: 'auto', maxWidth: '100%' }}
+              style={{ width: 'auto', height: 'auto', maxWidth: '100%', cursor: onImageClick ? 'zoom-in' : undefined }}
+              onClick={onImageClick ? () => onImageClick(src, caption) : undefined}
             />
             {caption && <figcaption>{caption}</figcaption>}
           </figure>
@@ -135,7 +138,12 @@ export const renderBlock = (
         const src = imageValue.external.url
         return (
           <figure>
-            <img src={src} alt={caption} />
+            <img
+              src={src}
+              alt={caption}
+              style={{ cursor: onImageClick ? 'zoom-in' : undefined }}
+              onClick={onImageClick ? () => onImageClick(src, caption) : undefined}
+            />
             {caption && <figcaption>{caption}</figcaption>}
           </figure>
         )
