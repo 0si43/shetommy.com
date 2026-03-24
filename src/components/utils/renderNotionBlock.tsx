@@ -5,6 +5,18 @@ import type { GetBlockResponse } from '@notionhq/client/build/src/api-endpoints'
 import LinkCard, { AmazonCard } from '../LinkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+
+const notionLangMap: Record<string, string> = {
+  'plain text': 'text',
+  'c++': 'cpp',
+  'c#': 'csharp',
+  'f#': 'fsharp',
+  'java/c/c++/c#': 'java',
+}
+
+const mapLanguage = (lang: string): string => notionLangMap[lang] ?? lang
 
 // Notion SDK の型定義から RichText 型を導出する
 // RichTextItemResponse は非公開型なので、公開型 GetBlockResponse 経由でアクセスする
@@ -151,30 +163,68 @@ export const renderBlock = (
       return <hr></hr>
     case 'table_of_contents':
       return (<TableOfContentsComponent tableOfContents={tableOfContents}/>)
-    case 'video':
-      if (block.video.type === 'external') {
-        const videoUrl = block.video.external.url
-        const isYoutube = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')
-        if (isYoutube) {
-          const videoId = videoUrl.includes('youtube.com')
-            ? videoUrl.split('v=')[1]?.split('&')[0]
-            : videoUrl.split('youtu.be/')[1]?.split('?')[0]
-          if (videoId) {
-            return (
-              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%' }}>
-                <iframe
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
-            )
-          }
+    case 'code': {
+      const codeValue = block.code
+      const rawLang = codeValue.language ?? 'plain text'
+      const language = mapLanguage(rawLang)
+      const codeText = (codeValue.text as RichText[]).map((t) => t.text.content).join('')
+      return (
+        <SyntaxHighlighter language={language} style={vscDarkPlus}>
+          {codeText}
+        </SyntaxHighlighter>
+      )
+    }
+    case 'video': {
+      const videoValue = block.video
+      if (videoValue.type === 'file') {
+        return (
+          <video controls style={{ width: '100%' }}>
+            <source src={videoValue.file.url} />
+          </video>
+        )
+      }
+      const videoUrl = videoValue.external.url
+      const isYoutube = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')
+      if (isYoutube) {
+        const videoId = videoUrl.includes('youtube.com')
+          ? videoUrl.split('v=')[1]?.split('&')[0]
+          : videoUrl.split('youtu.be/')[1]?.split('?')[0]
+        if (videoId) {
+          return (
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%' }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}`}
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          )
         }
       }
-      return <p>Unsupported video type</p>
+      return (
+        <video controls style={{ width: '100%' }}>
+          <source src={videoUrl} />
+        </video>
+      )
+    }
+    case 'audio': {
+      const audioValue = block.audio
+      const url = audioValue.type === 'external' ? audioValue.external.url : audioValue.file.url
+      return <audio controls src={url} style={{ width: '100%' }} />
+    }
+    case 'file': {
+      const fileValue = block.file
+      const url = fileValue.type === 'external' ? fileValue.external.url : fileValue.file.url
+      const caption = (fileValue.caption as RichText[])?.[0]?.plain_text ?? url
+      return <a href={url} target="_blank" rel="noopener noreferrer">{caption}</a>
+    }
+    case 'pdf': {
+      const pdfValue = block.pdf
+      const url = pdfValue.type === 'external' ? pdfValue.external.url : pdfValue.file.url
+      return <iframe src={url} width="100%" height="600px" />
+    }
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
