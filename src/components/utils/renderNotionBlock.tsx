@@ -1,7 +1,7 @@
 import styles from '../../styles/articles/post.module.css'
 import type { ExtendNotionBlock } from '../Notion'
 import type { ImageSizeMap } from './saveImageIfNeeded'
-import LinkCard from '../LinkCard'
+import LinkCard, { AmazonCard } from '../LinkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
 
@@ -52,6 +52,10 @@ export const renderBlock = (
     imageSizeMap: ImageSizeMap
   }
 ) => {
+  if (block.isAmazon && block.amazonUrl) {
+    return AmazonCard(block.amazonUrl)
+  }
+
   if (block.ogpData?.requestUrl) {
     return LinkCard(block.ogpData.requestUrl, block.ogpData)
   }

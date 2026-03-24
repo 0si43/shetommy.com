@@ -1,6 +1,20 @@
 import { type OgObject } from 'open-graph-scraper/dist/lib/types.d'
 import styles from '../styles/articles/post.module.css'
 
+export function AmazonCard(url: string) {
+  return (
+    <div className={styles.amazonCard}>
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        <div className={styles.amazonCardIcon}>Amazon</div>
+        <div className={styles.amazonCardContent}>
+          <p className={styles.amazonCardLabel}>Amazonで見る</p>
+          <p className={styles.amazonCardUrl}>{url}</p>
+        </div>
+      </a>
+    </div>
+  )
+}
+
 export default function LinkCard(url: string, ogpData: OgObject) {
     const urls = ogpData.ogImage?.map(image => image.url).filter(url => url != null && url != undefined) ?? []
     const bestImageUrl = findBestImage(urls, url)

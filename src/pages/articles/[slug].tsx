@@ -18,6 +18,9 @@ import Footer from '../../components/Footer'
 
 import { Fragment } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
+
+const isAmazonUrl = (url: string): boolean =>
+  url.includes('amazon.co.jp') || url.includes('amzn.to')
 import { ParsedUrlQuery } from 'querystring'
 
 export default function Post({ title, blocks, tableOfContentsBlocks, publishDate, imageSizeMap }: Props) {
@@ -93,17 +96,33 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       }
       
       /// OG情報を取得する
-      if (block.type === 'paragraph' 
+      if (block.type === 'paragraph'
           && block.paragraph.text.length == 1
           && block.paragraph.text[0].type === 'text'
           && block.paragraph.text[0].text.link?.url
           ) {
           const richText = block.paragraph.text[0] as { type: 'text'; text: { link: { url: string } } }
-          block.ogpData = await getOgpData(richText.text.link.url)
+          const url = richText.text.link.url
+          if (isAmazonUrl(url)) {
+            block.isAmazon = true
+            block.amazonUrl = url
+          } else {
+            block.ogpData = await getOgpData(url)
+          }
       } else if (block.type === 'bookmark') {
-        block.ogpData = await getOgpData(block.bookmark.url)
+        if (isAmazonUrl(block.bookmark.url)) {
+          block.isAmazon = true
+          block.amazonUrl = block.bookmark.url
+        } else {
+          block.ogpData = await getOgpData(block.bookmark.url)
+        }
       } else if (block.type === 'link_preview') {
-        block.ogpData = await getOgpData(block.link_preview.url)
+        if (isAmazonUrl(block.link_preview.url)) {
+          block.isAmazon = true
+          block.amazonUrl = block.link_preview.url
+        } else {
+          block.ogpData = await getOgpData(block.link_preview.url)
+        }
       }
   
       blocksWithOGP[index] = block
