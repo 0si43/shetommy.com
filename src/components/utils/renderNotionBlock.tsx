@@ -145,6 +145,13 @@ export const renderBlock = (
       return (
         <blockquote>
           <TextComponent richTexts={quoteValue.text as RichText[]} />
+          <>
+            {block.children?.map((childBlock) => (
+              <Fragment key={childBlock.id}>
+                {renderBlock({ block: childBlock, tableOfContents: tableOfContents, imageSizeMap: imageSizeMap })}
+              </Fragment>
+            ))}
+          </>
         </blockquote>
       )
     // OGP情報が取れていたら来ない
