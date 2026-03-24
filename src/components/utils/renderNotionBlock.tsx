@@ -125,7 +125,7 @@ export const renderBlock = (
               alt={caption}
               width={size.width}
               height={size.height}
-              style={{ width: '100%', height: 'auto' }}
+              style={{ width: 'auto', height: 'auto', maxWidth: '100%' }}
             />
             {caption && <figcaption>{caption}</figcaption>}
           </figure>
