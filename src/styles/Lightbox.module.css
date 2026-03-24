@@ -48,32 +48,4 @@
   max-width: 90vw;
   max-height: 80vh;
   object-fit: contain;
-  transform-origin: center;
-  transition: transform 0.2s ease;
-}
-
-.zoomControls {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  display: flex;
-  gap: 8px;
-}
-
-.zoomButton {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: #fff;
-  font-size: 20px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.zoomButton:hover {
-  background: rgba(255, 255, 255, 0.35);
 }
