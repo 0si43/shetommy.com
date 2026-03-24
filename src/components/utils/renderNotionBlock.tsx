@@ -1,48 +1,26 @@
 import styles from '../../styles/articles/post.module.css'
 import type { ExtendNotionBlock } from '../Notion'
 import type { ImageSizeMap } from './saveImageIfNeeded'
+import type { GetBlockResponse } from '@notionhq/client/build/src/api-endpoints'
 import LinkCard, { AmazonCard } from '../LinkCard'
 import { Fragment } from 'react'
 import Image from 'next/image'
 
-export type RichText = {
-  type: 'text'
-  text: {
-    content: string
-    link: {
-      url: string
-    } | null
-  }
-  annotations: {
-    bold: boolean
-    italic: boolean
-    strikethrough: boolean
-    underline: boolean
-    code: boolean
-    color:
-      | 'default'
-      | 'gray'
-      | 'brown'
-      | 'orange'
-      | 'yellow'
-      | 'green'
-      | 'blue'
-      | 'purple'
-      | 'pink'
-      | 'red'
-      | 'gray_background'
-      | 'brown_background'
-      | 'orange_background'
-      | 'yellow_background'
-      | 'green_background'
-      | 'blue_background'
-      | 'purple_background'
-      | 'pink_background'
-      | 'red_background'
-  }
-  plain_text: string
-  href: string | null
-}
+// Notion SDK の型定義から RichText 型を導出する
+// RichTextItemResponse は非公開型なので、公開型 GetBlockResponse 経由でアクセスする
+type BlockObjectResponse = Extract<GetBlockResponse, { type: string }>
+type ParagraphBlock = Extract<BlockObjectResponse, { type: 'paragraph' }>
+type RichTextItemResponse = ParagraphBlock['paragraph']['text'][number]
+export type RichText = Extract<RichTextItemResponse, { type: 'text' }>
+
+const TEXT_BLOCK_TAGS = {
+  paragraph: 'p',
+  heading_1: 'h1',
+  heading_2: 'h2',
+  heading_3: 'h3',
+} as const satisfies Record<string, keyof JSX.IntrinsicElements>
+
+type TextBlockType = keyof typeof TEXT_BLOCK_TAGS
 
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
 export const renderBlock = (
@@ -62,31 +40,20 @@ export const renderBlock = (
   }
 
   const { type, id } = block
+
+  if (type in TEXT_BLOCK_TAGS) {
+    const blockType = type as TextBlockType
+    const Tag = TEXT_BLOCK_TAGS[blockType]
+    const value = (block as unknown as Record<string, { text: RichText[] }>)[blockType]
+    const headingId = blockType.startsWith('heading') ? block.id : undefined
+    return (
+      <Tag id={headingId}>
+        <TextComponent richTexts={value.text} />
+      </Tag>
+    )
+  }
+
   switch (type) {
-    case 'paragraph':
-      return (
-        <p>
-          <TextComponent richTexts={block.paragraph.text as RichText[]} />
-        </p>
-      )
-    case 'heading_1':
-      return (
-        <h1 id={block.id}>
-          <TextComponent richTexts={block.heading_1.text as RichText[]} />
-        </h1>
-      )
-    case 'heading_2':
-      return (
-        <h2 id={block.id}>
-          <TextComponent richTexts={block.heading_2.text as RichText[]} />
-        </h2>
-      )
-    case 'heading_3':
-      return (
-        <h3 id={block.id}>
-          <TextComponent richTexts={block.heading_3.text as RichText[]} />
-        </h3>
-      )
     case 'bulleted_list_item':
       return renderBulletedListItem(block)
     case 'numbered_list_item':
@@ -160,7 +127,7 @@ export const renderBlock = (
           <>
             {block.children?.map((childBlock) => (
               <Fragment key={childBlock.id}>
-                {renderBlock({ block: childBlock, tableOfContents: tableOfContents, imageSizeMap: imageSizeMap })}
+                {renderBlock({ block: childBlock, tableOfContents: tableOfContents, imageSizeMap: imageSizeMap, onImageClick: onImageClick })}
               </Fragment>
             ))}
           </>
