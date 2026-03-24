@@ -75,10 +75,9 @@ When working with blog functionality:
 ## Global Rule
 
 - [MANDATORY] Answer in Japanese
-- [MANDATORY] タスクに取り掛かる前に、必ず新しいgit worktreeを作成し、その中で作業すること。worktreeのブランチ名はタスクの内容を表す名前にすること（例: `git worktree add ../shetommy-<branch-name> -b <branch-name>`）
+- [MANDATORY] タスクに取り掛かる前に、必ず新しいgit worktreeを作成し、その中で作業すること。worktreeのブランチ名はタスクの内容を表す名前にすること。worktreeは必ず `git fetch origin` してから `origin/main` をベースに作成すること（例: `git fetch origin && git worktree add ../shetommy-<branch-name> -b <branch-name> origin/main`）
 - [MANDATORY] worktree作成後、必ず以下のセットアップを行うこと:
   1. `.env.local` をメインディレクトリからworktreeにコピーする（例: `cp ../shetommy.com/.env.local ./.env.local`）
   2. `npm install` を実行して依存関係をインストールする
 - [MANDATORY] worktree内で作業ブランチを新規作成すること（mainブランチに直接コミットしない）
 - [MANDATORY] コミットは適切な単位で行うこと。1つのコミットに複数の無関係な変更を混在させない。機能追加・バグ修正・リファクタリングはそれぞれ別コミットにする
-- [MANDATORY] 修正が完了したら必ず `git push` でリモートにpushすること
