@@ -22,7 +22,7 @@ const fetchTitleFallback = async (url: string): Promise<OgObject> => {
     const html = await res.text()
     const match = html.match(/<title[^>]*>([^<]+)<\/title>/i)
     const title = match?.[1]?.trim() ?? null
-    return { ogTitle: title ?? undefined, requestUrl: url } as OgObject
+    return (title ? { ogTitle: title, requestUrl: url } : { requestUrl: url }) as OgObject
   } catch {
     return { requestUrl: url } as OgObject
   }
