@@ -16,11 +16,14 @@ import { databaseId } from './index'
 import styles from '../../styles/articles/post.module.css'
 import Footer from '../../components/Footer'
 
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
+import Lightbox from '../../components/Lightbox'
 
 export default function Post({ title, blocks, tableOfContentsBlocks, publishDate, imageSizeMap }: Props) {
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null)
+
   return (
     <div>
       <Header titlePre={title} />
@@ -31,11 +34,14 @@ export default function Post({ title, blocks, tableOfContentsBlocks, publishDate
         </time>
         <section>
           {blocks.map((block) => (
-            <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContentsBlocks, imageSizeMap: imageSizeMap })}</Fragment>
+            <Fragment key={block.id}>{renderBlock({ block: block, tableOfContents: tableOfContentsBlocks, imageSizeMap: imageSizeMap, onImageClick: (src, alt) => setLightbox({ src, alt }) })}</Fragment>
           ))}
         </section>
       </article>
       <Footer />
+      {lightbox && (
+        <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />
+      )}
     </div>
   )
 }
