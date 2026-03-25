@@ -6,6 +6,7 @@ import {
   getBlocks,
   isPublishDate,
   getPageDate,
+  getPage,
   type NotionPage,
   ExtendNotionBlock
 } from '../../components/Notion'
@@ -62,6 +63,7 @@ export const getStaticPaths = async () => {
       return {
         params: {
           slug: slug,
+          pageId: page.id,
         },
       }
     })
@@ -75,32 +77,27 @@ export const getStaticPaths = async () => {
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 interface IParams extends ParsedUrlQuery {
   slug: string
+  pageId: string
 }
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const { slug } = context.params as IParams
-  const database = await getDatabase(databaseId)
-  const page = database.find((page) => {
-    const title = getPageTitle(page as NotionPage)
-    const sanitizeTitle = sanitizeForUrl(title)
-    return sanitizeTitle == slug
-  })
-  const id = page!.id
+  const { pageId } = context.params as IParams
+  const page = await getPage(pageId)
   const title = getPageTitle(page as NotionPage)
-  const blocks = await getBlocks(id)
+  const blocks = await getBlocks(pageId)
   const imageSizeMap = await saveImageIfNeeded(blocks)
 
   const publishDate = getPageDate(page as NotionPage).toISOString()
   const blocksWithOGP: ExtendNotionBlock[] = []
   const tableOfContentsBlocks: ExtendNotionBlock[] = []
-  
+
   await Promise.all(
     blocks.map(async (block, index) => {
       /// 目次用のブロックを抽出
       if (['heading_1', 'heading_2', 'heading_3'].includes(block.type)) {
         tableOfContentsBlocks.push(block)
       }
-      
+
       /// OG情報を取得する
       if (block.type === 'paragraph'
           && block.paragraph.text.length == 1
@@ -130,7 +127,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
           block.ogpData = await getOgpData(block.link_preview.url)
         }
       }
-  
+
       blocksWithOGP[index] = block
     })
   )
