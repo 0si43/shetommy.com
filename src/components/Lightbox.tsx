@@ -21,7 +21,7 @@ export default function Lightbox({ src, alt, onClose }: Props) {
   }, [onClose])
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true" aria-label="画像拡大表示">
       <button className={styles.closeButton} onClick={onClose} aria-label="閉じる">
         ×
       </button>

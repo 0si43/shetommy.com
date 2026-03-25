@@ -4,18 +4,20 @@ export default function Career() {
   return (
     <div className={styles.career}>
       <table>
-        <tbody>
+        <thead>
           <tr>
-            <th>
+            <th scope="col">
               Start<br />
               (year)
             </th>
-            <th>
+            <th scope="col">
               End<br />
               (year)
             </th>
-            <th>Role</th>
+            <th scope="col">Role</th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>2019</td>
             <td>-</td>

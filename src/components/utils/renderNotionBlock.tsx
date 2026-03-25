@@ -200,6 +200,7 @@ export const renderBlock = (
             <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%' }}>
               <iframe
                 src={`https://www.youtube.com/embed/${videoId}`}
+                title="YouTube video"
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -229,7 +230,7 @@ export const renderBlock = (
     case 'pdf': {
       const pdfValue = block.pdf
       const url = pdfValue.type === 'external' ? pdfValue.external.url : pdfValue.file.url
-      return <iframe src={url} width="100%" height="600px" />
+      return <iframe src={url} title="PDF document" width="100%" height="600px" />
     }
     case 'table':
       return <TableComponent block={block} />
