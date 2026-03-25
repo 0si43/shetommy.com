@@ -127,10 +127,13 @@ export const renderBlock = (
         const src = imageValue.external.url
         return (
           <figure>
-            <img
+            <Image
               src={src}
               alt={caption}
-              style={{ cursor: onImageClick ? 'zoom-in' : undefined }}
+              width={800}
+              height={600}
+              unoptimized
+              style={{ width: 'auto', height: 'auto', maxWidth: '100%', cursor: onImageClick ? 'zoom-in' : undefined }}
               onClick={onImageClick ? () => onImageClick(src, caption) : undefined}
             />
             {caption && <figcaption>{caption}</figcaption>}
