@@ -40,6 +40,24 @@ const TEXT_BLOCK_TAGS = {
 
 type TextBlockType = keyof typeof TEXT_BLOCK_TAGS
 
+type ExtendParagraphBlock = Extract<ExtendNotionBlock, { type: 'paragraph' }>
+type ExtendHeading1Block = Extract<ExtendNotionBlock, { type: 'heading_1' }>
+type ExtendHeading2Block = Extract<ExtendNotionBlock, { type: 'heading_2' }>
+type ExtendHeading3Block = Extract<ExtendNotionBlock, { type: 'heading_3' }>
+type TextBlock = ExtendParagraphBlock | ExtendHeading1Block | ExtendHeading2Block | ExtendHeading3Block
+
+const isTextBlock = (block: ExtendNotionBlock): block is TextBlock =>
+  block.type in TEXT_BLOCK_TAGS
+
+const getTextBlockContent = (block: TextBlock): RichText[] => {
+  switch (block.type) {
+    case 'paragraph': return block.paragraph.text as RichText[]
+    case 'heading_1': return block.heading_1.text as RichText[]
+    case 'heading_2': return block.heading_2.text as RichText[]
+    case 'heading_3': return block.heading_3.text as RichText[]
+  }
+}
+
 /// 子ブロックを含めたブロックをHTML要素にレンダリングする
 export const renderBlock = (
   { block, tableOfContents, imageSizeMap, onImageClick }: {
@@ -59,14 +77,13 @@ export const renderBlock = (
 
   const { type, id } = block
 
-  if (type in TEXT_BLOCK_TAGS) {
-    const blockType = type as TextBlockType
-    const Tag = TEXT_BLOCK_TAGS[blockType]
-    const value = (block as unknown as Record<string, { text: RichText[] }>)[blockType]
-    const headingId = blockType.startsWith('heading') ? block.id : undefined
+  if (isTextBlock(block)) {
+    const Tag = TEXT_BLOCK_TAGS[block.type]
+    const richTexts = getTextBlockContent(block)
+    const headingId = block.type.startsWith('heading') ? block.id : undefined
     return (
       <Tag id={headingId}>
-        <TextComponent richTexts={value.text} />
+        <TextComponent richTexts={richTexts} />
       </Tag>
     )
   }

@@ -5,7 +5,6 @@ import {
   getPageDate,
   getOpeningSentence,
   isPublishDate,
-  type NotionPage,
 } from '../../../components/Notion'
 
 const databaseId = process.env.NOTION_DATABASE_ID || ''
@@ -39,22 +38,23 @@ export default async function handler(
 
   try {
     const { cursor } = req.query
+    const cursorString = typeof cursor === 'string' ? cursor : undefined
     const pageSize = 10
-    
+
     const response = await getDatabaseWithPagination(
       databaseId,
-      cursor as string | undefined,
+      cursorString,
       pageSize
     )
 
     // フィルタリングとソート
     const filteredDatabase = response.results
       .filter(
-        (page) => isPublishDate(page as NotionPage) && getPageTitle(page as NotionPage) !== ''
+        (page) => isPublishDate(page) && getPageTitle(page) !== ''
       )
       .sort(
         (page, page2) =>
-          getPageDate(page2 as NotionPage).getTime() - getPageDate(page as NotionPage).getTime()
+          getPageDate(page2).getTime() - getPageDate(page).getTime()
       )
 
     // 並行して冒頭文を取得
@@ -63,8 +63,8 @@ export default async function handler(
         const openingSentence = await getOpeningSentence(page.id)
         return {
           id: page.id,
-          title: getPageTitle(page as NotionPage),
-          date: getPageDate(page as NotionPage).toLocaleDateString('ja-JP', {
+          title: getPageTitle(page),
+          date: getPageDate(page).toLocaleDateString('ja-JP', {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',

@@ -26,6 +26,12 @@ export type PaginatedDatabaseResponse = {
   nextCursor: string | null
 }
 
+export const isNotionPage = (page: unknown): page is NotionPage => {
+  if (typeof page !== 'object' || page === null) return false
+  const p = page as Record<string, unknown>
+  return typeof p['id'] === 'string' && typeof p['properties'] === 'object' && p['properties'] !== null
+}
+
 /// Blog記事のデータベースを取得する
 export const getDatabase = async (databaseId: string) => {
   try {
@@ -56,7 +62,7 @@ export const getDatabaseWithPagination = async (databaseId: string, startCursor?
       ],
     })
     return {
-      results: response.results as NotionPage[],
+      results: response.results.filter(isNotionPage),
       hasMore: response.has_more,
       nextCursor: response.next_cursor,
     }

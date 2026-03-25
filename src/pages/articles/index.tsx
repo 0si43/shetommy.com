@@ -6,7 +6,6 @@ import {
   getPageDate,
   getOpeningSentence,
   isPublishDate,
-  type NotionPage,
   type PaginatedDatabaseResponse
 } from '../../components/Notion'
 import styles from '../../styles/articles/index.module.css'
@@ -39,11 +38,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   // フィルタリングとソート
   const filteredDatabase = response.results
     .filter(
-      (page) => isPublishDate(page as NotionPage) && getPageTitle(page as NotionPage) !== ''
+      (page) => isPublishDate(page) && getPageTitle(page) !== ''
     )
     .sort(
       (page, page2) =>
-        getPageDate(page2 as NotionPage).getTime() - getPageDate(page as NotionPage).getTime()
+        getPageDate(page2).getTime() - getPageDate(page).getTime()
     )
 
   const openingSentences = await Promise.all(
@@ -53,8 +52,8 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   // 初期記事データを整形
   const initialArticles = filteredDatabase.map((page, index) => ({
     id: page.id,
-    title: getPageTitle(page as NotionPage),
-    date: getPageDate(page as NotionPage).toLocaleDateString('ja-JP', {
+    title: getPageTitle(page),
+    date: getPageDate(page).toLocaleDateString('ja-JP', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
