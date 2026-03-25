@@ -231,6 +231,8 @@ export const renderBlock = (
       const url = pdfValue.type === 'external' ? pdfValue.external.url : pdfValue.file.url
       return <iframe src={url} width="100%" height="600px" />
     }
+    case 'table':
+      return <TableComponent block={block} />
     default:
       return `❌ Unsupported block (${
         type === 'unsupported' ? 'unsupported by Notion API' : type
@@ -330,6 +332,47 @@ const renderNumberedListItem = (block: ExtendNotionBlock) => {
         <NumberedListItem key={block.id} block={block} />
       )}
     </ol>
+  )
+}
+
+const TableComponent: React.FC<{ block: ExtendNotionBlock }> = ({ block }) => {
+  if (block.type !== 'table') return null
+
+  const { has_column_header, has_row_header } = block.table
+  const rows = block.children ?? []
+  const headerRow = has_column_header ? rows[0] : null
+  const bodyRows = has_column_header ? rows.slice(1) : rows
+
+  const renderCell = (cell: RichText[], isHeader: boolean, scope?: 'col' | 'row', key?: number) => {
+    const Tag = isHeader ? 'th' : 'td'
+    return (
+      <Tag key={key} className={isHeader ? styles.tableHeader : styles.tableCell} scope={scope}>
+        <TextComponent richTexts={cell} />
+      </Tag>
+    )
+  }
+
+  const renderRow = (rowBlock: ExtendNotionBlock, isHeaderRow: boolean) => {
+    if (rowBlock.type !== 'table_row') return null
+    const cells = rowBlock.table_row.cells as RichText[][]
+    return (
+      <tr key={rowBlock.id}>
+        {cells.map((cell, colIndex) => {
+          if (isHeaderRow) return renderCell(cell, true, 'col', colIndex)
+          if (has_row_header && colIndex === 0) return renderCell(cell, true, 'row', colIndex)
+          return renderCell(cell, false, undefined, colIndex)
+        })}
+      </tr>
+    )
+  }
+
+  return (
+    <div className={styles.tableWrapper}>
+      <table className={styles.table}>
+        {headerRow && <thead>{renderRow(headerRow, true)}</thead>}
+        <tbody>{bodyRows.map((row) => renderRow(row, false))}</tbody>
+      </table>
+    </div>
   )
 }
 
