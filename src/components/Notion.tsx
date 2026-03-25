@@ -121,6 +121,8 @@ export const getPage = async (pageId: string) => {
 }
 
 /// 冒頭140字を返す。存在しなかったらnullを返す
+// モジュールレベルのキャッシュ。同一プロセス内での重複API呼び出しを防ぐ。
+// Notionの内容を更新した場合はサーバーの再起動が必要。
 const openingSentenceCache = new Map<string, string>()
 
 export const getOpeningSentence = async (blockId: string) => {
