@@ -182,21 +182,26 @@ export const getBlocks = async (blockId: string) => {
     cursor = next_cursor
   }
   // 番号付きリストの順序性を保つためにリスト1ブロック目に全てのブロックを保持させる
-  var numberedListItems: ExtendNotionBlock[] = []
-  blocks.forEach((block, index) => {
-    if (block.type == 'numbered_list_item') {
-      numberedListItems.push(block)
-      if (blocks[index + 1]?.type != 'numbered_list_item') {
-        blocks[index - numberedListItems.length + 1] = {
-          ...blocks[index - numberedListItems.length + 1],
-          numberedListBlocks: numberedListItems
-        }
-        numberedListItems = []
+  const { result: groupedBlocks } = blocks.reduce<{
+    result: ExtendNotionBlock[]
+    group: ExtendNotionBlock[]
+  }>(
+    ({ result, group }, block, index) => {
+      if (block.type !== 'numbered_list_item') {
+        return { result: [...result, block], group: [] }
       }
-    }
-  })
+      const newGroup = [...group, block]
+      const isLastInGroup = blocks[index + 1]?.type !== 'numbered_list_item'
+      if (isLastInGroup) {
+        const head = { ...newGroup[0], numberedListBlocks: newGroup }
+        return { result: [...result, head], group: [] }
+      }
+      return { result, group: newGroup }
+    },
+    { result: [], group: [] }
+  )
 
-  return blocks
+  return groupedBlocks
 }
 
 /// ブロックに子ブロックがあれば付与する（リストブロック・トグルブロック）
