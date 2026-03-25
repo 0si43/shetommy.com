@@ -190,6 +190,32 @@
   text-overflow: ellipsis;
 }
 
+.tableWrapper {
+  overflow-x: auto;
+  margin: 8px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+.tableHeader,
+.tableCell {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+.tableHeader {
+  background-color: var(--quote-background-color);
+  font-weight: bold;
+}
+
 .container nav {
   background-color: var(--quote-background-color);
   padding: 16px;
