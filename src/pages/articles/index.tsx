@@ -2,11 +2,9 @@ import Header from '../../components/Header'
 import {
   getDatabaseWithPagination,
   sanitizeForUrl,
-  getPageTitle,
-  getPageDate,
   getOpeningSentence,
-  isPublishDate,
-  type NotionPage,
+  filterAndSortPages,
+  formatArticle,
   type PaginatedDatabaseResponse
 } from '../../components/Notion'
 import styles from '../../styles/articles/index.module.css'
@@ -36,31 +34,15 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   // ページング対応で記事を取得
   const response = await getDatabaseWithPagination(databaseId, undefined, pageSize)
   
-  // フィルタリングとソート
-  const filteredDatabase = response.results
-    .filter(
-      (page) => isPublishDate(page as NotionPage) && getPageTitle(page as NotionPage) !== ''
-    )
-    .sort(
-      (page, page2) =>
-        getPageDate(page2 as NotionPage).getTime() - getPageDate(page as NotionPage).getTime()
-    )
+  const filteredDatabase = filterAndSortPages(response.results)
 
   const openingSentences = await Promise.all(
     filteredDatabase.map((page) => getOpeningSentence(page.id))
   )
 
-  // 初期記事データを整形
-  const initialArticles = filteredDatabase.map((page, index) => ({
-    id: page.id,
-    title: getPageTitle(page as NotionPage),
-    date: getPageDate(page as NotionPage).toLocaleDateString('ja-JP', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }),
-    openingSentence: openingSentences[index],
-  }))
+  const initialArticles = filteredDatabase.map((page, index) =>
+    formatArticle(page, openingSentences[index])
+  )
 
   return {
     props: {

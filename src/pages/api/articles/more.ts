@@ -1,11 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {
   getDatabaseWithPagination,
-  getPageTitle,
-  getPageDate,
   getOpeningSentence,
-  isPublishDate,
-  type NotionPage,
+  filterAndSortPages,
+  formatArticle,
 } from '../../../components/Notion'
 
 const databaseId = process.env.NOTION_DATABASE_ID || ''
@@ -47,30 +45,12 @@ export default async function handler(
       pageSize
     )
 
-    // フィルタリングとソート
-    const filteredDatabase = response.results
-      .filter(
-        (page) => isPublishDate(page as NotionPage) && getPageTitle(page as NotionPage) !== ''
-      )
-      .sort(
-        (page, page2) =>
-          getPageDate(page2 as NotionPage).getTime() - getPageDate(page as NotionPage).getTime()
-      )
+    const filteredDatabase = filterAndSortPages(response.results)
 
-    // 並行して冒頭文を取得
     const articlesWithOpeningSentences = await Promise.all(
       filteredDatabase.map(async (page) => {
         const openingSentence = await getOpeningSentence(page.id)
-        return {
-          id: page.id,
-          title: getPageTitle(page as NotionPage),
-          date: getPageDate(page as NotionPage).toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          }),
-          openingSentence,
-        }
+        return formatArticle(page, openingSentence)
       })
     )
 

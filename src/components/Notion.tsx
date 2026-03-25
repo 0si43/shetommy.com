@@ -199,6 +199,27 @@ export const getBlocks = async (blockId: string) => {
   return blocks
 }
 
+/// 公開済み・タイトルありの記事のみに絞り込み、新しい順にソートする
+export const filterAndSortPages = (
+  results: QueryDatabaseResponse['results']
+): NotionPage[] => {
+  return (results as NotionPage[])
+    .filter((page) => isPublishDate(page) && getPageTitle(page) !== '')
+    .sort((page, page2) => getPageDate(page2).getTime() - getPageDate(page).getTime())
+}
+
+/// 記事データをUI用の形式に整形する
+export const formatArticle = (page: NotionPage, openingSentence: string) => ({
+  id: page.id,
+  title: getPageTitle(page),
+  date: getPageDate(page).toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }),
+  openingSentence,
+})
+
 /// ブロックに子ブロックがあれば付与する（リストブロック・トグルブロック）
 const appendChildren = async (block: ExtendNotionBlock): Promise<ExtendNotionBlock> => {
   if (block.has_children) {
