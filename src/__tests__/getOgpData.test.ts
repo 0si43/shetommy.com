@@ -1,4 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type { OgObject } from 'open-graph-scraper/dist/lib/types.d'
+import type { IncomingMessage } from 'http'
 
 // open-graph-scraperのモック
 vi.mock('open-graph-scraper', () => ({
@@ -8,25 +10,29 @@ vi.mock('open-graph-scraper', () => ({
 import openGraphScraper from 'open-graph-scraper'
 import getOgpData from '../components/utils/getOgpData'
 
+// scraper の戻り値の型に合わせたモック用ヘルパー
+const mockScraperResult = (result: Partial<OgObject>) =>
+  ({ result, error: false, response: {} as IncomingMessage, html: '' }) as Awaited<ReturnType<typeof openGraphScraper>>
+
 describe('getOgpData', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
   it('正常なURLのOGPデータを返す', async () => {
-    const mockResult = {
+    const mockResult: Partial<OgObject> = {
       success: true,
       requestUrl: 'https://example.com',
       ogTitle: 'Example',
     }
-    vi.mocked(openGraphScraper).mockResolvedValue({ result: mockResult } as any)
+    vi.mocked(openGraphScraper).mockResolvedValue(mockScraperResult(mockResult))
 
     const result = await getOgpData('https://example.com')
     expect(result).toEqual(mockResult)
   })
 
   it('success=falseの場合は空オブジェクトを返す', async () => {
-    vi.mocked(openGraphScraper).mockResolvedValue({ result: { success: false } } as any)
+    vi.mocked(openGraphScraper).mockResolvedValue(mockScraperResult({ success: false }))
 
     const result = await getOgpData('https://example.com')
     expect(result).toEqual({})
