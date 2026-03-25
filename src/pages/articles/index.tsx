@@ -7,7 +7,6 @@ import {
   getOpeningSentence,
   isPublishDate,
   type NotionPage,
-  type PaginatedDatabaseResponse
 } from '../../components/Notion'
 import styles from '../../styles/articles/index.module.css'
 import Footer from '../../components/Footer'
@@ -16,10 +15,6 @@ import { useState } from 'react'
 import { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import Link from 'next/link'
 
-
-export const databaseId = process.env.NOTION_DATABASE_ID
-  ? process.env.NOTION_DATABASE_ID
-  : ''
 
 type ArticleData = {
   id: string
@@ -31,8 +26,13 @@ type ArticleData = {
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const databaseId = process.env.NOTION_DATABASE_ID
+  if (!databaseId) {
+    throw new Error('NOTION_DATABASE_ID is not set')
+  }
+
   const pageSize = 10
-  
+
   // ページング対応で記事を取得
   const response = await getDatabaseWithPagination(databaseId, undefined, pageSize)
   

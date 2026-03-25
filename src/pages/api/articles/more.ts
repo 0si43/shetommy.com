@@ -8,7 +8,7 @@ import {
   type NotionPage,
 } from '../../../components/Notion'
 
-const databaseId = process.env.NOTION_DATABASE_ID || ''
+const MAX_CURSOR_LENGTH = 256
 
 type ArticleData = {
   id: string
@@ -37,13 +37,33 @@ export default async function handler(
     })
   }
 
+  const databaseId = process.env.NOTION_DATABASE_ID
+  if (!databaseId) {
+    console.error('[API] NOTION_DATABASE_ID is not set')
+    return res.status(500).json({
+      articles: [],
+      hasMore: false,
+      nextCursor: null,
+      error: 'Server configuration error'
+    })
+  }
+
+  const { cursor } = req.query
+  if (cursor !== undefined && (typeof cursor !== 'string' || cursor.length > MAX_CURSOR_LENGTH)) {
+    return res.status(400).json({
+      articles: [],
+      hasMore: false,
+      nextCursor: null,
+      error: 'Invalid cursor parameter'
+    })
+  }
+
   try {
-    const { cursor } = req.query
     const pageSize = 10
-    
+
     const response = await getDatabaseWithPagination(
       databaseId,
-      cursor as string | undefined,
+      cursor || undefined,
       pageSize
     )
 
