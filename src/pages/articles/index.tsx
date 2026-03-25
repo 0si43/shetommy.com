@@ -77,15 +77,20 @@ export default function Home({ initialArticles, hasMore: initialHasMore, nextCur
   const [hasMore, setHasMore] = useState(initialHasMore)
   const [nextCursor, setNextCursor] = useState(initialNextCursor)
   const [loading, setLoading] = useState(false)
+  const [loadError, setLoadError] = useState<string | null>(null)
 
   const loadMoreArticles = async () => {
     if (loading || !hasMore) return
-    
+
     setLoading(true)
+    setLoadError(null)
     try {
       const response = await fetch(`/api/articles/more?cursor=${nextCursor || ''}`)
+      if (!response.ok) {
+        throw new Error(`サーバーエラー: ${response.status}`)
+      }
       const data = await response.json()
-      
+
       if (data.articles) {
         setArticles(prev => [...prev, ...data.articles])
         setHasMore(data.hasMore)
@@ -93,6 +98,7 @@ export default function Home({ initialArticles, hasMore: initialHasMore, nextCur
       }
     } catch (error) {
       console.error('Error loading more articles:', error)
+      setLoadError('記事の読み込みに失敗しました。しばらくしてから再試行してください。')
     } finally {
       setLoading(false)
     }
@@ -129,9 +135,12 @@ export default function Home({ initialArticles, hasMore: initialHasMore, nextCur
         </ol>
         
         {/* もっと読むボタン */}
+        {loadError && (
+          <p className={styles.loadError}>{loadError}</p>
+        )}
         {hasMore && (
           <div className={styles.loadMore}>
-            <button 
+            <button
               onClick={loadMoreArticles}
               disabled={loading}
               className={styles.loadMoreButton}

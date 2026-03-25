@@ -83,3 +83,10 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.loadError {
+  color: var(--error-color, #e53e3e);
+  text-align: center;
+  margin: 8px 0;
+  font-size: 14px;
+}

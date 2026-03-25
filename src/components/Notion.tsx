@@ -35,7 +35,9 @@ export const getDatabase = async (databaseId: string) => {
     return response.results
   } catch (error: unknown) {
     if (isNotionClientError(error)) {
-      console.log(error.message)
+      console.error('[Notion] API error in getDatabase:', error.message)
+    } else {
+      console.error('[Notion] Unexpected error in getDatabase:', error)
     }
     return []
   }
@@ -62,7 +64,9 @@ export const getDatabaseWithPagination = async (databaseId: string, startCursor?
     }
   } catch (error: unknown) {
     if (isNotionClientError(error)) {
-      console.log(error.message)
+      console.error('[Notion] API error in getDatabaseWithPagination:', error.message)
+    } else {
+      console.error('[Notion] Unexpected error in getDatabaseWithPagination:', error)
     }
     return {
       results: [],
@@ -125,28 +129,37 @@ export const getOpeningSentence = async (blockId: string) => {
   let openingSentence = ''
   let cursor: undefined | string = undefined
 
-  while (true) {
-    const block = await Notion.blocks.children.list({
-      start_cursor: cursor,
-      block_id: blockId,
-      page_size: 10,
-    })
+  try {
+    while (true) {
+      const block = await Notion.blocks.children.list({
+        start_cursor: cursor,
+        block_id: blockId,
+        page_size: 10,
+      })
 
-    for (const result of block.results) {
-      if ('type' in result && result.type === 'paragraph') {
-        result.paragraph.text.forEach((textObject) => {
-          openingSentence += textObject.plain_text
-        })
+      for (const result of block.results) {
+        if ('type' in result && result.type === 'paragraph') {
+          result.paragraph.text.forEach((textObject) => {
+            openingSentence += textObject.plain_text
+          })
+        }
+        if (openingSentence.length >= 140) break
       }
-      if (openingSentence.length >= 140) break
-    }
 
-    const next_cursor = block.next_cursor as string | null
-    if (openingSentence.length >= 140 || !next_cursor) {
-      break
+      const next_cursor = block.next_cursor as string | null
+      if (openingSentence.length >= 140 || !next_cursor) {
+        break
+      }
+      cursor = next_cursor
     }
-    cursor = next_cursor
+  } catch (error: unknown) {
+    if (isNotionClientError(error)) {
+      console.error('[Notion] API error in getOpeningSentence:', error.message)
+    } else {
+      console.error('[Notion] Unexpected error in getOpeningSentence:', error)
+    }
   }
+
   return openingSentence.substring(0, 140)
 }
 
@@ -155,32 +168,42 @@ export const getBlocks = async (blockId: string) => {
   const blocks: ExtendNotionBlock[] = []
   let cursor: undefined | string = undefined
 
-  while (true) {
-    const blocksList = await Notion.blocks.children.list({
-      start_cursor: cursor,
-      block_id: blockId,
-    })
-    const extendNotionBlock = await Promise.all(
-      blocksList.results.filter(
-        (block): block is ExtendNotionBlock => {
-          return 'type' in block
-        }
+  try {
+    while (true) {
+      const blocksList = await Notion.blocks.children.list({
+        start_cursor: cursor,
+        block_id: blockId,
+      })
+      const extendNotionBlock = await Promise.all(
+        blocksList.results.filter(
+          (block): block is ExtendNotionBlock => {
+            return 'type' in block
+          }
+        )
+        .map(
+          (block) => {
+            return appendChildren(block)
+          }
+        )
       )
-      .map(
-        (block) => {
-          return appendChildren(block)
-        }
-      )
-    )
 
-    blocks.push(...extendNotionBlock)
+      blocks.push(...extendNotionBlock)
 
-    const next_cursor = blocksList.next_cursor as string | null
-    if (!next_cursor) {
-      break
+      const next_cursor = blocksList.next_cursor as string | null
+      if (!next_cursor) {
+        break
+      }
+      cursor = next_cursor
     }
-    cursor = next_cursor
+  } catch (error: unknown) {
+    if (isNotionClientError(error)) {
+      console.error('[Notion] API error in getBlocks:', error.message)
+    } else {
+      console.error('[Notion] Unexpected error in getBlocks:', error)
+    }
+    return blocks
   }
+
   // 番号付きリストの順序性を保つためにリスト1ブロック目に全てのブロックを保持させる
   var numberedListItems: ExtendNotionBlock[] = []
   blocks.forEach((block, index) => {
@@ -202,17 +225,21 @@ export const getBlocks = async (blockId: string) => {
 /// ブロックに子ブロックがあれば付与する（リストブロック・トグルブロック）
 const appendChildren = async (block: ExtendNotionBlock): Promise<ExtendNotionBlock> => {
   if (block.has_children) {
-    const childBlocks = await getBlocks(block.id)
-    const childrenWithNestedBlocks = await Promise.all(
-      childBlocks.map(childBlock => 
-        appendChildren(childBlock)
+    try {
+      const childBlocks = await getBlocks(block.id)
+      const childrenWithNestedBlocks = await Promise.all(
+        childBlocks.map(childBlock =>
+          appendChildren(childBlock)
+        )
       )
-    )
-    
-    return {
-      ...block,
-      children: childrenWithNestedBlocks
+
+      return {
+        ...block,
+        children: childrenWithNestedBlocks
+      }
+    } catch (error: unknown) {
+      console.error('[Notion] Error in appendChildren for block:', block.id, error)
     }
   }
-  return block 
+  return block
 }
