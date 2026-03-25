@@ -203,8 +203,10 @@ export const getBlocks = async (blockId: string) => {
 export const filterAndSortPages = (
   results: QueryDatabaseResponse['results']
 ): NotionPage[] => {
-  return (results as NotionPage[])
-    .filter((page) => isPublishDate(page) && getPageTitle(page) !== '')
+  return results
+    .filter((page): page is NotionPage =>
+      'properties' in page && isPublishDate(page as NotionPage) && getPageTitle(page as NotionPage) !== ''
+    )
     .sort((page, page2) => getPageDate(page2).getTime() - getPageDate(page).getTime())
 }
 

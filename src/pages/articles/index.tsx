@@ -5,7 +5,6 @@ import {
   getOpeningSentence,
   filterAndSortPages,
   formatArticle,
-  type PaginatedDatabaseResponse
 } from '../../components/Notion'
 import styles from '../../styles/articles/index.module.css'
 import Footer from '../../components/Footer'
