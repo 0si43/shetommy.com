@@ -121,7 +121,13 @@ export const getPage = async (pageId: string) => {
 }
 
 /// 冒頭140字を返す。存在しなかったらnullを返す
+const openingSentenceCache = new Map<string, string>()
+
 export const getOpeningSentence = async (blockId: string) => {
+  if (openingSentenceCache.has(blockId)) {
+    return openingSentenceCache.get(blockId)!
+  }
+
   let openingSentence = ''
   let cursor: undefined | string = undefined
 
@@ -147,7 +153,9 @@ export const getOpeningSentence = async (blockId: string) => {
     }
     cursor = next_cursor
   }
-  return openingSentence.substring(0, 140)
+  const result = openingSentence.substring(0, 140)
+  openingSentenceCache.set(blockId, result)
+  return result
 }
 
 /// 指定されたページ（ここではブロックID = ページID）のブロックをすべて返す
