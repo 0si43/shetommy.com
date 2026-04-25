@@ -4,6 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
+### Worktree Setup
+
+After creating a new worktree, run the following setup:
+
+1. Copy `.env.local` from the main worktree
+2. Run `npm install`
+
 ### Core Development
 - **Start development server**: `npm run dev` - Compiles TypeScript and starts Next.js dev server
 - **Build production**: `npm run build` - Creates optimized production build  
@@ -71,13 +78,3 @@ When working with blog functionality:
 3. Article rendering supports nested content, code blocks, and OGP link previews
 4. Images are automatically downloaded and served locally
 5. Table of contents is auto-generated from headings
-
-## Global Rule
-
-- [MANDATORY] Answer in Japanese
-- [MANDATORY] タスクに取り掛かる前に、必ず新しいgit worktreeを作成し、その中で作業すること。worktreeのブランチ名はタスクの内容を表す名前にすること。worktreeは必ず `git fetch origin` してから `origin/main` をベースに作成すること（例: `git fetch origin && git worktree add ../shetommy-<branch-name> -b <branch-name> origin/main`）
-- [MANDATORY] worktree作成後、必ず以下のセットアップを行うこと:
-  1. `.env.local` をメインディレクトリからworktreeにコピーする（例: `cp ../shetommy.com/.env.local ./.env.local`）
-  2. `npm install` を実行して依存関係をインストールする
-- [MANDATORY] worktree内で作業ブランチを新規作成すること（mainブランチに直接コミットしない）
-- [MANDATORY] コミットは適切な単位で行うこと。1つのコミットに複数の無関係な変更を混在させない。機能追加・バグ修正・リファクタリングはそれぞれ別コミットにする
