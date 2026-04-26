@@ -22,13 +22,15 @@
   padding: 8px 16px;
   border-radius: 16px;
   box-shadow: 1px 0 4px 1px var(--shadow-color);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .active:hover button,
 .active:focus button {
-  box-shadow: 0 4px 12px var(--hover-shadow-color);
-  transform: translateY(-2px);
+  color: var(--sub-text-color);
+  background-color: var(--hover-button-background-color);
+  padding: 8px 16px;
+  border-radius: 16px;
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
 }
 
 .header .inactive button:hover {
@@ -48,10 +50,9 @@
   box-shadow: 1px 0 4px 1px var(--shadow-color);
   margin: 8px;
   cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .actionButtonContainer:hover button {
-  box-shadow: 0 4px 12px var(--hover-shadow-color);
-  transform: translateY(-2px);
+  color: var(--surface-text-color);
+  background-color: var(--hover-background-color);
 }

@@ -7,7 +7,6 @@
   border: 1px solid var(--border-color);
   border-radius: 8px;
   box-shadow: 1px 0 4px 1px var(--shadow-color);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .content {
@@ -37,7 +36,12 @@
 }
 
 .work:hover {
-  box-shadow: 0 6px 16px var(--hover-shadow-color);
-  transform: translateY(-2px);
-  text-decoration: none;
+  background-color: var(--hover-background-color);
+  box-shadow: 1px 0 4px 1px var(--shadow-color);
+  text-decoration: none;;
+}
+
+.work:hover .content,
+.work:hover .description {
+  color: var(--surface-text-color);
 }
