@@ -17,8 +17,13 @@ export default function Career() {
             <th>Role</th>
           </tr>
           <tr>
-            <td>2019</td>
+            <td>2025</td>
             <td>-</td>
+            <td>モバイルエンジニア(Flutter)</td>
+          </tr>
+          <tr>
+            <td>2019</td>
+            <td>2025</td>
             <td>iOSエンジニア</td>
           </tr>
           <tr>
