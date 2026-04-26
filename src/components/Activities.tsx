@@ -14,7 +14,7 @@ export default function Activities() {
         <p className={styles.subText}>2026</p>
         <p>iOS開発の教科書</p>
         <p className={styles.description}>
-          （仮）Zennで「iOS開発の教科書」を執筆中です
+          Zennで「iOS開発の教科書」という電子本を公開しました
         </p>
       </a>
 
