@@ -17,6 +17,7 @@
   --quote-background-color: whitesmoke;
   /* other color */
   --shadow-color: lightgray;
+  --hover-shadow-color: rgba(0, 0, 0, 0.18);
   --border-color: gainsboro;
 }
 
@@ -39,6 +40,7 @@
   --quote-background-color: gray;
   /* other color */
   --shadow-color: darkgray;
+  --hover-shadow-color: rgba(0, 0, 0, 0.6);
   --border-color: dimgray;
 }
 
@@ -63,6 +65,7 @@
     --quote-background-color: gray;
     /* other color */
     --shadow-color: darkgray;
+    --hover-shadow-color: rgba(0, 0, 0, 0.6);
     --border-color: dimgray;
   }
 }

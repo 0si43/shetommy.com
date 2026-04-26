@@ -8,6 +8,7 @@
   border-radius: 8px;
   box-shadow: 1px 0 4px 1px var(--shadow-color);
   max-width: 380px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .activity img {
@@ -30,13 +31,7 @@
 }
 
 .activity:hover {
-  background-color: var(--hover-background-color);
-  box-shadow: 1px 0 4px 1px var(--shadow-color);
+  box-shadow: 0 6px 16px var(--hover-shadow-color);
+  transform: translateY(-2px);
   text-decoration: none;
-}
-
-.activity:hover,
-.activity:hover p,
-.activity:hover .description {
-  color: var(--surface-text-color);
 }
