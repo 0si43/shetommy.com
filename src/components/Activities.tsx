@@ -4,6 +4,20 @@ import styles from '../styles/home/activities.module.css'
 export default function Activities() {
   return (
     <>
+      <a className={styles.activity} href="https://zenn.dev/st43/books/bb5ea67aa3de15">
+        <Image
+          src="/ios_textbook.png"
+          alt="iOS開発の教科書"
+          width={300}
+          height={150}
+        />
+        <p className={styles.subText}>2026</p>
+        <p>iOS開発の教科書</p>
+        <p className={styles.description}>
+          （仮）Zennで「iOS開発の教科書」を執筆中です
+        </p>
+      </a>
+
       <a className={styles.activity} href="https://fortee.jp/iosdc-japan-2024/proposal/370206f7-82a4-4f7d-800e-995dc58178a6">
         <Image
           src="/iosdc2024.png"
