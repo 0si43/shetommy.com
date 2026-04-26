@@ -1,4 +1,5 @@
 import Apple from '../svgs/apple'
+import Flutter from '../svgs/flutter'
 import Unity from '../svgs/unity'
 import Nextjs from '../svgs/nextjs'
 import styles from '../styles/home/skills.module.css'
@@ -10,6 +11,11 @@ export default function Skills() {
         <div className={styles.skill}>
           <Apple />
           <p>iOS</p>
+        </div>
+
+        <div className={styles.skill}>
+          <Flutter />
+          <p>Flutter</p>
         </div>
 
         <div className={styles.skill}>

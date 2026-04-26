@@ -4,12 +4,26 @@ import styles from '../styles/home/activities.module.css'
 export default function Activities() {
   return (
     <>
+      <a className={styles.activity} href="https://zenn.dev/st43/books/bb5ea67aa3de15">
+        <Image
+          src="/ios_textbook.png"
+          alt="iOS開発の教科書"
+          width={320}
+          height={168}
+        />
+        <p className={styles.subText}>2026</p>
+        <p>iOS開発の教科書</p>
+        <p className={styles.description}>
+          Zennで「iOS開発の教科書」という電子本を公開しました
+        </p>
+      </a>
+
       <a className={styles.activity} href="https://fortee.jp/iosdc-japan-2024/proposal/370206f7-82a4-4f7d-800e-995dc58178a6">
         <Image
           src="/iosdc2024.png"
           alt="iOSDC 2024"
-          width={300}
-          height={150}
+          width={320}
+          height={168}
         />
         <p className={styles.subText}>2024</p>
         <p>iOSDC 2024登壇</p>
@@ -22,8 +36,8 @@ export default function Activities() {
         <Image
           src="/iosdc2023.png"
           alt="iOSDC 2023"
-          width={300}
-          height={150}
+          width={320}
+          height={168}
         />
         <p className={styles.subText}>2023</p>
         <p>iOSDC 2023登壇</p>
@@ -36,8 +50,8 @@ export default function Activities() {
         <Image
           src="/iosdc2020.png"
           alt="iOSDC 2020"
-          width={300}
-          height={150}
+          width={320}
+          height={168}
         />
         <p className={styles.subText}>2020</p>
         <p>iOSDC 2020登壇</p>
@@ -50,8 +64,8 @@ export default function Activities() {
         <Image
           src="/hatena.svg"
           alt="Hatena"
-          width={300}
-          height={150}
+          width={320}
+          height={168}
         />
         <p className={styles.subText}>2009 - 2020</p>
         <p>四十三庵</p>
