@@ -12,10 +12,9 @@
   fill: var(--primary-text-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .button:hover {
-  box-shadow: 0 4px 12px var(--hover-shadow-color);
-  transform: translateY(-2px);
+  fill: var(--surface-text-color);
+  background-color: var(--hover-background-color);
 }

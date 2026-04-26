@@ -35,8 +35,6 @@
 .post {
   padding: 8px;
   margin: 0 0 16px 0;
-  border-radius: 8px;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .postTitle {
@@ -49,12 +47,13 @@
   margin: 0 0 8px 0;
 }
 
-.post:hover {
-  box-shadow: 0 6px 16px var(--hover-shadow-color);
-  transform: translateY(-2px);
-}
-
-.post:hover a {
+.post:hover,
+.post:hover a,
+.post:hover .postTitle,
+.post:hover .postDescription {
+  color: var(--surface-text-color);
+  background-color: var(--hover-background-color);
+  border-radius: 8px;
   text-decoration: none;
 }
 
@@ -76,8 +75,8 @@
 }
 
 .loadMoreButton:hover {
-  box-shadow: 0 4px 12px var(--hover-shadow-color);
-  transform: translateY(-2px);
+  color: var(--surface-text-color);
+  background-color: var(--hover-background-color);
 }
 
 .loadMoreButton:disabled {
