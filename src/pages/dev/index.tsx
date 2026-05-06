@@ -4,6 +4,12 @@ import styles from '../../styles/dev/dev.module.css'
 export default function Dev() {
   return (
     <div className={styles.contents}>
+      <h1>お試しページ</h1>
+      <ul>
+        <li>
+          <Link href="/dev/sakura">Sakura</Link>
+        </li>
+      </ul>
       <h1>プライバシーポリシー(WristCounter)</h1>
       <ul>
         <li>
