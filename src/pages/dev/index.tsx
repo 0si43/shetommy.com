@@ -1,21 +1,18 @@
 import Link from 'next/link'
+import styles from '../../styles/dev/dev.module.css'
 
 export default function Dev() {
   return (
-      <>
-        <h1>
-          プライバシーポリシー
-        </h1>
-        <p>
-          <Link href="/privacy_policy/wristcounter.html">
-          WristCounter
-          </Link>
-        </p>
-        <p>
-          <Link href="/privacy_policy/wristcounter_jp.html">
-          WristCounter（日本語）
-          </Link>
-        </p>
-    </>
+    <div className={styles.contents}>
+      <h1>プライバシーポリシー(WristCounter)</h1>
+      <ul>
+        <li>
+          <Link href="/privacy_policy/wristcounter.html">英語版</Link>
+        </li>
+        <li>
+          <Link href="/privacy_policy/wristcounter_jp.html">日本語版</Link>
+        </li>
+      </ul>
+    </div>
   )
 }
