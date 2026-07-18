@@ -4,6 +4,22 @@ import styles from '../styles/home/works.module.css'
 export default function Works() {
   return (
     <>
+      <a className={styles.work} href="https://talkingdogs.dev">
+        <Image
+          src="/talking_dogs.png"
+          alt="Talking Dogs' icon"
+          width={100}
+          height={100}
+        />
+        <div className={styles.content}>
+          <p>Talking Dogs</p>
+          <p className={styles.subText}>2026</p>
+          <p className={styles.description}>
+            話題ベースでラフに交流するWebサービス
+          </p>
+        </div>
+      </a>
+
       <a className={styles.work} href="https://apps.apple.com/app/m-1-timer/id6474502299">
         <Image
           src="/m1_timer.png"
