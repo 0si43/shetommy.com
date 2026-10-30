@@ -9,6 +9,9 @@ export default function Dev() {
         <li>
           <Link href="/dev/sakura">Sakura</Link>
         </li>
+        <li>
+          <Link href="/dev/fonts">Font Lab</Link>
+        </li>
       </ul>
       <h1>プライバシーポリシー(WristCounter)</h1>
       <ul>
